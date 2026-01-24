@@ -1,0 +1,142 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 210 20% 98%;
+    /* #F9FAFB */
+    --foreground: 216 60% 10%;
+    /* #0A1628 Deep Midnight */
+
+    --card: 0 0% 100%;
+    --card-foreground: 216 60% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 216 60% 10%;
+
+    --primary: 216 60% 10%;
+    /* #0A1628 Deep Midnight */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 214 39% 19%;
+    /* #1E2F45 Soft Navy */
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 210 20% 98%;
+    --muted-foreground: 215 16% 65%;
+    /* #94A3B8 Secondary Text */
+
+    --accent: 38 92% 50%;
+    /* #F59E0B Warm Amber */
+    --accent-foreground: 216 60% 10%;
+    /* Dark text on amber for better readability */
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 38 92% 50%;
+
+    --radius: 0.75rem;
+    /* Reduced radius for cleaner look */
+
+    /* Premium shadow tokens */
+    --shadow-soft: 0 2px 10px -2px rgba(10, 22, 40, 0.05);
+    --shadow-card: 0 4px 20px -4px rgba(10, 22, 40, 0.08);
+    --shadow-elevated: 0 10px 40px -10px rgba(10, 22, 40, 0.12);
+    --shadow-orange: 0 4px 20px -4px rgba(245, 158, 11, 0.3);
+
+    /* Map sidebar to primary */
+    --sidebar-background: 216 60% 10%;
+    --sidebar-foreground: 0 0% 100%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Poppins', sans-serif;
+  }
+}
+
+@layer components {
+  .card-travel {
+    @apply bg-card rounded-2xl p-6 transition-all duration-300;
+    box-shadow: var(--shadow-card);
+  }
+
+  .card-travel:hover {
+    box-shadow: var(--shadow-elevated);
+    transform: translateY(-4px);
+  }
+
+  .btn-primary {
+    @apply bg-primary text-primary-foreground font-semibold px-8 py-4 rounded-full transition-all duration-300;
+    box-shadow: var(--shadow-orange);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 35px -8px hsl(16 100% 66% / 0.45);
+  }
+
+  .btn-outline {
+    @apply border-2 border-primary text-primary font-semibold px-6 py-3 rounded-full transition-all duration-300 bg-transparent;
+  }
+
+  .btn-outline:hover {
+    @apply bg-primary text-primary-foreground;
+  }
+
+  .input-travel {
+    @apply w-full px-5 py-4 rounded-2xl border-2 border-border bg-background text-foreground transition-all duration-300 outline-none;
+  }
+
+  .input-travel:focus {
+    @apply border-primary;
+    box-shadow: 0 0 0 4px hsl(16 100% 66% / 0.1);
+  }
+
+  .nav-link {
+    @apply px-5 py-2.5 rounded-full font-medium transition-all duration-300 text-muted-foreground;
+  }
+
+  .nav-link:hover {
+    @apply bg-accent text-accent-foreground;
+  }
+
+  .nav-link.active {
+    @apply bg-primary text-primary-foreground;
+  }
+
+  .timeline-dot {
+    @apply w-4 h-4 rounded-full bg-primary flex-shrink-0;
+    box-shadow: 0 0 0 4px hsl(16 100% 66% / 0.2);
+  }
+
+  .timeline-line {
+    @apply w-0.5 bg-border flex-grow min-h-[20px] my-2;
+  }
+
+  .section-title {
+    @apply text-3xl font-bold text-foreground mb-8 tracking-tight;
+  }
+
+  .page-title {
+    @apply text-4xl md:text-5xl font-extrabold text-foreground mb-6 tracking-tight;
+  }
+
+  .section-spacing {
+    @apply py-12 md:py-16;
+  }
+
+  .badge-travel {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-accent text-accent-foreground;
+  }
+}
