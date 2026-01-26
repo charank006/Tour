@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Compass, Search, Calendar, BarChart, ArrowRight } from 'lucide-react';
 import { activitiesData, ActivityItem } from '@/data/staticDiscoveryData';
 import StepIndicator from '@/components/ui/StepIndicator';
+import ActivityModal from '@/components/trip/ActivityModal';
 import { useNavigate } from 'react-router-dom';
 
 const Activities = () => {
@@ -10,6 +11,7 @@ const Activities = () => {
     const [filter, setFilter] = useState<string>('All');
     const [search, setSearch] = useState<string>('');
     const [selectedActivities, setSelectedActivities] = useState<string[]>([]);
+    const [selectedActivityForModal, setSelectedActivityForModal] = useState<ActivityItem | null>(null);
 
     const categories = ['All', 'Adventure', 'Nature', 'Spiritual', 'Culture', 'Food'];
 
@@ -91,7 +93,7 @@ const Activities = () => {
                                 animate={{ opacity: 1, scale: 1 }}
                                 transition={{ delay: index * 0.05 }}
                                 whileHover={{ y: -8 }}
-                                onClick={() => toggleActivity(act.id)}
+                                onClick={() => setSelectedActivityForModal(act)}
                                 className={`group cursor-pointer relative transition-all duration-300 ${isSelected ? 'ring-2 ring-primary ring-offset-2 rounded-3xl' : ''}`}
                             >
                                 <div className={`bg-card rounded-3xl overflow-hidden border shadow-soft hover:shadow-xl transition-all duration-300 h-full flex flex-col ${isSelected ? 'border-primary' : 'border-border'}`}>
@@ -176,6 +178,13 @@ const Activities = () => {
                     </div>
                 )}
             </div>
+
+            <ActivityModal
+                activity={selectedActivityForModal}
+                onClose={() => setSelectedActivityForModal(null)}
+                isSelected={selectedActivityForModal ? selectedActivities.includes(selectedActivityForModal.id) : false}
+                onToggle={toggleActivity}
+            />
         </div>
     );
 };

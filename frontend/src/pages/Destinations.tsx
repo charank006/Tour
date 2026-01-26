@@ -54,7 +54,7 @@ const Destinations = () => {
     }, [filter, search, highlightActivityIds]);
 
     return (
-        <div className="min-h-screen bg-background pt-24 pb-12 font-sans">
+        <div className="h-screen w-full bg-background pt-24 pb-12 font-sans overflow-y-auto text-foreground">
             <div className="container mx-auto px-4">
 
                 {/* Hero Section */}

@@ -15,7 +15,7 @@ import { tripApi } from '@/api/api';
 import PlanningAnimation from '@/components/PlanningAnimation';
 import PageTransition from '@/components/PageTransition';
 import TripSummary from '@/components/trip/TripSummary';
-import DailyItinerary from '@/components/trip/DailyItinerary';
+import TimelineItinerary from '@/components/trip/TimelineItinerary';
 import AlternativeSuggestions from '@/components/trip/AlternativeSuggestions';
 import MapSection from '@/components/trip/MapSection';
 import { planningLogic } from '@/lib/planningLogic';
@@ -55,7 +55,7 @@ const TripPlanPage = () => {
           const { destinationId, travelers, startDate, selectedPlaceIds } = tripData;
 
           // Generate Itinerary
-          const itinerary = planningLogic.generateItinerary(
+          const itinerary = planningLogic.generateSmartItinerary(
             destinationId,
             3, // Defaulting to 3 days for now as per previous logic
             Number(travelers) || 2,
@@ -307,9 +307,10 @@ const TripPlanPage = () => {
             formatCurrency={formatCurrency}
           />
 
-          <DailyItinerary
+          <TimelineItinerary
             dayPlans={tripPlan.dayPlans}
             formatCurrency={formatCurrency}
+            selectedStay={tripPlan.stayOptions.find((s: any) => s.type === selectedStayType)}
           />
 
           <MapSection destination={tripPlan.destination.name} />

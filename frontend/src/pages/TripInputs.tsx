@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { MapPin, Calendar, Users, Wallet, ArrowRight, Sparkles, User, Heart, Briefcase, PartyPopper } from 'lucide-react';
 import { startLocations, travelTypes, budgetRanges } from '@/api/mockData';
 import StepIndicator from '@/components/ui/StepIndicator';
@@ -8,6 +8,9 @@ import { motion } from 'framer-motion';
 
 const TripInputs = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const destinationData = location.state;
+
   // Smart defaults: Travelers 2, Budget 'moderate'
   const [formData, setFormData] = useState({
     startLocation: '',
@@ -52,12 +55,28 @@ const TripInputs = () => {
     e.preventDefault();
     if (validateForm()) {
       const budget = budgetRanges.find(b => b.value === formData.budget);
-      navigate('/suggestions', {
-        state: {
-          ...formData,
-          budgetRange: budget ? { min: budget.min, max: budget.max } : null
-        }
-      });
+
+      if (destinationData?.destination) {
+        // Direct to plan if we already have a destination
+        navigate('/trip-plan', {
+          state: {
+            ...formData,
+            destination: destinationData.destination,
+            destinationId: destinationData.destinationId,
+            selectedPlaceIds: destinationData.selectedPlaceIds,
+            budgetRange: budget ? { min: budget.min, max: budget.max } : null,
+            isManualPlan: true
+          }
+        });
+      } else {
+        // Go to suggestions if exploring
+        navigate('/suggestions', {
+          state: {
+            ...formData,
+            budgetRange: budget ? { min: budget.min, max: budget.max } : null
+          }
+        });
+      }
     }
   };
 
@@ -111,7 +130,11 @@ const TripInputs = () => {
             transition={{ delay: 0.1 }}
             className="text-4xl md:text-5xl font-bold text-foreground mb-4 tracking-tight"
           >
-            Let’s design your journey
+            {destinationData?.destination ? (
+              <>Plan your trip to <span className="text-primary">{destinationData.destination.name}</span></>
+            ) : (
+              "Let’s design your journey"
+            )}
           </motion.h1>
 
           <motion.p

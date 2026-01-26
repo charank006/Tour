@@ -9,6 +9,15 @@ export interface PlaceItem {
     cost: number; // per person entry/activity cost
     openingTime?: string;
     closingTime?: string;
+    // New Smart Fields
+    // New Smart Fields
+    bestTime: 'Sunrise' | 'Morning' | 'Afternoon' | 'Sunset' | 'Evening' | 'Night' | 'Any';
+    weatherSensitivity: 'Low' | 'Medium' | 'High';
+    locationType: 'Indoor' | 'Outdoor';
+    image?: string;
+    activityIds?: string[];
+    bestWindow?: string; // e.g. "7 AM - 9 AM"
+    crowdTimeline?: { time: string; level: 'Low' | 'Medium' | 'High' }[];
 }
 
 export interface DestinationItem {
@@ -32,6 +41,7 @@ export interface ActivityItem {
     difficulty?: 'Easy' | 'Moderate' | 'Hard';
     description: string;
     image: string;
+    duration?: string;
 }
 
 export const destinationsData: DestinationItem[] = [
@@ -45,11 +55,23 @@ export const destinationsData: DestinationItem[] = [
         image: 'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=500&auto=format&fit=crop&q=60',
         averageDailyCost: 3500,
         places: [
-            { id: 'p1_1', name: 'Solang Valley', type: 'Adventure', popularityScore: 9.5, crowdLevel: 'High', bestSeason: 'Winter', duration: '4h', cost: 1000 },
-            { id: 'p1_2', name: 'Hidimba Temple', type: 'Heritage', popularityScore: 9.0, crowdLevel: 'High', bestSeason: 'Year-round', duration: '1h', cost: 0 },
-            { id: 'p1_3', name: 'Rohtang Pass', type: 'Nature', popularityScore: 9.8, crowdLevel: 'High', bestSeason: 'Summer', duration: '6h', cost: 2500 },
-            { id: 'p1_4', name: 'Old Manali', type: 'Urban', popularityScore: 8.5, crowdLevel: 'Medium', bestSeason: 'Year-round', duration: '3h', cost: 500 },
-            { id: 'p1_5', name: 'Jogini Waterfalls', type: 'Nature', popularityScore: 7.5, crowdLevel: 'Low', bestSeason: 'Mar-Nov', duration: '3h', cost: 0 },
+            {
+                id: 'p1_1', name: 'Solang Valley', type: 'Adventure', popularityScore: 9.5, crowdLevel: 'High', bestSeason: 'Winter', duration: '4h', cost: 1000, bestTime: 'Morning', weatherSensitivity: 'High', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=500&auto=format&fit=crop&q=60', activityIds: ['a1', 'a7'],
+                bestWindow: '8 AM - 11 AM',
+                crowdTimeline: [
+                    { time: '8 AM', level: 'Low' }, { time: '10 AM', level: 'Medium' }, { time: '12 PM', level: 'High' }, { time: '2 PM', level: 'High' }, { time: '4 PM', level: 'Medium' }
+                ]
+            },
+            {
+                id: 'p1_2', name: 'Hidimba Temple', type: 'Heritage', popularityScore: 9.0, crowdLevel: 'High', bestSeason: 'Year-round', duration: '1h', cost: 0, bestTime: 'Morning', weatherSensitivity: 'Low', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1598091383021-15ddea10925d?w=500&auto=format&fit=crop&q=60',
+                bestWindow: '7 AM - 9 AM',
+                crowdTimeline: [
+                    { time: '7 AM', level: 'Low' }, { time: '9 AM', level: 'Medium' }, { time: '11 AM', level: 'High' }, { time: '4 PM', level: 'High' }
+                ]
+            },
+            { id: 'p1_3', name: 'Rohtang Pass', type: 'Nature', popularityScore: 9.8, crowdLevel: 'High', bestSeason: 'Summer', duration: '6h', cost: 2500, bestTime: 'Morning', weatherSensitivity: 'High', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1605649487215-285f33880653?w=500&auto=format&fit=crop&q=60' },
+            { id: 'p1_4', name: 'Old Manali', type: 'Urban', popularityScore: 8.5, crowdLevel: 'Medium', bestSeason: 'Year-round', duration: '3h', cost: 500, bestTime: 'Evening', weatherSensitivity: 'Medium', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1587595431973-160d0d94add1?w=500&auto=format&fit=crop&q=60' },
+            { id: 'p1_5', name: 'Jogini Waterfalls', type: 'Nature', popularityScore: 7.5, crowdLevel: 'Low', bestSeason: 'Mar-Nov', duration: '3h', cost: 0, bestTime: 'Afternoon', weatherSensitivity: 'Medium', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?w=500&auto=format&fit=crop&q=60', activityIds: ['a7'] },
         ]
     },
     {
@@ -62,11 +84,19 @@ export const destinationsData: DestinationItem[] = [
         image: 'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=500&auto=format&fit=crop&q=60',
         averageDailyCost: 4500,
         places: [
-            { id: 'p2_1', name: 'Baga Beach', type: 'Nature', popularityScore: 9.5, crowdLevel: 'High', bestSeason: 'Nov-Feb', duration: '4h', cost: 500 },
-            { id: 'p2_2', name: 'Fort Aguada', type: 'Heritage', popularityScore: 8.5, crowdLevel: 'Medium', bestSeason: 'Year-round', duration: '2h', cost: 300 },
-            { id: 'p2_3', name: 'Dudhsagar Falls', type: 'Nature', popularityScore: 9.0, crowdLevel: 'Medium', bestSeason: 'Monsoon', duration: '6h', cost: 1500 },
-            { id: 'p2_4', name: 'Palolem Beach', type: 'Relaxation', popularityScore: 8.0, crowdLevel: 'Low', bestSeason: 'Nov-Mar', duration: '4h', cost: 200 },
-            { id: 'p2_5', name: 'Basilica of Bom Jesus', type: 'Heritage', popularityScore: 8.8, crowdLevel: 'High', bestSeason: 'Year-round', duration: '1h', cost: 0 },
+            {
+                id: 'p2_1', name: 'Baga Beach', type: 'Nature', popularityScore: 9.5, crowdLevel: 'High', bestSeason: 'Nov-Feb', duration: '4h', cost: 500, bestTime: 'Sunset', weatherSensitivity: 'High', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1548232979-6c557ee14752?w=500&auto=format&fit=crop&q=60', activityIds: ['a2'],
+                bestWindow: '4 PM - 7 PM',
+                crowdTimeline: [{ time: '10 AM', level: 'Low' }, { time: '2 PM', level: 'Medium' }, { time: '5 PM', level: 'High' }, { time: '8 PM', level: 'High' }]
+            },
+            {
+                id: 'p2_2', name: 'Fort Aguada', type: 'Heritage', popularityScore: 8.5, crowdLevel: 'Medium', bestSeason: 'Year-round', duration: '2h', cost: 300, bestTime: 'Morning', weatherSensitivity: 'Medium', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1590422749842-3a5c2d3cae0a?w=500&auto=format&fit=crop&q=60',
+                bestWindow: '9 AM - 11 AM',
+                crowdTimeline: [{ time: '9 AM', level: 'Low' }, { time: '11 AM', level: 'Medium' }, { time: '4 PM', level: 'High' }]
+            },
+            { id: 'p2_3', name: 'Dudhsagar Falls', type: 'Nature', popularityScore: 9.0, crowdLevel: 'Medium', bestSeason: 'Monsoon', duration: '6h', cost: 1500, bestTime: 'Morning', weatherSensitivity: 'High', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1544473244-f6895e672d62?w=500&auto=format&fit=crop&q=60', activityIds: ['a7'] },
+            { id: 'p2_4', name: 'Palolem Beach', type: 'Relaxation', popularityScore: 8.0, crowdLevel: 'Low', bestSeason: 'Nov-Mar', duration: '4h', cost: 200, bestTime: 'Sunset', weatherSensitivity: 'High', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1591526462947-2cb83d8e58da?w=500&auto=format&fit=crop&q=60' },
+            { id: 'p2_5', name: 'Basilica of Bom Jesus', type: 'Heritage', popularityScore: 8.8, crowdLevel: 'High', bestSeason: 'Year-round', duration: '1h', cost: 0, bestTime: 'Any', weatherSensitivity: 'Low', locationType: 'Indoor', image: 'https://images.unsplash.com/photo-1587588354456-ae376af71a25?w=500&auto=format&fit=crop&q=60' },
         ]
     },
     {
@@ -79,11 +109,11 @@ export const destinationsData: DestinationItem[] = [
         image: 'https://images.unsplash.com/photo-1477587458883-47145ed94245?w=500&auto=format&fit=crop&q=60',
         averageDailyCost: 4000,
         places: [
-            { id: 'p3_1', name: 'Amber Fort', type: 'Heritage', popularityScore: 9.8, crowdLevel: 'High', bestSeason: 'Oct-Mar', duration: '3h', cost: 500 },
-            { id: 'p3_2', name: 'Hawa Mahal', type: 'Heritage', popularityScore: 9.5, crowdLevel: 'High', bestSeason: 'Year-round', duration: '1h', cost: 200 },
-            { id: 'p3_3', name: 'City Palace', type: 'Heritage', popularityScore: 9.0, crowdLevel: 'Medium', bestSeason: 'Year-round', duration: '2h', cost: 700 },
-            { id: 'p3_4', name: 'Jantar Mantar', type: 'Heritage', popularityScore: 8.5, crowdLevel: 'Medium', bestSeason: 'Year-round', duration: '1.5h', cost: 200 },
-            { id: 'p3_5', name: 'Nahargarh Fort', type: 'Nature', popularityScore: 8.8, crowdLevel: 'Medium', bestSeason: 'Sunset', duration: '3h', cost: 200 },
+            { id: 'p3_1', name: 'Amber Fort', type: 'Heritage', popularityScore: 9.8, crowdLevel: 'High', bestSeason: 'Oct-Mar', duration: '3h', cost: 500, bestTime: 'Morning', weatherSensitivity: 'Medium', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1599661046289-e31897846e41?w=500&auto=format&fit=crop&q=60' },
+            { id: 'p3_2', name: 'Hawa Mahal', type: 'Heritage', popularityScore: 9.5, crowdLevel: 'High', bestSeason: 'Year-round', duration: '1h', cost: 200, bestTime: 'Morning', weatherSensitivity: 'Low', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1477587458883-47145ed94245?w=500&auto=format&fit=crop&q=60' },
+            { id: 'p3_3', name: 'City Palace', type: 'Heritage', popularityScore: 9.0, crowdLevel: 'Medium', bestSeason: 'Year-round', duration: '2h', cost: 700, bestTime: 'Afternoon', weatherSensitivity: 'Low', locationType: 'Indoor', image: 'https://images.unsplash.com/photo-1557690756-62725e24344e?w=500&auto=format&fit=crop&q=60' },
+            { id: 'p3_4', name: 'Jantar Mantar', type: 'Heritage', popularityScore: 8.5, crowdLevel: 'Medium', bestSeason: 'Year-round', duration: '1.5h', cost: 200, bestTime: 'Morning', weatherSensitivity: 'Medium', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1592639396345-0d04c47849e7?w=500&auto=format&fit=crop&q=60' },
+            { id: 'p3_5', name: 'Nahargarh Fort', type: 'Nature', popularityScore: 8.8, crowdLevel: 'Medium', bestSeason: 'Sunset', duration: '3h', cost: 200, bestTime: 'Sunset', weatherSensitivity: 'Medium', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1590435974026-6b21644c1d47?w=500&auto=format&fit=crop&q=60' },
         ]
     },
     {
@@ -93,13 +123,13 @@ export const destinationsData: DestinationItem[] = [
         category: 'Spiritual',
         famousFor: 'Ancient ghats and spiritual ceremonies',
         tags: ['Ganga', 'Temples', 'Culture'],
-        image: 'https://images.unsplash.com/photo-1561361513-35e6ba0d7943?w=500&auto=format&fit=crop&q=60',
+        image: 'https://images.unsplash.com/photo-1561361058-c24cecae35ca?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8dmFyYW5hc2l8ZW58MHx8MHx8fDA%3D',
         averageDailyCost: 2500,
         places: [
-            { id: 'p4_1', name: 'Dashashwamedh Ghat', type: 'Spiritual', popularityScore: 10, crowdLevel: 'High', bestSeason: 'Year-round', duration: '3h', cost: 0 },
-            { id: 'p4_2', name: 'Kashi Vishwanath Temple', type: 'Spiritual', popularityScore: 9.8, crowdLevel: 'High', bestSeason: 'Year-round', duration: '2h', cost: 0 },
-            { id: 'p4_3', name: 'Sarnath', type: 'Heritage', popularityScore: 8.5, crowdLevel: 'Medium', bestSeason: 'Oct-Mar', duration: '3h', cost: 200 },
-            { id: 'p4_4', name: 'Assi Ghat', type: 'Spiritual', popularityScore: 8.0, crowdLevel: 'Medium', bestSeason: 'Morning', duration: '2h', cost: 0 },
+            { id: 'p4_1', name: 'Dashashwamedh Ghat', type: 'Spiritual', popularityScore: 10, crowdLevel: 'High', bestSeason: 'Year-round', duration: '3h', cost: 0, bestTime: 'Evening', weatherSensitivity: 'Low', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1561361513-35e6ba0d7943?w=500&auto=format&fit=crop&q=60', activityIds: ['a8'] },
+            { id: 'p4_2', name: 'Kashi Vishwanath Temple', type: 'Spiritual', popularityScore: 9.8, crowdLevel: 'High', bestSeason: 'Year-round', duration: '2h', cost: 0, bestTime: 'Morning', weatherSensitivity: 'Low', locationType: 'Indoor', image: 'https://images.unsplash.com/photo-1627894483216-2138af692e32?w=500&auto=format&fit=crop&q=60', activityIds: ['a8'] },
+            { id: 'p4_3', name: 'Sarnath', type: 'Heritage', popularityScore: 8.5, crowdLevel: 'Medium', bestSeason: 'Oct-Mar', duration: '3h', cost: 200, bestTime: 'Afternoon', weatherSensitivity: 'Medium', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1571597438372-540dd352bf41?w=500&auto=format&fit=crop&q=60' },
+            { id: 'p4_4', name: 'Assi Ghat', type: 'Spiritual', popularityScore: 8.0, crowdLevel: 'Medium', bestSeason: 'Morning', duration: '2h', cost: 0, bestTime: 'Morning', weatherSensitivity: 'Low', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1596001004147-38435d791533?w=500&auto=format&fit=crop&q=60' },
         ]
     },
     {
@@ -112,10 +142,10 @@ export const destinationsData: DestinationItem[] = [
         image: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=500&auto=format&fit=crop&q=60',
         averageDailyCost: 3800,
         places: [
-            { id: 'p5_1', name: 'Tea Museum', type: 'Heritage', popularityScore: 8.5, crowdLevel: 'Medium', bestSeason: 'Year-round', duration: '2h', cost: 200 },
-            { id: 'p5_2', name: 'Eravikulam National Park', type: 'Nature', popularityScore: 9.5, crowdLevel: 'High', bestSeason: 'Sep-Mar', duration: '4h', cost: 500 },
-            { id: 'p5_3', name: 'Mattupetty Dam', type: 'Nature', popularityScore: 8.8, crowdLevel: 'Medium', bestSeason: 'Year-round', duration: '1h', cost: 50 },
-            { id: 'p5_4', name: 'Top Station', type: 'Nature', popularityScore: 8.0, crowdLevel: 'Low', bestSeason: 'Morning', duration: '3h', cost: 0 },
+            { id: 'p5_1', name: 'Tea Museum', type: 'Heritage', popularityScore: 8.5, crowdLevel: 'Medium', bestSeason: 'Year-round', duration: '2h', cost: 200, bestTime: 'Afternoon', weatherSensitivity: 'Low', locationType: 'Indoor', image: 'https://images.unsplash.com/photo-1585800454359-598d9255a298?w=500&auto=format&fit=crop&q=60' },
+            { id: 'p5_2', name: 'Eravikulam National Park', type: 'Nature', popularityScore: 9.5, crowdLevel: 'High', bestSeason: 'Sep-Mar', duration: '4h', cost: 500, bestTime: 'Morning', weatherSensitivity: 'High', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1591807353995-1f99c27f329d?w=500&auto=format&fit=crop&q=60' },
+            { id: 'p5_3', name: 'Mattupetty Dam', type: 'Nature', popularityScore: 8.8, crowdLevel: 'Medium', bestSeason: 'Year-round', duration: '1h', cost: 50, bestTime: 'Any', weatherSensitivity: 'Medium', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1598687704772-f61b0c03cc5f?w=500&auto=format&fit=crop&q=60' },
+            { id: 'p5_4', name: 'Top Station', type: 'Nature', popularityScore: 8.0, crowdLevel: 'Low', bestSeason: 'Morning', duration: '3h', cost: 0, bestTime: 'Sunrise', weatherSensitivity: 'High', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1627915570889-cb7dd714d5ce?w=500&auto=format&fit=crop&q=60', activityIds: ['a7'] },
         ]
     },
     {
@@ -125,13 +155,13 @@ export const destinationsData: DestinationItem[] = [
         category: 'Spiritual',
         famousFor: 'Yoga capital and white water rafting',
         tags: ['Yoga', 'Rafting', 'Ganga'],
-        image: 'https://images.unsplash.com/photo-1588416936097-4183d2af387b?w=500&auto=format&fit=crop&q=60',
+        image: 'https://images.unsplash.com/photo-1624807136278-e2973be118ff?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHJpc2hpa2VzaHxlbnwwfHwwfHx8MA%3D%3D',
         averageDailyCost: 3000,
         places: [
-            { id: 'p6_1', name: 'Laxman Jhula', type: 'Heritage', popularityScore: 9.0, crowdLevel: 'High', bestSeason: 'Year-round', duration: '1h', cost: 0 },
-            { id: 'p6_2', name: 'Triveni Ghat', type: 'Spiritual', popularityScore: 8.5, crowdLevel: 'Medium', bestSeason: 'Evening', duration: '2h', cost: 0 },
-            { id: 'p6_3', name: 'River Rafting Point', type: 'Adventure', popularityScore: 9.8, crowdLevel: 'High', bestSeason: 'Sep-Jun', duration: '4h', cost: 1500 },
-            { id: 'p6_4', name: 'Beatles Ashram', type: 'Heritage', popularityScore: 7.5, crowdLevel: 'Low', bestSeason: 'Year-round', duration: '2h', cost: 600 },
+            { id: 'p6_1', name: 'Laxman Jhula', type: 'Heritage', popularityScore: 9.0, crowdLevel: 'High', bestSeason: 'Year-round', duration: '1h', cost: 0, bestTime: 'Evening', weatherSensitivity: 'Medium', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1594970428803-b1d3032d8478?w=500&auto=format&fit=crop&q=60' },
+            { id: 'p6_2', name: 'Triveni Ghat', type: 'Spiritual', popularityScore: 8.5, crowdLevel: 'Medium', bestSeason: 'Evening', duration: '2h', cost: 0, bestTime: 'Evening', weatherSensitivity: 'Low', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1594493397980-fc02a9a7384a?w=500&auto=format&fit=crop&q=60' },
+            { id: 'p6_3', name: 'River Rafting Point', type: 'Adventure', popularityScore: 9.8, crowdLevel: 'High', bestSeason: 'Sep-Jun', duration: '4h', cost: 1500, bestTime: 'Morning', weatherSensitivity: 'High', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1626624343160-c3d9a0d10266?w=500&auto=format&fit=crop&q=60' },
+            { id: 'p6_4', name: 'Beatles Ashram', type: 'Heritage', popularityScore: 7.5, crowdLevel: 'Low', bestSeason: 'Year-round', duration: '2h', cost: 600, bestTime: 'Afternoon', weatherSensitivity: 'Low', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1627896476140-54b0365022cc?w=500&auto=format&fit=crop&q=60' },
         ]
     },
     {
@@ -144,10 +174,10 @@ export const destinationsData: DestinationItem[] = [
         image: 'https://images.unsplash.com/photo-1615836245337-f5b9b2303f10?w=500&auto=format&fit=crop&q=60',
         averageDailyCost: 4500,
         places: [
-            { id: 'p7_1', name: 'City Palace', type: 'Heritage', popularityScore: 9.8, crowdLevel: 'High', bestSeason: 'Year-round', duration: '3h', cost: 400 },
-            { id: 'p7_2', name: 'Lake Pichola', type: 'Nature', popularityScore: 9.5, crowdLevel: 'High', bestSeason: 'Sunset', duration: '2h', cost: 500 },
-            { id: 'p7_3', name: 'Jag Mandir', type: 'Heritage', popularityScore: 8.5, crowdLevel: 'Medium', bestSeason: 'Year-round', duration: '1h', cost: 300 },
-            { id: 'p7_4', name: 'Sajjangarh Monsoon Palace', type: 'Nature', popularityScore: 9.0, crowdLevel: 'Medium', bestSeason: 'Monsoon', duration: '2h', cost: 150 },
+            { id: 'p7_1', name: 'City Palace', type: 'Heritage', popularityScore: 9.8, crowdLevel: 'High', bestSeason: 'Year-round', duration: '3h', cost: 400, bestTime: 'Morning', weatherSensitivity: 'Low', locationType: 'Indoor', image: 'https://images.unsplash.com/photo-1615836245337-f5b9b2303f10?w=500&auto=format&fit=crop&q=60' },
+            { id: 'p7_2', name: 'Lake Pichola', type: 'Nature', popularityScore: 9.5, crowdLevel: 'High', bestSeason: 'Sunset', duration: '2h', cost: 500, bestTime: 'Sunset', weatherSensitivity: 'Medium', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1595265677860-9a31435d8536?w=500&auto=format&fit=crop&q=60' },
+            { id: 'p7_3', name: 'Jag Mandir', type: 'Heritage', popularityScore: 8.5, crowdLevel: 'Medium', bestSeason: 'Year-round', duration: '1h', cost: 300, bestTime: 'Afternoon', weatherSensitivity: 'Low', locationType: 'Indoor', image: 'https://images.unsplash.com/photo-1628173426868-b7886477017d?w=500&auto=format&fit=crop&q=60' },
+            { id: 'p7_4', name: 'Sajjangarh Monsoon Palace', type: 'Nature', popularityScore: 9.0, crowdLevel: 'Medium', bestSeason: 'Monsoon', duration: '2h', cost: 150, bestTime: 'Sunset', weatherSensitivity: 'High', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1633519391060-f965d8362b58?w=500&auto=format&fit=crop&q=60' },
         ]
     },
     {
@@ -160,10 +190,10 @@ export const destinationsData: DestinationItem[] = [
         image: 'https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?w=500&auto=format&fit=crop&q=60',
         averageDailyCost: 5000,
         places: [
-            { id: 'p8_1', name: 'Pangong Lake', type: 'Nature', popularityScore: 10, crowdLevel: 'High', bestSeason: 'Jun-Sep', duration: '4h', cost: 0 },
-            { id: 'p8_2', name: 'Nubra Valley', type: 'Nature', popularityScore: 9.5, crowdLevel: 'Medium', bestSeason: 'Jun-Sep', duration: '5h', cost: 500 },
-            { id: 'p8_3', name: 'Thiksey Monastery', type: 'Spiritual', popularityScore: 8.5, crowdLevel: 'Low', bestSeason: 'Year-round', duration: '1.5h', cost: 100 },
-            { id: 'p8_4', name: 'Khardung La Pass', type: 'Adventure', popularityScore: 9.2, crowdLevel: 'Medium', bestSeason: 'Jun-Sep', duration: '1h', cost: 0 },
+            { id: 'p8_1', name: 'Pangong Lake', type: 'Nature', popularityScore: 10, crowdLevel: 'High', bestSeason: 'Jun-Sep', duration: '4h', cost: 0, bestTime: 'Morning', weatherSensitivity: 'High', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1601009187313-2d2c70032c28?w=500&auto=format&fit=crop&q=60' },
+            { id: 'p8_2', name: 'Nubra Valley', type: 'Nature', popularityScore: 9.5, crowdLevel: 'Medium', bestSeason: 'Jun-Sep', duration: '5h', cost: 500, bestTime: 'Morning', weatherSensitivity: 'High', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1627052968858-54c3c3a918a3?w=500&auto=format&fit=crop&q=60' },
+            { id: 'p8_3', name: 'Thiksey Monastery', type: 'Spiritual', popularityScore: 8.5, crowdLevel: 'Low', bestSeason: 'Year-round', duration: '1.5h', cost: 100, bestTime: 'Morning', weatherSensitivity: 'Low', locationType: 'Indoor', image: 'https://images.unsplash.com/photo-1598000494396-857ae230b80e?w=500&auto=format&fit=crop&q=60' },
+            { id: 'p8_4', name: 'Khardung La Pass', type: 'Adventure', popularityScore: 9.2, crowdLevel: 'Medium', bestSeason: 'Jun-Sep', duration: '1h', cost: 0, bestTime: 'Morning', weatherSensitivity: 'High', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1597519616091-bf1f57f44ace?w=500&auto=format&fit=crop&q=60' },
         ]
     },
     {
@@ -176,10 +206,10 @@ export const destinationsData: DestinationItem[] = [
         image: 'https://images.unsplash.com/photo-1529253355930-ddbe423a2ac7?w=500&auto=format&fit=crop&q=60',
         averageDailyCost: 4000,
         places: [
-            { id: 'p9_1', name: 'Gateway of India', type: 'Heritage', popularityScore: 9.8, crowdLevel: 'High', bestSeason: 'Year-round', duration: '1h', cost: 0 },
-            { id: 'p9_2', name: 'Marine Drive', type: 'Urban', popularityScore: 9.5, crowdLevel: 'High', bestSeason: 'Evening', duration: '2h', cost: 0 },
-            { id: 'p9_3', name: 'Elephanta Caves', type: 'Heritage', popularityScore: 8.8, crowdLevel: 'Medium', bestSeason: 'Nov-Mar', duration: '4h', cost: 250 },
-            { id: 'p9_4', name: 'Colaba Causeway', type: 'Urban', popularityScore: 8.5, crowdLevel: 'High', bestSeason: 'Year-round', duration: '2h', cost: 0 },
+            { id: 'p9_1', name: 'Gateway of India', type: 'Heritage', popularityScore: 9.8, crowdLevel: 'High', bestSeason: 'Year-round', duration: '1h', cost: 0, bestTime: 'Morning', weatherSensitivity: 'Medium', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1566552881560-0be862a7c445?w=500&auto=format&fit=crop&q=60' },
+            { id: 'p9_2', name: 'Marine Drive', type: 'Urban', popularityScore: 9.5, crowdLevel: 'High', bestSeason: 'Evening', duration: '2h', cost: 0, bestTime: 'Sunset', weatherSensitivity: 'Medium', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1567157577867-05ccb782306d?w=500&auto=format&fit=crop&q=60' },
+            { id: 'p9_3', name: 'Elephanta Caves', type: 'Heritage', popularityScore: 8.8, crowdLevel: 'Medium', bestSeason: 'Nov-Mar', duration: '4h', cost: 250, bestTime: 'Morning', weatherSensitivity: 'Medium', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1627299616853-535359142ec7?w=500&auto=format&fit=crop&q=60' },
+            { id: 'p9_4', name: 'Colaba Causeway', type: 'Urban', popularityScore: 8.5, crowdLevel: 'High', bestSeason: 'Year-round', duration: '2h', cost: 0, bestTime: 'Afternoon', weatherSensitivity: 'Medium', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1681754026365-d41c8849b291?w=500&auto=format&fit=crop&q=60' },
         ]
     },
     {
@@ -192,10 +222,10 @@ export const destinationsData: DestinationItem[] = [
         image: 'https://images.unsplash.com/photo-1589330273594-fade1ee91647?w=500&auto=format&fit=crop&q=60',
         averageDailyCost: 6000,
         places: [
-            { id: 'p10_1', name: 'Radhanagar Beach', type: 'Nature', popularityScore: 10, crowdLevel: 'High', bestSeason: 'Oct-May', duration: '3h', cost: 0 },
-            { id: 'p10_2', name: 'Cellular Jail', type: 'Heritage', popularityScore: 9.5, crowdLevel: 'Medium', bestSeason: 'Year-round', duration: '2h', cost: 100 },
-            { id: 'p10_3', name: 'Elephant Beach', type: 'Adventure', popularityScore: 9.0, crowdLevel: 'High', bestSeason: 'Oct-May', duration: '4h', cost: 1200 },
-            { id: 'p10_4', name: 'Ross Island', type: 'Heritage', popularityScore: 8.0, crowdLevel: 'Low', bestSeason: 'Oct-May', duration: '2h', cost: 200 },
+            { id: 'p10_1', name: 'Radhanagar Beach', type: 'Nature', popularityScore: 10, crowdLevel: 'High', bestSeason: 'Oct-May', duration: '3h', cost: 0, bestTime: 'Sunset', weatherSensitivity: 'High', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1629858509033-6893c5d6487e?w=500&auto=format&fit=crop&q=60' },
+            { id: 'p10_2', name: 'Cellular Jail', type: 'Heritage', popularityScore: 9.5, crowdLevel: 'Medium', bestSeason: 'Year-round', duration: '2h', cost: 100, bestTime: 'Morning', weatherSensitivity: 'Low', locationType: 'Indoor', image: 'https://images.unsplash.com/photo-1596791409278-68783472506b?w=500&auto=format&fit=crop&q=60' },
+            { id: 'p10_3', name: 'Elephant Beach', type: 'Adventure', popularityScore: 9.0, crowdLevel: 'High', bestSeason: 'Oct-May', duration: '4h', cost: 1200, bestTime: 'Morning', weatherSensitivity: 'High', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1569485641753-2cf53c07f212?w=500&auto=format&fit=crop&q=60' },
+            { id: 'p10_4', name: 'Ross Island', type: 'Heritage', popularityScore: 8.0, crowdLevel: 'Low', bestSeason: 'Oct-May', duration: '2h', cost: 200, bestTime: 'Afternoon', weatherSensitivity: 'High', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1628173426868-b7886477017d?w=500&auto=format&fit=crop&q=60' },
         ]
     },
     {
@@ -205,13 +235,13 @@ export const destinationsData: DestinationItem[] = [
         category: 'Heritage',
         famousFor: 'Ancient ruins and boulder landscapes',
         tags: ['History', 'Ruins', 'Architecture'],
-        image: 'https://images.unsplash.com/photo-1623143584856-bf5db5a16c7f?w=500&auto=format&fit=crop&q=60',
+        image: 'https://unsplash.com/photos/a-large-building-with-a-fountain-in-front-of-it-Q0mSdYr7EFQ',
         averageDailyCost: 2500,
         places: [
-            { id: 'p11_1', name: 'Virupaksha Temple', type: 'Spiritual', popularityScore: 9.5, crowdLevel: 'High', bestSeason: 'Oct-Feb', duration: '1h', cost: 0 },
-            { id: 'p11_2', name: 'Vijaya Vittala Temple', type: 'Heritage', popularityScore: 9.8, crowdLevel: 'High', bestSeason: 'Oct-Feb', duration: '2h', cost: 500 },
-            { id: 'p11_3', name: 'Matanga Hill', type: 'Nature', popularityScore: 9.0, crowdLevel: 'Medium', bestSeason: 'Sunrise', duration: '2h', cost: 0 },
-            { id: 'p11_4', name: 'Coracle Ride', type: 'Adventure', popularityScore: 8.5, crowdLevel: 'Medium', bestSeason: 'Oct-Feb', duration: '1h', cost: 400 },
+            { id: 'p11_1', name: 'Virupaksha Temple', type: 'Spiritual', popularityScore: 9.5, crowdLevel: 'High', bestSeason: 'Oct-Feb', duration: '1h', cost: 0, bestTime: 'Morning', weatherSensitivity: 'Low', locationType: 'Indoor', image: 'https://images.unsplash.com/photo-1623143584856-bf5db5a16c7f?w=500&auto=format&fit=crop&q=60' },
+            { id: 'p11_2', name: 'Vijaya Vittala Temple', type: 'Heritage', popularityScore: 9.8, crowdLevel: 'High', bestSeason: 'Oct-Feb', duration: '2h', cost: 500, bestTime: 'Afternoon', weatherSensitivity: 'Low', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1590422749842-3a5c2d3cae0a?w=500&auto=format&fit=crop&q=60' },
+            { id: 'p11_3', name: 'Matanga Hill', type: 'Nature', popularityScore: 9.0, crowdLevel: 'Medium', bestSeason: 'Sunrise', duration: '2h', cost: 0, bestTime: 'Sunrise', weatherSensitivity: 'High', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1625902030018-7b9c9f2b8423?w=500&auto=format&fit=crop&q=60' },
+            { id: 'p11_4', name: 'Coracle Ride', type: 'Adventure', popularityScore: 8.5, crowdLevel: 'Medium', bestSeason: 'Oct-Feb', duration: '1h', cost: 400, bestTime: 'Evening', weatherSensitivity: 'Medium', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1601726002061-0b5c1c045053?w=500&auto=format&fit=crop&q=60' },
         ]
     },
     {
@@ -221,13 +251,13 @@ export const destinationsData: DestinationItem[] = [
         category: 'Nature',
         famousFor: 'Coffee plantations and waterfalls',
         tags: ['Coffee', 'Hills', 'Nature'],
-        image: 'https://images.unsplash.com/photo-1589136777351-94328811440a?w=500&auto=format&fit=crop&q=60',
+        image: 'https://images.unsplash.com/photo-1599922760936-e840fa373d8d?q=80&w=3678&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
         averageDailyCost: 4000,
         places: [
-            { id: 'p12_1', name: 'Abbey Falls', type: 'Nature', popularityScore: 9.2, crowdLevel: 'High', bestSeason: 'Monsoon', duration: '2h', cost: 50 },
-            { id: 'p12_2', name: 'Dubare Elephant Camp', type: 'Nature', popularityScore: 9.0, crowdLevel: 'High', bestSeason: 'Year-round', duration: '3h', cost: 300 },
-            { id: 'p12_3', name: 'Raja\'s Seat', type: 'Relaxation', popularityScore: 8.5, crowdLevel: 'High', bestSeason: 'Sunset', duration: '1h', cost: 20 },
-            { id: 'p12_4', name: 'Coffee Plantation Tour', type: 'Nature', popularityScore: 8.8, crowdLevel: 'Low', bestSeason: 'Year-round', duration: '2h', cost: 500 },
+            { id: 'p12_1', name: 'Abbey Falls', type: 'Nature', popularityScore: 9.2, crowdLevel: 'High', bestSeason: 'Monsoon', duration: '2h', cost: 50, bestTime: 'Morning', weatherSensitivity: 'High', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1627896476140-54b0365022cc?w=500&auto=format&fit=crop&q=60' },
+            { id: 'p12_2', name: 'Dubare Elephant Camp', type: 'Nature', popularityScore: 9.0, crowdLevel: 'High', bestSeason: 'Year-round', duration: '3h', cost: 300, bestTime: 'Morning', weatherSensitivity: 'High', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1634629377488-81d33144c207?w=500&auto=format&fit=crop&q=60' },
+            { id: 'p12_3', name: 'Raja\'s Seat', type: 'Relaxation', popularityScore: 8.5, crowdLevel: 'High', bestSeason: 'Sunset', duration: '1h', cost: 20, bestTime: 'Sunset', weatherSensitivity: 'High', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1598000494396-857ae230b80e?w=500&auto=format&fit=crop&q=60' },
+            { id: 'p12_4', name: 'Coffee Plantation Tour', type: 'Nature', popularityScore: 8.8, crowdLevel: 'Low', bestSeason: 'Year-round', duration: '2h', cost: 500, bestTime: 'Afternoon', weatherSensitivity: 'Low', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1601009187313-2d2c70032c28?w=500&auto=format&fit=crop&q=60' },
         ]
     }
 ];
@@ -241,7 +271,8 @@ export const activitiesData: ActivityItem[] = [
         bestSeason: 'Sep - Jun',
         difficulty: 'Moderate',
         description: 'Navigate through thrilling rapids in the holy Ganga or Beas rivers.',
-        image: 'https://images.unsplash.com/photo-1530866495561-507c9faab2ed?w=500&auto=format&fit=crop&q=60'
+        image: 'https://images.unsplash.com/photo-1530866495561-507c9faab2ed?w=500&auto=format&fit=crop&q=60',
+        duration: '2-4 Hours'
     },
     {
         id: 'a2',
@@ -251,7 +282,8 @@ export const activitiesData: ActivityItem[] = [
         bestSeason: 'Oct - May',
         difficulty: 'Moderate',
         description: 'Explore vibrant coral reefs and marine life deep underwater.',
-        image: 'https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?w=500&auto=format&fit=crop&q=60'
+        image: 'https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?w=500&auto=format&fit=crop&q=60',
+        duration: '3-5 Hours'
     },
     {
         id: 'a3',
@@ -261,7 +293,8 @@ export const activitiesData: ActivityItem[] = [
         bestSeason: 'Year-round',
         difficulty: 'Easy',
         description: 'Rejuvenate your mind and body in the birthplace of Yoga.',
-        image: 'https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=500&auto=format&fit=crop&q=60'
+        image: 'https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=500&auto=format&fit=crop&q=60',
+        duration: '1-7 Days'
     },
     {
         id: 'a4',
@@ -271,7 +304,8 @@ export const activitiesData: ActivityItem[] = [
         bestSeason: 'Oct - Mar',
         difficulty: 'Easy',
         description: 'Ride through the golden dunes of the Thar desert at sunset.',
-        image: 'https://images.unsplash.com/photo-1589815033735-a764d9ac72b3?w=500&auto=format&fit=crop&q=60'
+        image: 'https://images.unsplash.com/photo-1589815033735-a764d9ac72b3?w=500&auto=format&fit=crop&q=60',
+        duration: '2 Hours'
     },
     {
         id: 'a5',
@@ -281,7 +315,8 @@ export const activitiesData: ActivityItem[] = [
         bestSeason: 'Aug - Mar',
         difficulty: 'Easy',
         description: 'Drift along serene backwaters in a traditional houseboat.',
-        image: 'https://images.unsplash.com/photo-1593693397690-362cb9666fc2?w=500&auto=format&fit=crop&q=60'
+        image: 'https://images.unsplash.com/photo-1593693397690-362cb9666fc2?w=500&auto=format&fit=crop&q=60',
+        duration: 'Overnight'
     },
     {
         id: 'a6',
@@ -291,7 +326,8 @@ export const activitiesData: ActivityItem[] = [
         bestSeason: 'Year-round',
         difficulty: 'Easy',
         description: 'Taste the authentic flavors of India, from chaat to kebabs.',
-        image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=500&auto=format&fit=crop&q=60'
+        image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=500&auto=format&fit=crop&q=60',
+        duration: '3 Hours'
     },
     {
         id: 'a7',
@@ -301,7 +337,8 @@ export const activitiesData: ActivityItem[] = [
         bestSeason: 'May - Oct',
         difficulty: 'Hard',
         description: 'Conquer the peaks and witness breathtaking mountain vistas.',
-        image: 'https://images.unsplash.com/photo-1551632811-561732d1e306?w=500&auto=format&fit=crop&q=60'
+        image: 'https://images.unsplash.com/photo-1551632811-561732d1e306?w=500&auto=format&fit=crop&q=60',
+        duration: 'Full Day'
     },
     {
         id: 'a8',
@@ -311,6 +348,7 @@ export const activitiesData: ActivityItem[] = [
         bestSeason: 'Year-round',
         difficulty: 'Easy',
         description: 'Marvel at ancient architecture and spiritual ceremonies.',
-        image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=500&auto=format&fit=crop&q=60'
+        image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=500&auto=format&fit=crop&q=60',
+        duration: 'Half Day'
     }
 ];

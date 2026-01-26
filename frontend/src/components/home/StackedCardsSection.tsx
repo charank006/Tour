@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 interface CardItem {
     id: string;
@@ -8,6 +9,7 @@ interface CardItem {
     title: string;
     subtitle: string;
     category?: string;
+    badge?: string;
 }
 
 interface StackedCardsSectionProps {
@@ -15,10 +17,17 @@ interface StackedCardsSectionProps {
     subtitle?: string;
     items: CardItem[];
     align?: 'left' | 'right';
+    ctaLink?: string;
+    ctaText?: string;
 }
 
-const StackedCardsSection = ({ title, subtitle, items, align = 'left' }: StackedCardsSectionProps) => {
+const StackedCardsSection = ({ title, subtitle, items, align = 'left', ctaLink, ctaText }: StackedCardsSectionProps) => {
     const [hovered, setHovered] = useState(false);
+    const [imageErrors, setImageErrors] = useState<Record<string, boolean>>({});
+
+    const handleImageError = (id: string) => {
+        setImageErrors(prev => ({ ...prev, [id]: true }));
+    };
 
     // Layout: Text on one side, cards on the other.
     // If align left: Text Left, Cards Right.
@@ -50,16 +59,18 @@ const StackedCardsSection = ({ title, subtitle, items, align = 'left' }: Stacked
                                 {subtitle}
                             </motion.p>
                         )}
-                        <motion.button
-                            initial={{ opacity: 0, x: -20 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: 0.2 }}
-                            className="group inline-flex items-center gap-2 text-primary font-semibold text-lg"
-                        >
-                            Explore Collection
-                            <ArrowUpRight size={20} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                        </motion.button>
+                        <Link to={ctaLink || '#'}>
+                            <motion.div
+                                initial={{ opacity: 0, x: -20 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: 0.2 }}
+                                className="group inline-flex items-center gap-2 text-primary font-semibold text-lg cursor-pointer"
+                            >
+                                {ctaText || "Explore Collection"}
+                                <ArrowUpRight size={20} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                            </motion.div>
+                        </Link>
                     </div>
 
                     {/* Stacked Cards */}
@@ -73,6 +84,7 @@ const StackedCardsSection = ({ title, subtitle, items, align = 'left' }: Stacked
                             // Reverse index for z-index (first item on bottom or top? usually first item on top to be seen, or last item on top?)
                             // Let's put first item on top.
                             const reverseIndex = items.length - 1 - index;
+                            const hasError = imageErrors[item.id];
 
                             return (
                                 <motion.div
@@ -105,17 +117,31 @@ const StackedCardsSection = ({ title, subtitle, items, align = 'left' }: Stacked
                                     }}
                                     transition={{ type: 'spring', stiffness: 200, damping: 20 }}
                                 >
-                                    <img
-                                        src={item.image}
-                                        alt={item.title}
-                                        className="w-full h-full object-cover"
-                                    />
+                                    {!hasError ? (
+                                        <img
+                                            src={item.image}
+                                            alt={item.title}
+                                            onError={() => handleImageError(item.id)}
+                                            className="w-full h-full object-cover"
+                                        />
+                                    ) : (
+                                        <div className="w-full h-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
+                                            <span className="text-muted-foreground font-medium text-lg opacity-50">No Image</span>
+                                        </div>
+                                    )}
                                     <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent text-white">
-                                        {item.category && (
-                                            <span className="text-xs font-bold uppercase tracking-wider text-accent mb-1 block">
-                                                {item.category}
-                                            </span>
-                                        )}
+                                        <div className="flex justify-between items-start mb-1">
+                                            {item.category && (
+                                                <span className="text-xs font-bold uppercase tracking-wider text-accent block">
+                                                    {item.category}
+                                                </span>
+                                            )}
+                                            {item.badge && (
+                                                <span className="text-[10px] font-medium bg-white/20 backdrop-blur-md px-2 py-0.5 rounded-full border border-white/30">
+                                                    {item.badge}
+                                                </span>
+                                            )}
+                                        </div>
                                         <h3 className="text-xl font-bold">{item.title}</h3>
                                         <p className="text-sm text-white/80">{item.subtitle}</p>
                                     </div>

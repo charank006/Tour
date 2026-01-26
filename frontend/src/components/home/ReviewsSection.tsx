@@ -5,35 +5,43 @@ import { useRef, useEffect, useState } from 'react';
 const reviews = [
     {
         id: 1,
-        name: "Elena Rodriguez",
-        role: "Adventure Traveler",
-        text: "PlanYours completely transformed how I travel. The AI suggested hidden waterfalls in Bali that weren't on any blog!",
+        name: "Aisha Kapoor",
+        role: "Solo Traveler • Mumbai",
+        text: "I always struggled with planning solo trips that felt safe yet adventurous. PlanYours suggested the perfect mix of crowded spots and quiet cafes in Udaipur. The 'Hidden Gems' feature is a game changer!",
         rating: 5,
         avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop"
     },
     {
         id: 2,
-        name: "Mark & Sarah",
-        role: "Honeymooners",
-        text: "We wanted a mix of luxury and culture for our honeymoon. The itinerary was perfectly balanced and within budget.",
+        name: "James & Sarah",
+        role: "Couple • London",
+        text: "We wanted a honeymoon in Kerala that wasn't just tourist traps. The itinerary generator gave us a plan that included a private houseboat and a local cooking class. It felt so personal and seamless.",
         rating: 5,
         avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop"
     },
     {
         id: 3,
-        name: "David Chen",
-        role: "Solo Backpacker",
-        text: "The budget breakdowns are a lifesaver. I knew exactly how much to save for my Japan trip. Super accurate.",
+        name: "Rohan Mehta",
+        role: "Photography Enthusiast • Delhi",
+        text: "As a photographer, I need to be at the right place at the right time. The 'Sunrise' and 'Sunset' slots in the itinerary are incredibly accurate. Capturing the Taj Mahal at dawn was magical.",
         rating: 5,
         avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop"
     },
     {
         id: 4,
         name: "Priya Patel",
-        role: "Family Vacation",
-        text: "Planning for a family of 5 is a nightmare usually. This app made it fun. The kids loved the activity choices.",
+        role: "Family Vacation • Gujarat",
+        text: "Traveling with three kids is no joke. The app helped us find family-friendly activities in Manali that kept everyone entertained. The budget estimator was spot on, no nasty surprises.",
         rating: 4,
         avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop"
+    },
+    {
+        id: 5,
+        name: "David Chen",
+        role: "Backpacker • Singapore",
+        text: "I love how flexible the plans are. I swapped a museum day for a trekking experience last minute, and the app reorganized my entire schedule instantly. Best travel companion app I've used.",
+        rating: 5,
+        avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&h=150&fit=crop"
     }
 ];
 
