@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, MapPin, Clock, ArrowRight, Check, Star, Users } from 'lucide-react';
 import { DestinationItem, PlaceItem } from '@/data/staticDiscoveryData';
@@ -13,6 +13,18 @@ const DestinationModal = ({ destination, onClose }: DestinationModalProps) => {
     const navigate = useNavigate();
     const [selectedPlaces, setSelectedPlaces] = useState<string[]>([]);
     const [imageError, setImageError] = useState<Record<string, boolean>>({});
+
+    // Lock body scroll when modal is open
+    useEffect(() => {
+        if (destination) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, [destination]);
 
     const togglePlace = (id: string) => {
         setSelectedPlaces(prev =>
@@ -47,8 +59,6 @@ const DestinationModal = ({ destination, onClose }: DestinationModalProps) => {
         const quiet = remaining.filter(p => p.crowdLevel === 'Low' || p.popularityScore < 8.5);
         const balanced = remaining.filter(p => !quiet.includes(p)); // Everything else is balanced
 
-        // If local is empty, maybe move some balanced to local if they fit loosely? Or just keep clean logic.
-
         return { iconic, local, quiet, balanced };
     }, [destination]);
 
@@ -64,7 +74,7 @@ const DestinationModal = ({ destination, onClose }: DestinationModalProps) => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+                className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
                 onClick={onClose}
             >
                 <motion.div
@@ -72,10 +82,10 @@ const DestinationModal = ({ destination, onClose }: DestinationModalProps) => {
                     animate={{ scale: 1, opacity: 1 }}
                     exit={{ scale: 0.95, opacity: 0 }}
                     onClick={(e) => e.stopPropagation()}
-                    className="bg-background w-full max-w-5xl max-h-[90vh] rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row"
+                    className="bg-background w-full max-w-5xl h-[85vh] md:h-[90vh] rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row"
                 >
-                    {/* Image Side (Desktp) / Header (Mobile) */}
-                    <div className="md:w-1/3 relative h-48 md:h-auto md:min-h-full">
+                    {/* Image Side (Desktop) / Header (Mobile) */}
+                    <div className="md:w-1/3 relative h-48 md:h-auto md:min-h-full shrink-0">
                         <img
                             src={destination.image}
                             alt={destination.name}
@@ -106,15 +116,16 @@ const DestinationModal = ({ destination, onClose }: DestinationModalProps) => {
                     </div>
 
                     {/* Content Side */}
-                    <div className="md:w-2/3 flex flex-col h-full overflow-hidden bg-background">
-                        <div className="p-6 md:p-8 flex-grow overflow-y-auto custom-scrollbar">
+                    {/* Content Side */}
+                    <div className="md:w-2/3 flex flex-col h-full bg-background min-h-0">
+                        <div className="flex-1 overflow-y-auto custom-scrollbar p-6 md:p-8">
 
                             <div className="mb-8">
                                 <h3 className="text-2xl font-bold text-foreground mb-2">Explore {destination.name}</h3>
                                 <p className="text-muted-foreground">Select the places you'd like to visit to build your perfect itinerary.</p>
                             </div>
 
-                            <div className="space-y-10">
+                            <div className="space-y-10 pb-4">
                                 {/* Customizable Sections */}
                                 <PlaceGroup
                                     title="Iconic Sights"
@@ -122,8 +133,6 @@ const DestinationModal = ({ destination, onClose }: DestinationModalProps) => {
                                     places={getGroupedPlaces.iconic}
                                     selectedPlaces={selectedPlaces}
                                     togglePlace={togglePlace}
-                                    imageError={imageError}
-                                    handleImageError={handleImageError}
                                 />
 
                                 <PlaceGroup
@@ -132,8 +141,6 @@ const DestinationModal = ({ destination, onClose }: DestinationModalProps) => {
                                     places={getGroupedPlaces.local}
                                     selectedPlaces={selectedPlaces}
                                     togglePlace={togglePlace}
-                                    imageError={imageError}
-                                    handleImageError={handleImageError}
                                 />
 
                                 <PlaceGroup
@@ -142,8 +149,6 @@ const DestinationModal = ({ destination, onClose }: DestinationModalProps) => {
                                     places={getGroupedPlaces.quiet}
                                     selectedPlaces={selectedPlaces}
                                     togglePlace={togglePlace}
-                                    imageError={imageError}
-                                    handleImageError={handleImageError}
                                 />
 
                                 <PlaceGroup
@@ -151,14 +156,12 @@ const DestinationModal = ({ destination, onClose }: DestinationModalProps) => {
                                     places={getGroupedPlaces.balanced}
                                     selectedPlaces={selectedPlaces}
                                     togglePlace={togglePlace}
-                                    imageError={imageError}
-                                    handleImageError={handleImageError}
                                 />
                             </div>
                         </div>
 
-                        {/* Footer */}
-                        <div className="p-6 border-t border-border bg-background/50 backdrop-blur-xl flex items-center justify-between shrink-0">
+                        {/* Footer - Fixed at bottom of panel */}
+                        <div className="p-6 border-t border-border bg-background/50 backdrop-blur-xl flex items-center justify-between shrink-0 z-10">
                             <div className="text-sm font-medium">
                                 <span className="text-primary text-lg font-bold">{selectedPlaces.length}</span> places selected
                             </div>
@@ -177,7 +180,7 @@ const DestinationModal = ({ destination, onClose }: DestinationModalProps) => {
     );
 };
 
-const PlaceGroup = ({ title, icon, places, selectedPlaces, togglePlace, imageError, handleImageError }: any) => {
+const PlaceGroup = ({ title, icon, places, selectedPlaces, togglePlace }: any) => {
     if (!places || places.length === 0) return null;
 
     return (
@@ -185,50 +188,33 @@ const PlaceGroup = ({ title, icon, places, selectedPlaces, togglePlace, imageErr
             <h4 className="text-lg font-bold text-foreground mb-4 flex items-center gap-2">
                 {icon} {title}
             </h4>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="flex flex-col gap-3">
                 {places.map((place: PlaceItem) => {
                     const isSelected = selectedPlaces.includes(place.id);
-                    const hasImageError = imageError[place.id];
 
                     return (
                         <div
                             key={place.id}
                             onClick={() => togglePlace(place.id)}
-                            className={`group relative rounded-2xl overflow-hidden cursor-pointer border-2 transition-all duration-300 ${isSelected ? 'border-primary ring-2 ring-primary/20' : 'border-transparent hover:border-primary/50'
+                            className={`flex items-start gap-4 p-4 rounded-xl border cursor-pointer transition-all ${isSelected
+                                ? 'bg-primary/5 border-primary shadow-sm'
+                                : 'bg-card border-border/50 hover:bg-muted/50 hover:border-border'
                                 }`}
                         >
-                            {/* Image Aspect 16:9 */}
-                            <div className="aspect-video relative bg-muted">
-                                {place.image && !hasImageError ? (
-                                    <img
-                                        src={place.image}
-                                        alt={place.name}
-                                        onError={() => handleImageError(place.id)}
-                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                                    />
-                                ) : (
-                                    <div className="w-full h-full flex items-center justify-center bg-secondary text-muted-foreground">
-                                        <MapPin size={24} />
-                                    </div>
-                                )}
+                            {/* Checkbox */}
+                            <div className={`mt-1 shrink-0 w-5 h-5 rounded-md border flex items-center justify-center transition-colors ${isSelected ? 'bg-primary border-primary text-primary-foreground' : 'border-muted-foreground/30 bg-background'
+                                }`}>
+                                {isSelected && <Check size={14} strokeWidth={3} />}
+                            </div>
 
-                                {/* Overlay Gradient */}
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-
-                                {/* Selection Check */}
-                                <div className={`absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center transition-all ${isSelected ? 'bg-primary text-white scale-100 shadow-lg' : 'bg-black/40 text-transparent border border-white/30 scale-90 group-hover:scale-100'
-                                    }`}>
-                                    <Check size={16} strokeWidth={3} />
+                            <div className="flex-1">
+                                <div className="flex items-center justify-between mb-1">
+                                    <h5 className="font-bold text-base text-foreground">{place.name}</h5>
+                                    <span className="text-xs font-medium text-muted-foreground flex items-center gap-1 bg-secondary/50 px-2 py-0.5 rounded-full">
+                                        <Clock size={12} /> {place.duration}
+                                    </span>
                                 </div>
-
-                                {/* Content Overlay */}
-                                <div className="absolute bottom-3 left-3 right-3 text-white">
-                                    <h5 className="font-bold text-base leading-tight mb-1">{place.name}</h5>
-                                    <div className="flex items-center justify-between text-xs text-white/80">
-                                        <span>{place.type}</span>
-                                        <span className="flex items-center gap-1"><Clock size={10} /> {place.duration}</span>
-                                    </div>
-                                </div>
+                                <p className="text-sm text-muted-foreground">{place.type}</p>
                             </div>
                         </div>
                     );
