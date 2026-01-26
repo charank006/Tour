@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Star, Quote } from 'lucide-react';
 import { useRef, useEffect, useState } from 'react';
+import EmptyState from "@/components/ui/EmptyState";
 
 const reviews = [
     {
@@ -72,49 +73,64 @@ const ReviewsSection = () => {
                     </p>
                 </div>
 
-                <motion.div
-                    ref={carouselRef}
-                    className="cursor-grab active:cursor-grabbing overflow-hidden"
-                >
+                {reviews.length === 0 ? (
+                    <div className="max-w-2xl mx-auto">
+                        <EmptyState
+                            icon={Quote}
+                            title="No reviews yet"
+                            description="Be the first to share your experience with us! We'd love to hear about your journey."
+                            action={
+                                <button className="btn-outline">
+                                    Write a Review
+                                </button>
+                            }
+                        />
+                    </div>
+                ) : (
                     <motion.div
-                        drag="x"
-                        dragConstraints={{ right: 0, left: -width }}
-                        className="flex gap-6"
+                        ref={carouselRef}
+                        className="cursor-grab active:cursor-grabbing overflow-hidden"
                     >
-                        {reviews.map((review) => (
-                            <motion.div
-                                key={review.id}
-                                className="min-w-[300px] md:min-w-[400px] p-8 rounded-3xl bg-card border border-border shadow-soft relative flex flex-col items-start"
-                            >
-                                <Quote className="text-primary/20 absolute top-6 right-8 w-12 h-12" />
+                        <motion.div
+                            drag="x"
+                            dragConstraints={{ right: 0, left: -width }}
+                            className="flex gap-6"
+                        >
+                            {reviews.map((review) => (
+                                <motion.div
+                                    key={review.id}
+                                    className="min-w-[300px] md:min-w-[400px] p-8 rounded-3xl bg-card border border-border shadow-soft relative flex flex-col items-start"
+                                >
+                                    <Quote className="text-primary/20 absolute top-6 right-8 w-12 h-12" />
 
-                                <div className="flex gap-1 mb-6">
-                                    {[...Array(5)].map((_, i) => (
-                                        <Star
-                                            key={i}
-                                            size={18}
-                                            className={`${i < review.rating ? 'text-accent fill-accent' : 'text-gray-300'} transition-colors`}
-                                        />
-                                    ))}
-                                </div>
-
-                                <p className="text-lg text-foreground mb-8 line-clamp-3 italic">
-                                    "{review.text}"
-                                </p>
-
-                                <div className="mt-auto flex items-center gap-4">
-                                    <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-primary/20">
-                                        <img src={review.avatar} alt={review.name} className="w-full h-full object-cover" />
+                                    <div className="flex gap-1 mb-6">
+                                        {[...Array(5)].map((_, i) => (
+                                            <Star
+                                                key={i}
+                                                size={18}
+                                                className={`${i < review.rating ? 'text-accent fill-accent' : 'text-gray-300'} transition-colors`}
+                                            />
+                                        ))}
                                     </div>
-                                    <div>
-                                        <h4 className="font-bold text-foreground">{review.name}</h4>
-                                        <p className="text-xs text-muted-foreground uppercase tracking-wider">{review.role}</p>
+
+                                    <p className="text-lg text-foreground mb-8 line-clamp-3 italic">
+                                        "{review.text}"
+                                    </p>
+
+                                    <div className="mt-auto flex items-center gap-4">
+                                        <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-primary/20">
+                                            <img src={review.avatar} alt={review.name} className="w-full h-full object-cover" />
+                                        </div>
+                                        <div>
+                                            <h4 className="font-bold text-foreground">{review.name}</h4>
+                                            <p className="text-xs text-muted-foreground uppercase tracking-wider">{review.role}</p>
+                                        </div>
                                     </div>
-                                </div>
-                            </motion.div>
-                        ))}
+                                </motion.div>
+                            ))}
+                        </motion.div>
                     </motion.div>
-                </motion.div>
+                )}
             </div>
         </section>
     );

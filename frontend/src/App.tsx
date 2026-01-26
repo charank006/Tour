@@ -12,6 +12,7 @@ import NotFound from "./pages/NotFound";
 
 import Destinations from "./pages/Destinations";
 import Activities from "./pages/Activities";
+import Reviews from "./pages/Reviews";
 
 import MyTrips from "./pages/MyTrips";
 import TestPage from "./pages/TestLogic";
@@ -32,6 +33,7 @@ const App = () => (
           <Route path="/trip-plan" element={<TripPlan />} />
           <Route path="/destinations" element={<Destinations />} />
           <Route path="/activities" element={<Activities />} />
+          <Route path="/reviews" element={<Reviews />} />
           <Route path="/my-trips" element={<MyTrips />} />
           <Route path="/test-logic" element={<TestPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

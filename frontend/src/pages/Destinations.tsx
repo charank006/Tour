@@ -157,7 +157,7 @@ const Destinations = () => {
 
                                     <div className="flex flex-wrap gap-2 mt-auto">
                                         {dest.tags.slice(0, 3).map(tag => (
-                                            <span key={tag} className="text-[10px] bg-secondary text-secondary-foreground px-2 py-1 rounded-md">
+                                            <span key={tag} className="text-[10px] bg-muted/80 text-muted-foreground px-2 py-1 rounded-md font-medium">
                                                 #{tag}
                                             </span>
                                         ))}

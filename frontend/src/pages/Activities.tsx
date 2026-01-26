@@ -5,6 +5,7 @@ import { activitiesData, ActivityItem } from '@/data/staticDiscoveryData';
 import StepIndicator from '@/components/ui/StepIndicator';
 import ActivityModal from '@/components/trip/ActivityModal';
 import { useNavigate } from 'react-router-dom';
+import EmptyState from '@/components/ui/EmptyState';
 
 const Activities = () => {
     const navigate = useNavigate();
@@ -170,12 +171,20 @@ const Activities = () => {
                 )}
 
                 {filteredActivities.length === 0 && (
-                    <div className="text-center py-20">
-                        <p className="text-muted-foreground text-lg">No activities found matching your criteria.</p>
-                        <button onClick={() => { setFilter('All'); setSearch('') }} className="mt-4 text-primary font-medium hover:underline">
-                            Clear filters
-                        </button>
-                    </div>
+                    <EmptyState
+                        icon={Search}
+                        title="No activities found"
+                        description="We couldn't find any activities matching your criteria. Try adjusting your search term or selecting a different category."
+                        action={
+                            <button
+                                onClick={() => { setFilter('All'); setSearch('') }}
+                                className="text-primary font-bold hover:underline"
+                            >
+                                Clear all filters
+                            </button>
+                        }
+                        className="mt-12"
+                    />
                 )}
             </div>
 

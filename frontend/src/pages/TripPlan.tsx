@@ -8,11 +8,14 @@ import {
   Bus,
   Wallet,
   MapPin,
-  Home
+  Home,
+  UtensilsCrossed,
+  ShoppingBag,
+  Sparkles
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { tripApi } from '@/api/api';
-import PlanningAnimation from '@/components/PlanningAnimation';
+import TripPlanSkeleton from '@/components/skeletons/TripPlanSkeleton';
 import PageTransition from '@/components/PageTransition';
 import TripSummary from '@/components/trip/TripSummary';
 import TimelineItinerary from '@/components/trip/TimelineItinerary';
@@ -258,11 +261,7 @@ const TripPlanPage = () => {
   };
 
   if (loading) {
-    return (
-      <div className="min-h-screen bg-background pt-24 flex items-center justify-center">
-        <PlanningAnimation />
-      </div>
-    );
+    return <TripPlanSkeleton />;
   }
 
   if (error) {
@@ -314,65 +313,77 @@ const TripPlanPage = () => {
           />
 
           <MapSection destination={tripPlan.destination.name} />
-          {/* Section 3: Travel Options */}
-          <motion.section
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, ease: "easeOut", delay: 0.25 }}
-            className="mb-8"
-          >
-            <h2 className="section-title flex items-center gap-2">
-              <Plane className="text-primary" size={24} />
-              Travel Options
+          {/* Section 4: Trip Logistics (Travel & Stay) */}
+          <section className="mb-16">
+            <h2 className="section-title flex items-center gap-2 mb-8">
+              <MapPin className="text-primary" size={24} />
+              Your Trip Logistics
             </h2>
 
-            <div className="grid md:grid-cols-3 gap-4">
-              {tripPlan.travelOptions.map((option: any) => {
-                const Icon = getTravelIcon(option.type);
-                const isSelected = selectedTravelType === option.type;
-                return (
-                  <button
-                    key={option.type}
-                    onClick={() => setSelectedTravelType(option.type)}
-                    className={`card-travel text-left transition-all ${isSelected ? 'ring-2 ring-primary bg-accent' : ''
-                      }`}
-                  >
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${isSelected ? 'bg-primary' : 'bg-secondary'
-                        }`}>
-                        <Icon size={22} className={isSelected ? 'text-primary-foreground' : 'text-foreground'} />
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-foreground capitalize">{option.type}</h3>
-                        <p className="text-xs text-muted-foreground">{option.operator}</p>
-                      </div>
-                    </div>
-                    <div className="space-y-2 text-sm">
-                      <div className="flex justify-between">
-                        <span className="text-muted-foreground">Duration</span>
-                        <span className="font-medium text-foreground">{option.duration}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-muted-foreground">Departure</span>
-                        <span className="font-medium text-foreground">{option.departure}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-muted-foreground">Price (one-way)</span>
-                        <span className="font-bold text-primary">{formatCurrency(option.cost)}</span>
-                      </div>
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
-          </motion.section>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+              {/* Left Column: Travel */}
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.4, delay: 0.2 }}
+                className="space-y-6"
+              >
+                <h3 className="text-xl font-bold flex items-center gap-2 text-foreground">
+                  <Plane className="text-muted-foreground" size={20} />
+                  Getting There
+                </h3>
 
-          <AlternativeSuggestions
-            stayOptions={tripPlan.stayOptions}
-            selectedStayType={selectedStayType}
-            setSelectedStayType={setSelectedStayType}
-            formatCurrency={formatCurrency}
-          />
+                <div className="space-y-4">
+                  {tripPlan.travelOptions.map((option: any) => {
+                    const Icon = getTravelIcon(option.type);
+                    const isSelected = selectedTravelType === option.type;
+                    return (
+                      <button
+                        key={option.type}
+                        onClick={() => setSelectedTravelType(option.type)}
+                        className={`w-full text-left p-4 rounded-2xl border transition-all duration-300 relative group overflow-hidden ${isSelected
+                          ? 'bg-primary/5 border-primary ring-1 ring-primary'
+                          : 'bg-card border-border hover:border-primary/50 hover:shadow-md'
+                          }`}
+                      >
+                        <div className="flex items-center gap-4 relative z-10">
+                          <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 transition-colors ${isSelected ? 'bg-primary text-primary-foreground' : 'bg-secondary text-foreground group-hover:bg-primary/10 group-hover:text-primary'
+                            }`}>
+                            <Icon size={22} />
+                          </div>
+                          <div className="flex-grow">
+                            <div className="flex justify-between items-start mb-1">
+                              <h4 className="font-bold text-foreground capitalize text-lg">{option.type}</h4>
+                              <span className="font-bold text-primary">{formatCurrency(option.cost)}</span>
+                            </div>
+                            <div className="flex justify-between text-sm text-muted-foreground">
+                              <span>{option.operator}</span>
+                              <span>{option.duration} • {option.departure}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </motion.div>
+
+              {/* Right Column: Stay */}
+              <div className="space-y-6">
+                <h3 className="text-xl font-bold flex items-center gap-2 text-foreground">
+                  <Home className="text-muted-foreground" size={20} />
+                  Where to Stay
+                </h3>
+
+                <AlternativeSuggestions
+                  stayOptions={tripPlan.stayOptions}
+                  selectedStayType={selectedStayType}
+                  setSelectedStayType={setSelectedStayType}
+                  formatCurrency={formatCurrency}
+                />
+              </div>
+            </div>
+          </section>
 
           {/* Section 5: Budget Breakdown */}
           <motion.section
@@ -385,38 +396,39 @@ const TripPlanPage = () => {
               Budget Breakdown
             </h2>
 
-            <div className="card-travel">
-              <div className="space-y-4">
+            <div className="bg-card rounded-3xl p-8 shadow-sm border border-border/40 hover:shadow-md transition-shadow">
+              <div className="space-y-6">
                 {[
-                  { label: 'Travel (Round Trip)', value: tripPlan.budgetBreakdown.travel, icon: Plane },
-                  { label: 'Accommodation', value: tripPlan.budgetBreakdown.stay, icon: Home },
-                  { label: 'Activities & Sightseeing', value: tripPlan.budgetBreakdown.activities, icon: MapPin },
-                  { label: 'Food & Dining', value: tripPlan.budgetBreakdown.food, emoji: '🍽️' },
-                  { label: 'Miscellaneous (10%)', value: tripPlan.budgetBreakdown.misc, emoji: '📦' },
+                  { label: 'Travel', sub: 'Round Trip', value: tripPlan.budgetBreakdown.travel, icon: Plane, color: 'text-blue-500', bg: 'bg-blue-500/10' },
+                  { label: 'Accommodation', sub: 'Stay Cost', value: tripPlan.budgetBreakdown.stay, icon: Home, color: 'text-purple-500', bg: 'bg-purple-500/10' },
+                  { label: 'Activities', sub: 'Sightseeing', value: tripPlan.budgetBreakdown.activities, icon: MapPin, color: 'text-emerald-500', bg: 'bg-emerald-500/10' },
+                  { label: 'Food & Dining', sub: 'Est. Meals', value: tripPlan.budgetBreakdown.food, icon: UtensilsCrossed, color: 'text-orange-500', bg: 'bg-orange-500/10' },
+                  { label: 'Miscellaneous', sub: 'Buffer & Shopping', value: tripPlan.budgetBreakdown.misc, icon: ShoppingBag, color: 'text-pink-500', bg: 'bg-pink-500/10' },
                 ].map((item: any, index) => (
-                  <div key={index} className="flex items-center justify-between py-3 border-b border-border last:border-0">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-secondary flex items-center justify-center">
-                        {'icon' in item && item.icon ? (
-                          <item.icon size={18} className="text-primary" />
-                        ) : (
-                          <span className="text-lg">{item.emoji}</span>
-                        )}
+                  <div key={index} className="flex items-center justify-between group">
+                    <div className="flex items-center gap-4">
+                      <div className={`w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 transition-colors ${item.bg}`}>
+                        <item.icon size={24} className={item.color} />
                       </div>
-                      <span className="text-foreground">{item.label}</span>
+                      <div>
+                        <div className="font-bold text-lg text-foreground">{item.label}</div>
+                        <div className="text-sm text-muted-foreground font-medium">{item.sub}</div>
+                      </div>
                     </div>
-                    <span className="font-semibold text-foreground">{formatCurrency(item.value)}</span>
+                    <div className="text-xl font-bold text-foreground tabular-nums group-hover:text-primary transition-colors">
+                      {formatCurrency(item.value)}
+                    </div>
                   </div>
                 ))}
               </div>
 
-              <div className="mt-6 pt-6 border-t-2 border-primary/20">
-                <div className="flex items-center justify-between">
+              <div className="mt-8 pt-8 border-t border-border/50">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                   <div>
-                    <div className="text-lg font-bold text-foreground">Total Estimated Cost</div>
-                    <div className="text-sm text-muted-foreground">For {tripPlan.travelers} traveler(s)</div>
+                    <div className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-1">Total Estimated Cost</div>
+                    <div className="text-sm text-muted-foreground font-medium">Inclusive of all categories for {tripPlan.travelers} traveler(s)</div>
                   </div>
-                  <div className="text-3xl font-bold text-primary">
+                  <div className="text-4xl md:text-5xl font-black text-primary tracking-tight">
                     {formatCurrency(tripPlan.budgetBreakdown.total)}
                   </div>
                 </div>

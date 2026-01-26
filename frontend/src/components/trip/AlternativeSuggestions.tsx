@@ -1,5 +1,6 @@
 import { Home, Star } from 'lucide-react';
 import { motion } from 'framer-motion';
+import ImageWithFallback from '@/components/ui/ImageWithFallback';
 
 interface Amenities {
     amenities: string[];
@@ -27,12 +28,9 @@ const AlternativeSuggestions = ({ stayOptions, selectedStayType, setSelectedStay
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, ease: "easeOut", delay: 0.3 }}
-            className="mb-8"
+            className="h-full"
         >
-            <h2 className="section-title flex items-center gap-2">
-                <Home className="text-primary" size={24} />
-                Stay Suggestions
-            </h2>
+
 
             <div className="grid md:grid-cols-2 gap-6">
                 {stayOptions.map((stay) => {
@@ -45,12 +43,13 @@ const AlternativeSuggestions = ({ stayOptions, selectedStayType, setSelectedStay
                                 }`}
                         >
                             <div className="relative h-32 -mx-6 -mt-6 mb-4 overflow-hidden">
-                                <img
+                                <ImageWithFallback
                                     src={stay.image}
                                     alt={stay.name}
-                                    className="w-full h-full object-cover"
+                                    className="w-full h-full"
+                                    fallbackIcon={Home}
                                 />
-                                <div className="absolute top-3 left-3">
+                                <div className="absolute top-3 left-3 z-20">
                                     <span className={`badge-travel ${stay.type === 'budget' ? 'bg-secondary' : 'bg-primary text-primary-foreground'
                                         }`}>
                                         {stay.type === 'budget' ? '💰 Budget' : '✨ Comfort'}

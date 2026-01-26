@@ -235,7 +235,7 @@ export const destinationsData: DestinationItem[] = [
         category: 'Heritage',
         famousFor: 'Ancient ruins and boulder landscapes',
         tags: ['History', 'Ruins', 'Architecture'],
-        image: 'https://unsplash.com/photos/a-large-building-with-a-fountain-in-front-of-it-Q0mSdYr7EFQ',
+        image: 'https://images.unsplash.com/photo-1561981969-65ee8dfc7351?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fGhhbXBpfGVufDB8fDB8fHww',
         averageDailyCost: 2500,
         places: [
             { id: 'p11_1', name: 'Virupaksha Temple', type: 'Spiritual', popularityScore: 9.5, crowdLevel: 'High', bestSeason: 'Oct-Feb', duration: '1h', cost: 0, bestTime: 'Morning', weatherSensitivity: 'Low', locationType: 'Indoor', image: 'https://images.unsplash.com/photo-1623143584856-bf5db5a16c7f?w=500&auto=format&fit=crop&q=60' },
@@ -304,7 +304,7 @@ export const activitiesData: ActivityItem[] = [
         bestSeason: 'Oct - Mar',
         difficulty: 'Easy',
         description: 'Ride through the golden dunes of the Thar desert at sunset.',
-        image: 'https://images.unsplash.com/photo-1589815033735-a764d9ac72b3?w=500&auto=format&fit=crop&q=60',
+        image: 'https://plus.unsplash.com/premium_photo-1661962542692-4fe7a4ad6b54?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8Y2FtZWwlMjBzYWZhcml8ZW58MHx8MHx8fDA%3D',
         duration: '2 Hours'
     },
     {
