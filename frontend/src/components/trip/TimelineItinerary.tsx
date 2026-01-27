@@ -207,7 +207,7 @@ const TimelineItinerary = ({ dayPlans, formatCurrency, selectedStay }: TimelineI
                                                         src={activity.image}
                                                         alt={activity.title}
                                                         className="w-full h-full"
-                                                        fallbackIcon={MapPin}
+                                                        fallbackIcon={Sparkles}
                                                     />
                                                     <div className="absolute top-2 left-2 z-20">
                                                         <span className="flex items-center gap-1.5 text-[10px] font-bold text-foreground bg-white/90 backdrop-blur-md px-2.5 py-1 rounded-full shadow-sm">

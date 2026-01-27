@@ -20,7 +20,6 @@ import PageTransition from '@/components/PageTransition';
 import TripSummary from '@/components/trip/TripSummary';
 import TimelineItinerary from '@/components/trip/TimelineItinerary';
 import AlternativeSuggestions from '@/components/trip/AlternativeSuggestions';
-import MapSection from '@/components/trip/MapSection';
 import { planningLogic } from '@/lib/planningLogic';
 
 type TripState = "idle" | "loading" | "success" | "fallback" | "error";
@@ -312,7 +311,6 @@ const TripPlanPage = () => {
             selectedStay={tripPlan.stayOptions.find((s: any) => s.type === selectedStayType)}
           />
 
-          <MapSection destination={tripPlan.destination.name} />
           {/* Section 4: Trip Logistics (Travel & Stay) */}
           <section className="mb-16">
             <h2 className="section-title flex items-center gap-2 mb-8">
