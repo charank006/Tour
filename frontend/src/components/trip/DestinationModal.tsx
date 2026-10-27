@@ -180,7 +180,15 @@ const DestinationModal = ({ destination, onClose }: DestinationModalProps) => {
     );
 };
 
-const PlaceGroup = ({ title, icon, places, selectedPlaces, togglePlace }: any) => {
+interface PlaceGroupProps {
+    title: string;
+    icon: React.ReactNode;
+    places: PlaceItem[];
+    selectedPlaces: string[];
+    togglePlace: (id: string) => void;
+}
+
+const PlaceGroup = ({ title, icon, places, selectedPlaces, togglePlace }: PlaceGroupProps) => {
     if (!places || places.length === 0) return null;
 
     return (

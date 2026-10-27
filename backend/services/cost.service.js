@@ -1,37 +1,83 @@
-const priceUtils = require('../utils/price.utils');
+const travelService = require('./travel.service');
+const hotelsService = require('./hotels.service');
 
 // Service: Cost Engine
-// Estimates costs based on market rates (as of 2024/2025 constants for India context if implied, or global)
+// Estimates costs based on real-time data from other services where possible
 
-exports.estimateTripCost = (distanceKm, durationDays, travelers) => {
-    // Rates
-    const fuelRatePerKm = 10;
-    const avgHotelCost = 3000; // per night per room
-    const avgFoodCost = 1500; // per day per person
-    const avgActivityCost = 1000; // per day per person
+/**
+ * Calculates a detailed budget breakdown for a trip.
+ * 
+ * @param {string} fromCity - Origin city
+ * @param {string} toCity - Destination city
+ * @param {string} date - Travel start date (YYYY-MM-DD)
+ * @param {number} durationDays - Number of days
+ * @param {number} travelers - Number of travelers
+ * @param {string} budgetLevel - 'low', 'medium', 'high'
+ */
+exports.estimateTripCost = async (fromCity, toCity, date, durationDays, travelers, budgetLevel = 'medium') => {
+    // 1. Travel Cost (Get Cheapest Valid Option)
+    // We fetch top options and pick the cheapest one for the budget estimate
+    let travelCostPerPerson = 2000; // Default fallback if API fails
 
-    // 1. Base Costs
-    const transport = Math.round(distanceKm * fuelRatePerKm);
-    const stay = Math.round(avgHotelCost * durationDays * Math.ceil(travelers / 2));
-    const food = Math.round(avgFoodCost * durationDays * travelers);
-    const activities = Math.round(avgActivityCost * durationDays * travelers);
+    try {
+        const travelOptions = await travelService.getTravelOptions(fromCity, toCity, date);
+        if (travelOptions && travelOptions.length > 0) {
+            // Find option with lowest price
+            // Ensure price is a number
+            const validOptions = travelOptions.filter(o => (o.priceEstimate || o.price) > 0);
+            if (validOptions.length > 0) {
+                const cheapest = validOptions.reduce((min, o) => (o.priceEstimate || o.price) < (min.priceEstimate || min.price) ? o : min);
+                travelCostPerPerson = cheapest.priceEstimate || cheapest.price;
+            }
+        }
+    } catch (err) {
+        console.warn("Cost Service: Failed to fetch dynamic travel cost, using default.", err.message);
+    }
 
-    // 2. Buffer (15% for miscellaneous/safety)
-    const subtotal = transport + stay + food + activities;
-    const buffer = Math.round(subtotal * 0.15);
+    const totalTravel = travelCostPerPerson * travelers;
 
-    // 3. Totals
-    const total = subtotal + buffer;
-    const perDay = Math.round(total / (durationDays || 1));
+    // 2. Stay Cost (Fetch Hotel for Budget Level)
+    let hotelCostPerNight = 3000; // Default Medium
+    if (budgetLevel === 'low') hotelCostPerNight = 1200;
+    if (budgetLevel === 'high') hotelCostPerNight = 8000;
 
-    // Return detailed numeric breakdown
+    try {
+        const hotels = await hotelsService.getHotels(toCity, budgetLevel);
+        if (hotels && hotels.length > 0) {
+            // Take average of top 3 findings to be safe? Or just the cheapest/best fit?
+            // Let's take the first one (top rated in price tier)
+            hotelCostPerNight = hotels[0].priceEstimate || hotelCostPerNight;
+        }
+    } catch (err) {
+        console.warn("Cost Service: Failed to fetch dynamic hotel cost, using default.", err.message);
+    }
+
+    // Cost is per room per night. Assume 2 people share a room.
+    const rooms = Math.ceil(travelers / 2);
+    const totalStay = hotelCostPerNight * durationDays * rooms;
+
+    // 3. Food & Activities (Static Heuristics based on Budget Level)
+    const dailyFood = budgetLevel === 'high' ? 3000 : (budgetLevel === 'low' ? 800 : 1500);
+    const dailyActivity = budgetLevel === 'high' ? 2000 : (budgetLevel === 'low' ? 500 : 1000);
+
+    const totalFood = dailyFood * durationDays * travelers;
+    const totalActivities = dailyActivity * durationDays * travelers;
+
+    // 4. Misc Buffer (10%)
+    const subtotal = totalTravel + totalStay + totalFood + totalActivities;
+    const misc = Math.round(subtotal * 0.10);
+
+    const total = subtotal + misc;
+
     return {
         total,
-        transport,
-        stay,
-        food,
-        activities,
-        buffer,
-        perDay
+        breakdown: {
+            travel: totalTravel,
+            stay: totalStay,
+            food: totalFood,
+            activities: totalActivities,
+            misc: misc
+        },
+        perPerson: Math.round(total / travelers)
     };
 };

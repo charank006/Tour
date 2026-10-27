@@ -1,13 +1,20 @@
 const OpenAI = require('openai');
+const { API_KEYS } = require('../config/apiKeys');
 
-const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
-});
+let openai = null;
+
+if (API_KEYS.openai) {
+    openai = new OpenAI({
+        apiKey: API_KEYS.openai,
+    });
+} else {
+    console.warn("AI Service: OpenAI API Key missing. AI features disabled.");
+}
 
 exports.enhanceTripText = async (plan) => {
-    // 1. Fail-safe: Check API Key
-    if (!process.env.OPENAI_API_KEY) {
-        console.warn("AI Service: No API Key found, returning original plan.");
+    // 1. Fail-safe: Check if OpenAI is initialized
+    if (!openai) {
+        console.warn("AI Service: OpenAI disabled, returning original plan.");
         return plan;
     }
 

@@ -33,6 +33,7 @@ const TripPlanPage = () => {
   const [error, setError] = useState<string | null>(null);
   const [selectedTravelType, setSelectedTravelType] = useState<'flight' | 'train' | 'bus'>('flight');
   const [selectedStayType, setSelectedStayType] = useState<'budget' | 'comfort' | 'luxury'>('budget');
+  const [isSaved, setIsSaved] = useState(false);
 
   const tripData = location.state;
 
@@ -167,11 +168,13 @@ const TripPlanPage = () => {
               }))
             }
           ],
-          travelOptions: [
-            { type: 'flight', operator: 'IndiGo', duration: '2h 15m', departure: '06:00 AM', cost: 4500 },
-            { type: 'train', operator: 'Shatabdi Exp', duration: '6h', departure: '07:00 AM', cost: 1200 },
-            { type: 'bus', operator: 'Volvo AC', duration: '10h', departure: '09:00 PM', cost: 800 }
-          ],
+          travelOptions: (backendData.plan.transportOptions && backendData.plan.transportOptions.length > 0)
+            ? backendData.plan.transportOptions
+            : [
+              { type: 'flight', operator: 'IndiGo', duration: '2h 15m', departure: '06:00 AM', cost: 4500 },
+              { type: 'train', operator: 'Shatabdi Exp', duration: '6h', departure: '07:00 AM', cost: 1200 },
+              { type: 'bus', operator: 'Volvo AC', duration: '10h', departure: '09:00 PM', cost: 800 }
+            ],
           stayOptions: [
             { type: 'budget', name: 'Zostel', rating: 4.5, amenities: ['WiFi', 'AC'], pricePerNight: 999, image: 'https://images.unsplash.com/photo-1555854743-e3c746dd448d' },
             { type: 'comfort', name: 'Lemon Tree', rating: 4.2, amenities: ['Pool', 'Gym'], pricePerNight: 3500, image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945' },
@@ -257,6 +260,28 @@ const TripPlanPage = () => {
       currency: 'INR',
       maximumFractionDigits: 0,
     }).format(amount);
+  };
+
+  const saveTrip = () => {
+    if (!tripPlan || isSaved) return;
+    try {
+      const existing: any[] = JSON.parse(localStorage.getItem('my_trips') || '[]');
+      const tripRecord = {
+        id: 'trip-' + Date.now(),
+        savedAt: new Date().toISOString(),
+        destination: tripPlan.destination?.name || 'Unknown',
+        startDate: tripPlan.startDate,
+        endDate: tripPlan.endDate,
+        travelers: tripPlan.travelers,
+        totalDays: tripPlan.totalDays,
+        totalCost: tripPlan.budgetBreakdown?.total || 0,
+        plan: tripPlan
+      };
+      localStorage.setItem('my_trips', JSON.stringify([tripRecord, ...existing]));
+      setIsSaved(true);
+    } catch (e) {
+      console.error('Failed to save trip:', e);
+    }
   };
 
   if (loading) {
@@ -444,8 +469,12 @@ const TripPlanPage = () => {
                 Happy with your plan? Let's make it happen!
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <button className="btn-primary">
-                  Book This Trip
+                <button
+                  onClick={saveTrip}
+                  disabled={isSaved}
+                  className={`btn-primary ${isSaved ? 'opacity-60 cursor-not-allowed' : ''}`}
+                >
+                  {isSaved ? '✓ Saved to My Trips' : 'Save to My Trips'}
                 </button>
                 <Link to="/plan" className="btn-outline">
                   Plan Another Trip

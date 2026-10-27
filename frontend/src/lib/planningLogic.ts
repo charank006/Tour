@@ -121,7 +121,7 @@ export const planningLogic = {
             if (match) return match;
 
             // Loose Match Mapping
-            const looseMap: any = {
+            const looseMap: Record<string, string[]> = {
                 'Sunrise': ['Morning'],
                 'Morning': ['Sunrise', 'Any'],
                 'Midday': ['Afternoon', 'Any'],

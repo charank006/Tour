@@ -1,5 +1,7 @@
 const axios = require('axios');
 const { OPENTRIPMAP_KEY, GEOAPIFY_KEY } = require('../config/keys');
+const { API_KEYS } = require('../config/apiKeys');
+
 
 exports.getPlaces = async (city, weatherRules, moodRules) => {
   try {
@@ -32,7 +34,8 @@ exports.getPlaces = async (city, weatherRules, moodRules) => {
             .map(p => ({
               name: p.name,
               category: p.kinds ? p.kinds.split(',')[0].replace(/_/g, ' ') : 'Tourist Attraction',
-              location: `Lat: ${p.point.lat.toFixed(4)}, Lon: ${p.point.lon.toFixed(4)}`, // OTM doesn't give address in list
+              location: `Lat: ${p.point.lat.toFixed(4)}, Lon: ${p.point.lon.toFixed(4)}`,
+              coordinates: { lat: p.point.lat, lon: p.point.lon },
               source: 'OpenTripMap'
             }));
         } else {
@@ -63,6 +66,7 @@ exports.getPlaces = async (city, weatherRules, moodRules) => {
               ? props.categories[0].split('.')[1] || props.categories[0].split('.')[0]
               : 'Attraction',
             location: props.formatted,
+            coordinates: { lat: f.geometry.coordinates[1], lon: f.geometry.coordinates[0] }, // GeoJSON is [lon, lat]
             source: 'Geoapify'
           };
         }).filter(p => p.name && p.name !== 'Unknown Place' && !p.name.includes("Street near"));
@@ -95,3 +99,65 @@ exports.getPlaces = async (city, weatherRules, moodRules) => {
     return []; // Fail gracefully
   }
 };
+/**
+ * Fetch experiences (dining, nightlife, culture) using Foursquare
+ */
+exports.getExperiences = async (city, category = 'food') => {
+  // Category IDs for Foursquare v3
+  const categoriesMap = {
+    food: '13000',      // Dining and Drinking
+    cafe: '13032',      // Cafe, Coffee, and Tea House
+    cultural: '10000',  // Arts and Entertainment
+    nightlife: '13003,13026' // Bar, Night Club
+  };
+
+  const categoryIds = categoriesMap[category] || '13000';
+
+  // Fallback Data
+  const fallbackExperiences = [
+    { name: "The Local Bistro", category: "Dining", popularityScore: 8.5, coordinates: { lat: 0, lon: 0 } },
+    { name: "City Museum", category: "Culture", popularityScore: 9.0, coordinates: { lat: 0, lon: 0 } },
+    { name: "Sunset Cafe", category: "Cafe", popularityScore: 7.8, coordinates: { lat: 0, lon: 0 } }
+  ];
+
+  if (!API_KEYS.foursquare) {
+    console.warn("Foursquare API Key missing. Returning fallback experiences.");
+    return fallbackExperiences;
+  }
+
+  try {
+    const url = 'https://api.foursquare.com/v3/places/search';
+    const params = {
+      near: city,
+      categories: categoryIds,
+      sort: 'POPULARITY',
+      limit: 10
+    };
+
+    const response = await axios.get(url, {
+      headers: {
+        'Authorization': API_KEYS.foursquare,
+        'Accept': 'application/json'
+      },
+      params: params
+    });
+
+    const results = response.data.results;
+    if (!results || results.length === 0) return fallbackExperiences;
+
+    return results.map(place => ({
+      name: place.name,
+      category: place.categories?.length > 0 ? place.categories[0].name : category,
+      popularityScore: place.rating ? place.rating : 8.0, // Foursquare v3 rating is 0-10, sometimes missing
+      coordinates: {
+        lat: place.geocodes?.main?.latitude || 0,
+        lon: place.geocodes?.main?.longitude || 0
+      }
+    }));
+
+  } catch (error) {
+    console.error("Foursquare Experiences Error:", error.message);
+    return fallbackExperiences;
+  }
+};
+

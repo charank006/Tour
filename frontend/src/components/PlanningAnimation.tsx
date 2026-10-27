@@ -2,18 +2,18 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plane } from 'lucide-react';
 
-const PlanningAnimation = () => {
-    const messages = [
-        "Analyzing seasons...",
-        "Optimizing budget...",
-        "Designing your journey..."
-    ];
+const MESSAGES = [
+    "Analyzing seasons...",
+    "Optimizing budget...",
+    "Designing your journey..."
+];
 
+const PlanningAnimation = () => {
     const [msgIndex, setMsgIndex] = useState(0);
 
     useEffect(() => {
         const interval = setInterval(() => {
-            setMsgIndex((prev) => (prev + 1) % messages.length);
+            setMsgIndex((prev) => (prev + 1) % MESSAGES.length);
         }, 2000);
         return () => clearInterval(interval);
     }, []);
@@ -82,14 +82,14 @@ const PlanningAnimation = () => {
             <div className="h-8 relative w-full text-center">
                 <AnimatePresence mode="wait">
                     <motion.p
-                        key={messages[msgIndex]}
+                        key={MESSAGES[msgIndex]}
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
                         transition={{ duration: 0.5 }}
                         className="text-muted-foreground font-medium text-lg absolute w-full"
                     >
-                        {messages[msgIndex]}
+                        {MESSAGES[msgIndex]}
                     </motion.p>
                 </AnimatePresence>
             </div>

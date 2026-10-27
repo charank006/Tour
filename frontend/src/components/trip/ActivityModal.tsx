@@ -12,10 +12,10 @@ interface ActivityModalProps {
 }
 
 const ActivityModal = ({ activity, onClose, isSelected, onToggle }: ActivityModalProps) => {
-    if (!activity) return null;
-
     // Filter relevant places
     const relevantPlaces = useMemo(() => {
+        if (!activity) return { famous: [], balanced: [], hidden: [] };
+
         const allPlaces: { place: PlaceItem, destinationName: string }[] = [];
 
         destinationsData.forEach(dest => {
@@ -38,6 +38,8 @@ const ActivityModal = ({ activity, onClose, isSelected, onToggle }: ActivityModa
 
         return { famous, balanced, hidden };
     }, [activity]);
+
+    if (!activity) return null;
 
 
     return (

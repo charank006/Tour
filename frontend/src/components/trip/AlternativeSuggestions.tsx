@@ -18,7 +18,7 @@ interface StayOption {
 interface AlternativeSuggestionsProps {
     stayOptions: StayOption[];
     selectedStayType: string;
-    setSelectedStayType: (type: any) => void;
+    setSelectedStayType: (type: string) => void;
     formatCurrency: (amount: number) => string;
 }
 

@@ -3,9 +3,14 @@ const placesService = require('../services/places.service');
 const routingService = require('../services/routing.service');
 const costService = require('../services/cost.service');
 const aiService = require('../services/ai.service');
+const travelService = require('../services/travel.service');
 const moodLogic = require('../logic/mood.logic');
 const paceLogic = require('../logic/pace.logic');
 const weatherLogic = require('../logic/weather.logic');
+const schedulerLogic = require('../logic/scheduler.logic'); // Import Scheduler
+const clusteringLogic = require('../logic/clustering.logic'); // Import Clustering
+const budgetLogic = require('../logic/budget.logic');
+const fatigueLogic = require('../logic/fatigue.logic');
 
 exports.createTrip = async (req, res) => {
     try {
@@ -29,34 +34,48 @@ exports.createTrip = async (req, res) => {
         const moodRules = moodLogic.apply(mood);
         const paceRules = paceLogic.apply(pace, travelers);
 
-        // 2. Places Service
+        // 2. Places + Transport (parallel for speed)
+        const routeStart = startLocation || 'New Delhi';
+
+        const [placesResult, transportResult, routeResult] = await Promise.allSettled([
+            placesService.getPlaces(destination, weatherRules, moodRules),
+            travelService.getTravelOptions(routeStart, destination, startDate),
+            routingService.getRoute(routeStart, destination)
+        ]);
+
         let places = [];
-        try {
-            // Fetch places from OTM / Geoapify
-            places = await placesService.getPlaces(destination, weatherRules, moodRules);
+        if (placesResult.status === 'fulfilled') {
+            places = placesResult.value || [];
             console.log(`Found ${places.length} places for ${destination}`);
-        } catch (err) {
-            console.error("Places Service Failed:", err.message);
-            // Fallback to empty list
+        } else {
+            console.error("Places Service Failed:", placesResult.reason?.message);
         }
 
-        // 3. Routing & Cost
-        // Default to 'New Delhi' if no start location provided
-        const routeStart = startLocation || 'New Delhi';
-        let route = { distanceKm: 0, duration: 'N/A' };
+        // Normalize transport options for frontend
+        let transportOptions = [
+            { type: 'flight', operator: 'IndiGo', duration: '2h 15m', departure: '06:00 AM', cost: 4500 },
+            { type: 'train', operator: 'Shatabdi Exp', duration: '6h 00m', departure: '07:00 AM', cost: 1200 },
+            { type: 'bus', operator: 'Volvo AC', duration: '10h 00m', departure: '09:00 PM', cost: 800 }
+        ];
+        if (transportResult.status === 'fulfilled' && Array.isArray(transportResult.value) && transportResult.value.length > 0) {
+            transportOptions = transportResult.value.map(opt => ({
+                type: opt.category?.toLowerCase() || opt.type || 'flight',
+                operator: opt.airline || opt.operator || 'Carrier',
+                duration: opt.durationEstimate || opt.duration || 'N/A',
+                departure: opt.departureTime || opt.departure || 'TBD',
+                cost: opt.priceEstimate || opt.price || 0
+            }));
+        } else {
+            console.warn("Transport Service Failed — using fallback data.");
+        }
 
-        try {
-            route = await routingService.getRoute(routeStart, destination);
-        } catch (err) {
-            console.error("Routing failed, defaulting to empty route:", err.message);
-            // Fallback object to prevent crash
-            route = {
-                start: routeStart,
-                end: destination,
-                distanceKm: 0,
-                duration: "Unknown",
-                apiDurationMin: 0
-            };
+        // 3. Routing
+        let route = { distanceKm: 0, duration: 'N/A' };
+        if (routeResult.status === 'fulfilled') {
+            route = routeResult.value;
+        } else {
+            console.error("Routing failed, defaulting to empty route:", routeResult.reason?.message);
+            route = { start: routeStart, end: destination, distanceKm: 0, duration: "Unknown", apiDurationMin: 0 };
         }
 
         // 4. Cost Estimation
@@ -100,7 +119,17 @@ exports.createTrip = async (req, res) => {
         const budgetReasoning = `Optimized for ${travelers} traveler(s) within a ${budget} budget.`;
         const stayReasoning = `Selected ${stayType} accommodation to maximize comfort within budget.`;
 
-        const plan = {
+        // 7. Scheduler Logic (NEW)
+        const dayPlansRaw = schedulerLogic.generateItinerary(places, durationDays, pace, weather);
+
+        // 7b. Clustering Logic (NEW)
+        // Optimize days by geography
+        const dayPlansClustered = clusteringLogic.clusterItinerary(dayPlansRaw);
+
+        // 7c. Fatigue Balancing (NEW)
+        const dayPlans = fatigueLogic.balanceFatigue(dayPlansClustered, pace);
+
+        let plan = {
             planSummary,
             whyThisDestination,
             budgetReasoning,
@@ -109,11 +138,19 @@ exports.createTrip = async (req, res) => {
             route,
             estimatedCost,
             stay,
+            transportOptions,  // Real transport data
             rules: { weatherRules, moodRules, paceRules },
-            places // Ensure this is sent!
+            places, // Ensure this is sent!
+            dayPlans // Added structured itinerary
         };
 
-        // 7. AI Enhancement (Optional)
+
+
+        // 8. Budget Optimization (NEW)
+        // Run budget logic to adjust plan if needed
+        plan = budgetLogic.optimizeTrip(plan, budget);
+
+        // 9. AI Enhancement (Optional)
         // Enhances text fields (summary, themes, tips) using OpenAI if Key is present.
         // Returns original plan on failure.
         const finalPlan = await aiService.enhanceTripText(plan);
@@ -130,23 +167,18 @@ exports.createTrip = async (req, res) => {
             mood,
             pace,
             budget,
-            plan: finalPlan // Use the potentially enhanced plan
+            plan: finalPlan // Use the potentially enhanced AND optimized plan
         };
 
         console.log("Sending Trip Response. Places count:", plan.places.length);
         res.status(200).json(tripResponse);
+
     } catch (err) {
         console.error("Create Trip Critical Error:", err);
-        // Even in critical error, return a fallback JSON to prevent blank screen
-        console.log("ALL PLACES COUNT:", allPlaces.length);
-        console.log("ALL PLACES SAMPLE:", allPlaces.slice(0, 3));
-        console.log("DAY PLANS FINAL:", JSON.stringify(dayPlans, null, 2));
-
         res.status(200).json({
             error: "Critical Failure",
             details: err.message,
-            // Minimal valid structure
-            plan: { places: [], weather: {}, route: {} }
+            plan: { places: [], weather: {}, route: {}, dayPlans: [] }
         });
     }
 };

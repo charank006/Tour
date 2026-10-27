@@ -1,27 +1,22 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import Logo from './Logo';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const isHome = location.pathname === '/';
 
   useEffect(() => {
-    const handleScroll = () => {
-      const isScrolled = window.scrollY > 20;
-      if (isScrolled !== scrolled) {
-        setScrolled(isScrolled);
-      }
-    };
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [scrolled]);
+  useEffect(() => { setIsOpen(false); }, [location.pathname]);
 
   const navItems = [
     { path: '/destinations', label: 'Destinations' },
@@ -31,84 +26,113 @@ const Navbar = () => {
   ];
 
   const isActive = (path: string) => location.pathname === path;
-
-  // Placeholder for future logo image.
-  // Replace undefined with require/import path or public URL string, e.g., '/logo.png'
-  const logoUrl = '/logo.png';
+  const transparent = isHome && !scrolled;
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-primary border-b border-white/5 shadow-lg py-4 transition-all duration-300">
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 py-3 transition-all duration-500 ${transparent
+          ? 'bg-transparent border-transparent'
+          : 'bg-[#0A1628]/90 backdrop-blur-2xl border-b border-white/[0.06] shadow-[0_4px_30px_rgba(0,0,0,0.3)]'
+        }`}
+    >
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between">
-          {/* Logo */}
-          <Logo size="md" linkTo="/" imageUrl={logoUrl} className="" />
+        <div className="flex items-center justify-between h-14">
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
-            {navItems.map((item) => (
+          {/* Logo */}
+          <Logo size="md" linkTo="/" imageUrl="/logo.png" />
+
+          {/* Desktop links */}
+          <div className="hidden md:flex items-center gap-1">
+            {navItems.map(item => (
               <Link
                 key={item.path}
                 to={item.path}
-                className={`relative nav-link text-sm font-medium transition-colors ${isActive(item.path)
-                  ? 'text-white'
-                  : 'text-white/60 hover:text-white'
+                className={`relative px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${isActive(item.path)
+                    ? 'text-white'
+                    : 'text-white/55 hover:text-white hover:bg-white/[0.08]'
                   }`}
               >
                 {item.label}
                 {isActive(item.path) && (
                   <motion.div
-                    layoutId="navbar-indicator"
-                    className="absolute -bottom-1 left-0 right-0 h-[2px] bg-accent rounded-full"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
+                    layoutId="nav-pill"
+                    className="absolute inset-0 rounded-full bg-white/10 border border-white/10 -z-10"
+                    transition={{ type: 'spring', stiffness: 380, damping: 32 }}
                   />
                 )}
               </Link>
             ))}
+
             <Link
               to="/plan"
-              className="bg-accent text-accent-foreground hover:bg-accent/90 rounded-full px-6 py-2.5 text-sm font-bold shadow-orange hover:shadow-elevated transition-all"
+              className="ml-4 btn-accent text-sm font-bold px-5 py-2.5 rounded-full"
             >
               Start Planning
             </Link>
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile hamburger */}
           <button
             className="md:hidden p-2 rounded-xl text-white hover:bg-white/10 transition-colors"
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle menu"
           >
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.span
+                key={isOpen ? 'x' : 'menu'}
+                initial={{ rotate: -90, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: 90, opacity: 0 }}
+                transition={{ duration: 0.18 }}
+                className="block"
+              >
+                {isOpen ? <X size={22} /> : <Menu size={22} />}
+              </motion.span>
+            </AnimatePresence>
           </button>
         </div>
 
-        {/* Mobile Navigation */}
-        {isOpen && (
-          <div className="md:hidden py-4 border-t border-white/5 animate-fade-in bg-primary absolute top-full left-0 right-0 shadow-xl">
-            <div className="flex flex-col gap-2 p-4">
-              {navItems.map((item) => (
-                <Link
-                  key={item.path}
-                  to={item.path}
-                  className={`nav-link text-center text-lg py-2 ${isActive(item.path) ? 'text-accent font-bold' : 'text-white/60'
-                    }`}
-                  onClick={() => setIsOpen(false)}
-                >
-                  {item.label}
-                </Link>
-              ))}
-              <Link
-                to="/plan"
-                className="bg-accent text-accent-foreground text-center mt-4 mx-4 py-3 rounded-full font-bold shadow-orange"
-                onClick={() => setIsOpen(false)}
-              >
-                Start Planning
-              </Link>
-            </div>
-          </div>
-        )}
+        {/* Mobile drawer */}
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.28, ease: 'easeInOut' }}
+              className="md:hidden overflow-hidden"
+            >
+              <div className="pt-2 pb-4 border-t border-white/[0.07] mt-2 flex flex-col gap-1">
+                {navItems.map((item, i) => (
+                  <motion.div
+                    key={item.path}
+                    initial={{ opacity: 0, x: -16 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.06 }}
+                  >
+                    <Link
+                      to={item.path}
+                      className={`block px-4 py-3 rounded-xl text-sm transition-colors ${isActive(item.path)
+                          ? 'text-white bg-white/10 font-semibold'
+                          : 'text-white/60 hover:text-white hover:bg-white/[0.06]'
+                        }`}
+                    >
+                      {item.label}
+                    </Link>
+                  </motion.div>
+                ))}
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.26 }}>
+                  <Link
+                    to="/plan"
+                    className="block mt-2 text-center btn-accent text-sm font-bold py-3 rounded-full"
+                  >
+                    Start Planning
+                  </Link>
+                </motion.div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </nav>
   );

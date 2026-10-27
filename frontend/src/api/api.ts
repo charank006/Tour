@@ -21,7 +21,7 @@ api.interceptors.request.use((config) => {
 
 export const tripApi = {
     // Trip
-    createTrip: async (tripData: any) => {
+    createTrip: async (tripData: Record<string, unknown>) => {
         const response = await api.post('/trip/create', tripData);
         return response.data;
     },
@@ -41,11 +41,11 @@ export const tripApi = {
 };
 
 export const authApi = {
-    login: async (credentials: any) => {
+    login: async (credentials: Record<string, unknown>) => {
         const response = await api.post('/auth/login', credentials);
         return response.data;
     },
-    register: async (userData: any) => {
+    register: async (userData: Record<string, unknown>) => {
         const response = await api.post('/auth/register', userData);
         return response.data;
     }
