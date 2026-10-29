@@ -5,7 +5,7 @@ import PlanByMood from '@/components/home/PlanByMood';
 import SmartFeaturesBento from '@/components/home/SmartFeaturesBento';
 import ReviewsSection from '@/components/home/ReviewsSection';
 import StatsSection from '@/components/home/StatsSection';
-import InteractiveGlobe from '@/components/home/InteractiveGlobe';
+import SubcontinentCorridors from '@/components/home/SubcontinentCorridors';
 import FinalCta from '@/components/home/FinalCta';
 import Footer from '@/components/home/Footer';
 
@@ -33,8 +33,8 @@ const Index = () => {
       {/* 7. Stats Counters (Real Application Numbers) */}
       <StatsSection />
 
-      {/* 8. Interactive Lightweight Cobe Globe */}
-      <InteractiveGlobe />
+      {/* 8. Curated Subcontinent Corridors Showcase */}
+      <SubcontinentCorridors />
 
       {/* 9. Final CTA Band & Footer */}
       <FinalCta />

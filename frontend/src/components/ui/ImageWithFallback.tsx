@@ -1,6 +1,28 @@
 import { useState, useEffect } from 'react';
-import { MapPin, Compass } from 'lucide-react';
 import { motion } from 'framer-motion';
+
+// Curated pool of guaranteed high-resolution Unsplash travel photography
+const VERIFIED_FALLBACK_IMAGES = [
+  'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=85&w=800&auto=format&fit=crop', // Mountain mist
+  'https://images.unsplash.com/photo-1544735716-392fe2489ffa?q=85&w=800&auto=format&fit=crop', // Tea gardens
+  'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?q=85&w=800&auto=format&fit=crop', // Snow peaks
+  'https://images.unsplash.com/photo-1477587458883-47145ed94245?q=85&w=800&auto=format&fit=crop', // Amer palace
+  'https://images.unsplash.com/photo-1518684079-3c830dcef090?q=85&w=800&auto=format&fit=crop', // Backwaters
+  'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=85&w=800&auto=format&fit=crop', // Heritage stay
+  'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=85&w=800&auto=format&fit=crop', // Boutique villa
+  'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=85&w=800&auto=format&fit=crop', // Spice market
+];
+
+const getDeterministicFallback = (key?: string) => {
+  if (!key) return VERIFIED_FALLBACK_IMAGES[0];
+  let hash = 0;
+  for (let i = 0; i < key.length; i++) {
+    hash = (hash << 5) - hash + key.charCodeAt(i);
+    hash |= 0;
+  }
+  const index = Math.abs(hash) % VERIFIED_FALLBACK_IMAGES.length;
+  return VERIFIED_FALLBACK_IMAGES[index];
+};
 
 interface ImageWithFallbackProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   fallbackIcon?: React.ElementType;
@@ -12,63 +34,47 @@ export const ImageWithFallback = ({
   src,
   alt,
   className = '',
-  fallbackIcon: Icon = Compass,
-  fallbackText,
   containerClassName = '',
   ...props
 }: ImageWithFallbackProps) => {
-  const [error, setError] = useState(false);
+  const fallbackUrl = getDeterministicFallback(alt || src);
+  const [currentSrc, setCurrentSrc] = useState<string>(src || fallbackUrl);
+  const [hasError, setHasError] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  // Reset state if src changes
+  // Sync when prop changes
   useEffect(() => {
-    setError(false);
+    setCurrentSrc(src || fallbackUrl);
+    setHasError(false);
     setLoading(true);
-  }, [src]);
-
-  const handleLoad = () => {
-    setLoading(false);
-  };
+  }, [src, fallbackUrl]);
 
   const handleError = () => {
-    setError(true);
-    setLoading(false);
+    if (!hasError && currentSrc !== fallbackUrl) {
+      // Gracefully switch to verified fallback image
+      setHasError(true);
+      setCurrentSrc(fallbackUrl);
+    } else {
+      setLoading(false);
+    }
   };
-
-  if (error || !src) {
-    return (
-      <div
-        className={`w-full h-full min-h-[120px] bg-gradient-to-br from-primary/10 via-amber-500/5 to-muted/80 flex flex-col items-center justify-center text-muted-foreground p-4 text-center select-none border border-border/40 ${containerClassName}`}
-      >
-        <div className="w-10 h-10 rounded-full bg-card/80 border border-border/80 flex items-center justify-center text-primary mb-2 shadow-xs">
-          <Icon size={20} />
-        </div>
-        <span className="text-xs font-semibold text-foreground/80 tracking-wide line-clamp-1">
-          {alt || fallbackText || 'Travel Scene'}
-        </span>
-        <span className="text-[11px] text-muted-foreground/75 mt-0.5">
-          {fallbackText || 'Destination Photo Archive'}
-        </span>
-      </div>
-    );
-  }
 
   return (
     <div className={`relative overflow-hidden ${containerClassName}`}>
       {loading && (
-        <div className="absolute inset-0 bg-muted/50 animate-pulse flex items-center justify-center z-10">
-          <MapPin size={22} className="text-primary/40 animate-bounce" />
+        <div className="absolute inset-0 bg-muted/40 animate-pulse flex items-center justify-center z-10">
+          <div className="w-4 h-4 rounded-full border-2 border-primary/30 border-t-primary animate-spin" />
         </div>
       )}
       <motion.img
         initial={{ opacity: 0 }}
-        animate={{ opacity: loading ? 0 : 1 }}
-        transition={{ duration: 0.4 }}
-        src={src}
-        alt={alt || 'Travel scene'}
+        animate={{ opacity: loading ? 0.3 : 1 }}
+        transition={{ duration: 0.3 }}
+        src={currentSrc}
+        alt={alt || 'Curated travel view'}
         loading="lazy"
         onError={handleError}
-        onLoad={handleLoad}
+        onLoad={() => setLoading(false)}
         className={`w-full h-full object-cover transition-transform duration-500 will-change-transform ${className}`}
         {...props}
       />
