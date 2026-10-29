@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { Menu, X, Sparkles } from 'lucide-react';
+import { motion, AnimatePresence, useScroll } from 'framer-motion';
 import Logo from './Logo';
 
 const Navbar = () => {
@@ -11,130 +11,149 @@ const Navbar = () => {
   const isHome = location.pathname === '/';
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    const onScroll = () => setScrolled(window.scrollY > 28);
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  useEffect(() => { setIsOpen(false); }, [location.pathname]);
+  useEffect(() => {
+    setIsOpen(false);
+  }, [location.pathname]);
 
   const navItems = [
     { path: '/destinations', label: 'Destinations' },
-    { path: '/activities', label: 'Activities' },
-    { path: '/reviews', label: 'Reviews' },
-    { path: '/my-trips', label: 'My Trips' },
+    { path: '/activities', label: 'Curated Experiences' },
+    { path: '/reviews', label: 'Field Notes' },
+    { path: '/my-trips', label: 'My Journeys' },
   ];
 
+  const { scrollYProgress } = useScroll();
   const isActive = (path: string) => location.pathname === path;
-  const transparent = isHome && !scrolled;
+  const isTransparent = isHome && !scrolled;
 
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 py-3 transition-all duration-500 ${transparent
-          ? 'bg-transparent border-transparent'
-          : 'bg-[#0A1628]/90 backdrop-blur-2xl border-b border-white/[0.06] shadow-[0_4px_30px_rgba(0,0,0,0.3)]'
-        }`}
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-editorial ${
+        isTransparent
+          ? 'bg-gradient-to-b from-black/50 via-black/20 to-transparent py-4'
+          : 'bg-background/92 backdrop-blur-md border-b border-border/80 shadow-warm-sm py-3'
+      }`}
     >
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-14">
+      {/* Scroll Progress Bar */}
+      <motion.div
+        style={{ scaleX: scrollYProgress, transformOrigin: '0%' }}
+        className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-primary z-50 pointer-events-none"
+      />
 
-          {/* Logo */}
-          <Logo size="md" linkTo="/" imageUrl="/logo.png" />
+      <div className="container mx-auto px-4 sm:px-6">
+        <div className="flex items-center justify-between h-12 md:h-14">
 
-          {/* Desktop links */}
-          <div className="hidden md:flex items-center gap-1">
-            {navItems.map(item => (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={`relative px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${isActive(item.path)
-                    ? 'text-white'
-                    : 'text-white/55 hover:text-white hover:bg-white/[0.08]'
+          {/* Editorial Logo */}
+          <Logo
+            size="md"
+            linkTo="/"
+            variant={isTransparent ? 'light' : 'auto'}
+          />
+
+          {/* Desktop Navigation Links */}
+          <nav className="hidden md:flex items-center gap-1.5" aria-label="Main navigation">
+            {navItems.map((item) => {
+              const active = isActive(item.path);
+              return (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`relative px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 ${
+                    isTransparent
+                      ? active
+                        ? 'text-white font-semibold'
+                        : 'text-white/80 hover:text-white hover:bg-white/10'
+                      : active
+                      ? 'text-primary font-semibold'
+                      : 'text-foreground/75 hover:text-foreground hover:bg-muted/80'
                   }`}
-              >
-                {item.label}
-                {isActive(item.path) && (
-                  <motion.div
-                    layoutId="nav-pill"
-                    className="absolute inset-0 rounded-full bg-white/10 border border-white/10 -z-10"
-                    transition={{ type: 'spring', stiffness: 380, damping: 32 }}
-                  />
-                )}
-              </Link>
-            ))}
+                >
+                  {item.label}
+                  {active && (
+                    <motion.span
+                      layoutId="nav-active-pill"
+                      className={`absolute inset-0 rounded-full -z-10 ${
+                        isTransparent
+                          ? 'bg-white/15 border border-white/20'
+                          : 'bg-primary/10 border border-primary/20'
+                      }`}
+                      transition={{ type: 'spring', stiffness: 350, damping: 30 }}
+                    />
+                  )}
+                </Link>
+              );
+            })}
 
+            {/* Primary Action Button */}
             <Link
               to="/plan"
-              className="ml-4 btn-accent text-sm font-bold px-5 py-2.5 rounded-full"
+              className="ml-3 inline-flex items-center gap-2 bg-primary text-primary-foreground text-sm font-semibold px-5 py-2.5 rounded-full shadow-warm hover:brightness-105 active:scale-[0.98] transition-all duration-200"
             >
-              Start Planning
+              <Sparkles size={15} />
+              <span>Plan a Trip</span>
             </Link>
-          </div>
+          </nav>
 
-          {/* Mobile hamburger */}
+          {/* Mobile Menu Button */}
           <button
-            className="md:hidden p-2 rounded-xl text-white hover:bg-white/10 transition-colors"
+            className={`md:hidden p-2.5 rounded-full transition-colors ${
+              isTransparent
+                ? 'text-white hover:bg-white/15'
+                : 'text-foreground hover:bg-muted'
+            }`}
             onClick={() => setIsOpen(!isOpen)}
-            aria-label="Toggle menu"
+            aria-label={isOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={isOpen}
           >
-            <AnimatePresence mode="wait" initial={false}>
-              <motion.span
-                key={isOpen ? 'x' : 'menu'}
-                initial={{ rotate: -90, opacity: 0 }}
-                animate={{ rotate: 0, opacity: 1 }}
-                exit={{ rotate: 90, opacity: 0 }}
-                transition={{ duration: 0.18 }}
-                className="block"
-              >
-                {isOpen ? <X size={22} /> : <Menu size={22} />}
-              </motion.span>
-            </AnimatePresence>
+            {isOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
 
-        {/* Mobile drawer */}
+        {/* Mobile Slide-down Drawer */}
         <AnimatePresence>
           {isOpen && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.28, ease: 'easeInOut' }}
-              className="md:hidden overflow-hidden"
+              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+              className="md:hidden overflow-hidden bg-card/98 backdrop-blur-xl border border-border/80 rounded-2xl mt-2 p-4 shadow-warm-lg"
             >
-              <div className="pt-2 pb-4 border-t border-white/[0.07] mt-2 flex flex-col gap-1">
-                {navItems.map((item, i) => (
-                  <motion.div
+              <div className="flex flex-col gap-1">
+                {navItems.map((item) => (
+                  <Link
                     key={item.path}
-                    initial={{ opacity: 0, x: -16 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: i * 0.06 }}
+                    to={item.path}
+                    className={`px-4 py-3 rounded-xl text-base font-medium transition-colors ${
+                      isActive(item.path)
+                        ? 'text-primary bg-primary/10 font-semibold'
+                        : 'text-foreground/80 hover:bg-muted hover:text-foreground'
+                    }`}
                   >
-                    <Link
-                      to={item.path}
-                      className={`block px-4 py-3 rounded-xl text-sm transition-colors ${isActive(item.path)
-                          ? 'text-white bg-white/10 font-semibold'
-                          : 'text-white/60 hover:text-white hover:bg-white/[0.06]'
-                        }`}
-                    >
-                      {item.label}
-                    </Link>
-                  </motion.div>
+                    {item.label}
+                  </Link>
                 ))}
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.26 }}>
+
+                <div className="pt-3 mt-2 border-t border-border/60">
                   <Link
                     to="/plan"
-                    className="block mt-2 text-center btn-accent text-sm font-bold py-3 rounded-full"
+                    className="w-full inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground font-semibold py-3 px-5 rounded-full shadow-warm active:scale-[0.98] transition-transform"
                   >
-                    Start Planning
+                    <Sparkles size={16} />
+                    <span>Plan a Trip</span>
                   </Link>
-                </motion.div>
+                </div>
               </div>
             </motion.div>
           )}
         </AnimatePresence>
       </div>
-    </nav>
+    </header>
   );
 };
 

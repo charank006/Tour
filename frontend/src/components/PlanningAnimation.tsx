@@ -1,100 +1,87 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Plane } from 'lucide-react';
+import { Compass, Sparkles, MapPin } from 'lucide-react';
+import { FoldedMapIllustration } from './illustrations/TravelIllustrations';
 
-const MESSAGES = [
-    "Analyzing seasons...",
-    "Optimizing budget...",
-    "Designing your journey..."
+const REAL_STEPS_MICROCOPY = [
+  'Checking historical weather forecasts & monsoon radar...',
+  'Curating morning crowd windows to avoid tour bus jams...',
+  'Calculating scenic road factor & transit options...',
+  'Balancing day fatigue and evening rest slots...',
+  'Aligning heritage highlights with your travel tempo...',
+  'Finalizing your living, swappable travel journal...'
 ];
 
-const PlanningAnimation = () => {
-    const [msgIndex, setMsgIndex] = useState(0);
+export const PlanningAnimation = () => {
+  const [msgIndex, setMsgIndex] = useState(0);
 
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setMsgIndex((prev) => (prev + 1) % MESSAGES.length);
-        }, 2000);
-        return () => clearInterval(interval);
-    }, []);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setMsgIndex((prev) => (prev + 1) % REAL_STEPS_MICROCOPY.length);
+    }, 1800);
+    return () => clearInterval(interval);
+  }, []);
 
-    return (
-        <div className="flex flex-col items-center justify-center p-8 w-full max-w-md mx-auto">
-            {/* Animation Scene */}
-            <div className="relative w-full h-32 flex items-center justify-center mb-8 overflow-hidden">
-                {/* Dashed Path Background */}
-                <svg className="absolute w-full h-full" viewBox="0 0 400 100">
-                    <motion.path
-                        d="M 20 80 Q 200 10 380 80"
-                        fill="transparent"
-                        stroke="#e2e8f0"
-                        strokeWidth="4"
-                        strokeDasharray="10 10"
-                        initial={{ pathLength: 0, opacity: 0 }}
-                        animate={{ pathLength: 1, opacity: 1 }}
-                        transition={{ duration: 1 }}
-                    />
-                    {/* Animated Route Line */}
-                    <motion.path
-                        d="M 20 80 Q 200 10 380 80"
-                        fill="transparent"
-                        stroke="#3b82f6"
-                        strokeWidth="4"
-                        strokeLinecap="round"
-                        strokeDasharray="10 20"
-                        initial={{ strokeDashoffset: 100 }}
-                        animate={{ strokeDashoffset: -1000 }}
-                        transition={{
-                            duration: 20,
-                            repeat: Infinity,
-                            ease: "linear"
-                        }}
-                    />
-                </svg>
+  return (
+    <div className="flex flex-col items-center justify-center p-8 w-full max-w-lg mx-auto text-center">
+      {/* Folded Map & Compass Animation Scene */}
+      <div className="relative w-48 h-36 flex items-center justify-center mb-6">
+        <FoldedMapIllustration className="w-full h-full text-foreground/80 opacity-90 filter drop-shadow-md" />
 
-                {/* Moving Airplane */}
-                <motion.div
-                    className="absolute z-10 text-primary"
-                    initial={{ offsetDistance: "0%" }}
-                    animate={{ offsetDistance: "100%" }}
-                    style={{
-                        offsetPath: "path('M 20 80 Q 200 10 380 80')",
-                        offsetRotate: "auto 45deg" // Adjust rotation to align plane
-                    }}
-                    transition={{
-                        duration: 3,
-                        repeat: Infinity,
-                        ease: "easeInOut"
-                    }}
-                >
-                    <div className="transform -rotate-45"> {/* Counter-rotate if needed strictly by CSS, but offsetRotate handles path following */}
-                        <Plane size={32} fill="currentColor" className="text-blue-500" />
-                    </div>
-                </motion.div>
+        {/* Floating Compass Indicator */}
+        <motion.div
+          animate={{
+            y: [-3, 3, -3],
+            rotate: [0, 8, -8, 0],
+          }}
+          transition={{
+            duration: 4,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
+          className="absolute -top-2 right-4 w-10 h-10 rounded-full bg-card border border-primary/40 shadow-warm flex items-center justify-center text-primary"
+        >
+          <Compass size={22} className="animate-spin-slow" />
+        </motion.div>
 
-                {/* Fallback using simple x translation if offset-path not supported perfectly in all execution contexts, 
-                    but pure CSS Motion Path (offset-path) is best for curves. 
-                    Let's use a simpler Framer Motion approach for the plane if offset-path is tricky in React styles sometimes.
-                */}
-            </div>
+        {/* Pulse pin marker */}
+        <motion.div
+          initial={{ scale: 0.8, opacity: 0.5 }}
+          animate={{ scale: [0.8, 1.2, 0.8], opacity: [0.7, 1, 0.7] }}
+          transition={{ duration: 2, repeat: Infinity }}
+          className="absolute bottom-6 left-12 text-primary"
+        >
+          <MapPin size={24} className="fill-primary text-primary" />
+        </motion.div>
+      </div>
 
-            {/* Cycling Text */}
-            <div className="h-8 relative w-full text-center">
-                <AnimatePresence mode="wait">
-                    <motion.p
-                        key={MESSAGES[msgIndex]}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        transition={{ duration: 0.5 }}
-                        className="text-muted-foreground font-medium text-lg absolute w-full"
-                    >
-                        {MESSAGES[msgIndex]}
-                    </motion.p>
-                </AnimatePresence>
-            </div>
-        </div>
-    );
+      {/* Progress badge */}
+      <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-widest mb-3">
+        <Sparkles size={12} />
+        <span>Curating Itinerary Blueprint</span>
+      </div>
+
+      <h3 className="font-serif-display text-2xl font-bold text-foreground mb-3 tracking-tight">
+        Drafting Your Personal Journey
+      </h3>
+
+      {/* Cycling Microcopy with smooth AnimatePresence transition */}
+      <div className="h-12 relative w-full flex items-center justify-center px-4">
+        <AnimatePresence mode="wait">
+          <motion.p
+            key={REAL_STEPS_MICROCOPY[msgIndex]}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            className="text-xs sm:text-sm text-muted-foreground font-medium absolute leading-relaxed max-w-sm"
+          >
+            {REAL_STEPS_MICROCOPY[msgIndex]}
+          </motion.p>
+        </AnimatePresence>
+      </div>
+    </div>
+  );
 };
 
 export default PlanningAnimation;

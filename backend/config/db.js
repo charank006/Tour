@@ -6,7 +6,9 @@ const connectDB = async () => {
             console.warn("⚠️  MONGO_URI missing. Running without database.");
             return;
         }
-        await mongoose.connect(process.env.MONGO_URI);
+        await mongoose.connect(process.env.MONGO_URI, {
+            serverSelectionTimeoutMS: 5000
+        });
         console.log('MongoDB Connected');
     } catch (err) {
         console.error('⚠️  MongoDB Connection Error:', err.message);

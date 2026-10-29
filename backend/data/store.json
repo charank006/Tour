@@ -1,0 +1,1706 @@
+{
+  "trips": [
+    {
+      "_id": "trip_1793191383478",
+      "id": "trip_1793191383478",
+      "shareId": "share_395caa5f0ef2",
+      "userId": "guest",
+      "destination": "Manali",
+      "startLocation": "Mumbai",
+      "startDate": "2026-11-04",
+      "endDate": "2026-11-08",
+      "durationDays": 5,
+      "travelers": 2,
+      "mood": "mountains",
+      "pace": "Medium",
+      "budget": 30000,
+      "plan": {
+        "planSummary": "A curated 5-day Comfort itinerary to Manali",
+        "whyThisDestination": "Perfect for your mountains mood with Early winter chill (seasonal estimate).",
+        "budgetReasoning": "Optimized for 2 traveler(s) within a ₹30,000 budget.",
+        "stayReasoning": "Selected Comfort accommodation for optimal comfort and accessibility.",
+        "weather": {
+          "temp": 8,
+          "feelsLike": 8,
+          "humidity": 60,
+          "windKph": 12,
+          "rain": false,
+          "snow": false,
+          "description": "Early winter chill (seasonal estimate)",
+          "icon": null,
+          "city": "Manali",
+          "country": "IN",
+          "meta": {
+            "source": "estimated",
+            "degraded": true
+          }
+        },
+        "route": {
+          "start": "Mumbai",
+          "end": "Manali",
+          "distanceKm": 1987,
+          "duration": "30h 34m",
+          "apiDurationMin": 1834,
+          "modalEstimates": {
+            "flight": {
+              "distanceKm": 1987,
+              "duration": "4h 19m",
+              "speedKmh": 600
+            },
+            "train": {
+              "distanceKm": 1987,
+              "duration": "26h 30m",
+              "speedKmh": 75
+            },
+            "car": {
+              "distanceKm": 1987,
+              "duration": "30h 34m",
+              "speedKmh": 65
+            },
+            "bus": {
+              "distanceKm": 1987,
+              "duration": "44h 9m",
+              "speedKmh": 45
+            }
+          },
+          "meta": {
+            "source": "estimated",
+            "degraded": true
+          }
+        },
+        "estimatedCost": {
+          "total": 38200,
+          "transport": 9000,
+          "stay": 10000,
+          "accommodation": 2000,
+          "food": 14000,
+          "activities": 9000,
+          "buffer": 4200,
+          "misc": 4200,
+          "perPerson": 23100,
+          "breakdown": {
+            "travel": 9000,
+            "stay": 10000,
+            "food": 14000,
+            "activities": 9000,
+            "misc": 4200
+          },
+          "meta": {
+            "source": "estimated",
+            "degraded": false
+          }
+        },
+        "stay": {
+          "type": "Budget",
+          "area": "Manali Heritage Quarter",
+          "estimatedCostPerNight": 1500,
+          "nights": 4
+        },
+        "transportOptions": [
+          {
+            "type": "flight",
+            "operator": "IndiGo",
+            "duration": "2h 15m",
+            "departure": "06:00 AM",
+            "cost": 4500
+          },
+          {
+            "type": "flight",
+            "operator": "Air India",
+            "duration": "2h 30m",
+            "departure": "10:30 AM",
+            "cost": 5200
+          },
+          {
+            "type": "flight",
+            "operator": "Vistara",
+            "duration": "2h 15m",
+            "departure": "05:00 PM",
+            "cost": 6000
+          }
+        ],
+        "rules": {
+          "weatherRules": {
+            "indoorPreference": false,
+            "packRainGear": false,
+            "warmClothing": true
+          },
+          "moodRules": {
+            "priority": [],
+            "paceOverride": null
+          },
+          "paceRules": {
+            "maxSpotsPerDay": 5
+          }
+        },
+        "places": [
+          {
+            "name": "Atal Tunnel & Sissu Viewpoint",
+            "category": "Mountain Pass",
+            "coordinates": {
+              "lat": 32.44,
+              "lon": 77.16
+            },
+            "isIndoor": false,
+            "weatherSensitivity": "high",
+            "rating": 9.5,
+            "cost": 0,
+            "openHours": "07:00 - 18:00",
+            "location": "Manali, India",
+            "meta": {
+              "source": "seed",
+              "degraded": true
+            },
+            "score": 99.3,
+            "matchPercent": 90,
+            "reasons": [
+              "Matches your interest in mountain",
+              "Free public access highlight"
+            ]
+          },
+          {
+            "name": "Jogini Waterfalls Trail",
+            "category": "Waterfall Hike",
+            "coordinates": {
+              "lat": 32.268,
+              "lon": 77.195
+            },
+            "isIndoor": false,
+            "weatherSensitivity": "high",
+            "rating": 9.2,
+            "cost": 0,
+            "openHours": "06:00 - 17:00",
+            "location": "Manali, India",
+            "meta": {
+              "source": "seed",
+              "degraded": true
+            },
+            "score": 99.1,
+            "matchPercent": 90,
+            "reasons": [
+              "Matches your interest in hike",
+              "Free public access highlight"
+            ]
+          },
+          {
+            "name": "Solang Valley Alpine Meadow",
+            "category": "Valley & Adventure",
+            "coordinates": {
+              "lat": 32.316,
+              "lon": 77.1575
+            },
+            "isIndoor": false,
+            "weatherSensitivity": "high",
+            "rating": 9.3,
+            "cost": 500,
+            "openHours": "09:00 - 18:00",
+            "location": "Manali, India",
+            "meta": {
+              "source": "seed",
+              "degraded": true
+            },
+            "score": 97.2,
+            "matchPercent": 88,
+            "reasons": [
+              "Matches your interest in valley"
+            ]
+          },
+          {
+            "name": "Vashisht Natural Hot Springs",
+            "category": "Wellness & Baths",
+            "coordinates": {
+              "lat": 32.2612,
+              "lon": 77.1895
+            },
+            "isIndoor": true,
+            "weatherSensitivity": "low",
+            "rating": 8.6,
+            "cost": 0,
+            "openHours": "07:00 - 20:00",
+            "location": "Manali, India",
+            "meta": {
+              "source": "seed",
+              "degraded": true
+            },
+            "score": 88.3,
+            "matchPercent": 80,
+            "reasons": [
+              "Free public access highlight"
+            ]
+          },
+          {
+            "name": "Manu Temple Pilgrimage",
+            "category": "Ancient Temple",
+            "coordinates": {
+              "lat": 32.256,
+              "lon": 77.172
+            },
+            "isIndoor": true,
+            "weatherSensitivity": "low",
+            "rating": 8.5,
+            "cost": 0,
+            "openHours": "06:00 - 19:00",
+            "location": "Manali, India",
+            "meta": {
+              "source": "seed",
+              "degraded": true
+            },
+            "score": 88.3,
+            "matchPercent": 80,
+            "reasons": [
+              "Free public access highlight"
+            ]
+          },
+          {
+            "name": "Hadimba Cedar Forest Temple",
+            "category": "Historic Shrine",
+            "coordinates": {
+              "lat": 32.2483,
+              "lon": 77.1804
+            },
+            "isIndoor": false,
+            "weatherSensitivity": "medium",
+            "rating": 9,
+            "cost": 50,
+            "openHours": "08:00 - 18:00",
+            "location": "Manali, India",
+            "meta": {
+              "source": "seed",
+              "degraded": true
+            },
+            "score": 86.5,
+            "matchPercent": 79,
+            "reasons": []
+          },
+          {
+            "name": "Old Manali Apple Orchards & Cafes",
+            "category": "Culture & Cafe",
+            "coordinates": {
+              "lat": 32.253,
+              "lon": 77.175
+            },
+            "isIndoor": true,
+            "weatherSensitivity": "low",
+            "rating": 8.9,
+            "cost": 300,
+            "openHours": "09:00 - 22:00",
+            "location": "Manali, India",
+            "meta": {
+              "source": "seed",
+              "degraded": true
+            },
+            "score": 86.5,
+            "matchPercent": 79,
+            "reasons": []
+          },
+          {
+            "name": "Van Vihar Pine Sanctuary",
+            "category": "Forest Walk",
+            "coordinates": {
+              "lat": 32.241,
+              "lon": 77.187
+            },
+            "isIndoor": false,
+            "weatherSensitivity": "medium",
+            "rating": 8.4,
+            "cost": 30,
+            "openHours": "08:00 - 19:00",
+            "location": "Manali, India",
+            "meta": {
+              "source": "seed",
+              "degraded": true
+            },
+            "score": 86.2,
+            "matchPercent": 78,
+            "reasons": []
+          }
+        ],
+        "dayPlans": [
+          {
+            "day": 1,
+            "theme": "Exploration",
+            "date": "2026-11-04",
+            "activities": [
+              {
+                "time": "Morning",
+                "title": "Jogini Waterfalls Trail",
+                "description": "Explore Jogini Waterfalls Trail.",
+                "duration": "2-3 hours",
+                "cost": 0,
+                "type": "Waterfall Hike"
+              },
+              {
+                "time": "Afternoon",
+                "title": "Manu Temple Pilgrimage",
+                "description": "Visit Manu Temple Pilgrimage.",
+                "duration": "1-2 hours",
+                "cost": 0,
+                "type": "Ancient Temple"
+              },
+              {
+                "time": "Late Afternoon",
+                "title": "Van Vihar Pine Sanctuary",
+                "description": "Visit Van Vihar Pine Sanctuary.",
+                "duration": "1-2 hours",
+                "cost": 0,
+                "type": "Forest Walk"
+              }
+            ],
+            "optionalActivities": [
+              {
+                "title": "Atal Tunnel & Sissu Viewpoint",
+                "description": "Optional: Atal Tunnel & Sissu Viewpoint",
+                "type": "Mountain Pass",
+                "isIndoor": false,
+                "weatherSensitivity": "high"
+              },
+              {
+                "title": "Solang Valley Alpine Meadow",
+                "description": "Optional: Solang Valley Alpine Meadow",
+                "type": "Valley & Adventure",
+                "isIndoor": false,
+                "weatherSensitivity": "high"
+              }
+            ]
+          },
+          {
+            "day": 2,
+            "theme": "Exploration",
+            "date": "2026-11-05",
+            "activities": [
+              {
+                "time": "Morning",
+                "title": "Vashisht Natural Hot Springs",
+                "description": "Explore Vashisht Natural Hot Springs.",
+                "duration": "2-3 hours",
+                "cost": 0,
+                "type": "Wellness & Baths"
+              },
+              {
+                "time": "Afternoon",
+                "title": "Hadimba Cedar Forest Temple",
+                "description": "Visit Hadimba Cedar Forest Temple.",
+                "duration": "1-2 hours",
+                "cost": 0,
+                "type": "Historic Shrine"
+              },
+              {
+                "time": "Late Afternoon",
+                "title": "Old Manali Apple Orchards & Cafes",
+                "description": "Visit Old Manali Apple Orchards & Cafes.",
+                "duration": "1-2 hours",
+                "cost": 0,
+                "type": "Culture & Cafe"
+              }
+            ],
+            "optionalActivities": []
+          }
+        ],
+        "meta": {
+          "recommenderProvider": "rule",
+          "fallbackApplied": false,
+          "degraded": true
+        },
+        "budgetAdjusted": true,
+        "adjustmentsMade": [
+          "Downgraded accommodation from Comfort to Budget to save 8000.",
+          "Budget still exceeded. Consider using Train or Bus instead of Flight/Car to save significantly on travel costs."
+        ]
+      },
+      "createdAt": "2026-10-28T12:43:03.478Z",
+      "updatedAt": "2026-10-28T12:43:03.480Z"
+    },
+    {
+      "_id": "trip_1793190290373",
+      "id": "trip_1793190290373",
+      "shareId": "share_c5f4506e697b",
+      "userId": "guest",
+      "destination": "Jaipur",
+      "startLocation": "Mumbai",
+      "startDate": "2026-11-04",
+      "endDate": "2026-11-08",
+      "durationDays": 5,
+      "travelers": 2,
+      "mood": "mountains",
+      "pace": "Medium",
+      "budget": 37700,
+      "plan": {
+        "_id": "trip_1793190290373",
+        "id": "trip_1793190290373",
+        "shareId": "share_c5f4506e697b",
+        "destination": {
+          "name": "Jaipur"
+        },
+        "totalDays": 5,
+        "travelers": 2,
+        "startDate": "2026-11-04",
+        "endDate": "2026-11-08",
+        "budgetBreakdown": {
+          "total": 37700,
+          "travel": 9000,
+          "stay": 10000,
+          "food": 14000,
+          "activities": 9000,
+          "misc": 4200
+        },
+        "dayPlans": [
+          {
+            "day": 1,
+            "date": "Wed, 4 Nov",
+            "title": "Exploration",
+            "dailySpend": 7540,
+            "activities": [
+              {
+                "time": "Morning",
+                "title": "Lassiwala Traditional Milk Bar",
+                "description": "Explore Lassiwala Traditional Milk Bar.",
+                "duration": "2-3 hours",
+                "cost": 0,
+                "type": "Culinary Heritage"
+              },
+              {
+                "time": "Afternoon",
+                "title": "Nahargarh Fort Sunset Viewpoint",
+                "description": "Optional: Nahargarh Fort Sunset Viewpoint",
+                "duration": "2 hours",
+                "cost": 0,
+                "type": "Sunset & Fort"
+              },
+              {
+                "time": "Late Afternoon",
+                "title": "Albert Hall Museum",
+                "description": "Visit Albert Hall Museum.",
+                "duration": "1-2 hours",
+                "cost": 0,
+                "type": "State Art Museum"
+              }
+            ]
+          },
+          {
+            "day": 2,
+            "date": "Thu, 5 Nov",
+            "title": "Exploration",
+            "dailySpend": 7540,
+            "activities": [
+              {
+                "time": "Morning",
+                "title": "Jal Mahal (Water Palace Promenade)",
+                "description": "Explore Jal Mahal (Water Palace Promenade).",
+                "duration": "2-3 hours",
+                "cost": 0,
+                "type": "Scenic Lake Walk"
+              },
+              {
+                "time": "Afternoon",
+                "title": "Galta Ji (Monkey Temple)",
+                "description": "Visit Galta Ji (Monkey Temple).",
+                "duration": "1-2 hours",
+                "cost": 0,
+                "type": "Ancient Temple Complex"
+              },
+              {
+                "time": "Late Afternoon",
+                "title": "Bapu Bazaar Artisan Walk",
+                "description": "Visit Bapu Bazaar Artisan Walk.",
+                "duration": "1-2 hours",
+                "cost": 0,
+                "type": "Crafts & Spices"
+              }
+            ]
+          },
+          {
+            "day": 3,
+            "date": "Fri, 6 Nov",
+            "title": "Exploration",
+            "dailySpend": 7540,
+            "activities": [
+              {
+                "time": "Morning",
+                "title": "Hawa Mahal (Palace of Winds)",
+                "description": "Explore Hawa Mahal (Palace of Winds).",
+                "duration": "2-3 hours",
+                "cost": 0,
+                "type": "Architecture"
+              },
+              {
+                "time": "Afternoon",
+                "title": "Jaigarh Fort & Cannon",
+                "description": "Visit Jaigarh Fort & Cannon.",
+                "duration": "1-2 hours",
+                "cost": 0,
+                "type": "Historic Citadel"
+              }
+            ]
+          }
+        ],
+        "travelOptions": [
+          {
+            "type": "flight",
+            "operator": "IndiGo",
+            "duration": "2h 15m",
+            "departure": "06:00 AM",
+            "cost": 4500,
+            "badge": "fastest"
+          },
+          {
+            "type": "flight",
+            "operator": "Air India",
+            "duration": "2h 30m",
+            "departure": "10:30 AM",
+            "cost": 5200,
+            "badge": "recommended"
+          },
+          {
+            "type": "flight",
+            "operator": "Vistara",
+            "duration": "2h 15m",
+            "departure": "05:00 PM",
+            "cost": 6000,
+            "badge": "cheapest"
+          }
+        ],
+        "stayOptions": [
+          {
+            "type": "budget",
+            "name": "Jaipur Heritage Homestay",
+            "rating": 4.6,
+            "amenities": [
+              "High-speed WiFi",
+              "Traditional Breakfast",
+              "Garden Courtyard"
+            ],
+            "pricePerNight": 750,
+            "image": "https://images.unsplash.com/photo-1555854743-e3c746dd448d?q=85&w=600&auto=format&fit=crop"
+          },
+          {
+            "type": "comfort",
+            "name": "Jaipur Boutique Palace View",
+            "rating": 4.8,
+            "amenities": [
+              "Pool",
+              "Rooftop Terrace",
+              "Buffet Breakfast",
+              "Airport Pickup"
+            ],
+            "pricePerNight": 1500,
+            "image": "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=85&w=600&auto=format&fit=crop"
+          },
+          {
+            "type": "luxury",
+            "name": "The Grand Jaipur Royal Haveli",
+            "rating": 4.9,
+            "amenities": [
+              "Private Chauffeur",
+              "Ayurvedic Spa",
+              "Fine Dining Courtyard",
+              "Butler"
+            ],
+            "pricePerNight": 3750,
+            "image": "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=85&w=600&auto=format&fit=crop"
+          }
+        ],
+        "isOffline": false
+      },
+      "createdAt": "2026-10-28T12:25:44.575Z",
+      "updatedAt": "2026-10-28T12:25:44.581Z",
+      "totalDays": 5
+    },
+    {
+      "_id": "trip_1793190138916",
+      "id": "trip_1793190138916",
+      "shareId": "share_c89f90c2d316",
+      "userId": "guest",
+      "destination": "Kerala",
+      "startLocation": "Mumbai",
+      "startDate": "2026-11-04",
+      "endDate": "2026-11-08",
+      "durationDays": 5,
+      "travelers": 2,
+      "mood": "mountains",
+      "pace": "Medium",
+      "budget": 30000,
+      "plan": {
+        "planSummary": "A curated 5-day Comfort itinerary to Kerala",
+        "whyThisDestination": "Perfect for your mountains mood with Clear lagoons and sunshine (seasonal estimate).",
+        "budgetReasoning": "Optimized for 2 traveler(s) within a ₹30,000 budget.",
+        "stayReasoning": "Selected Comfort accommodation for optimal comfort and accessibility.",
+        "weather": {
+          "temp": 28,
+          "feelsLike": 28,
+          "humidity": 72,
+          "windKph": 12,
+          "rain": false,
+          "snow": false,
+          "description": "Clear lagoons and sunshine (seasonal estimate)",
+          "icon": null,
+          "city": "Kerala",
+          "country": "IN",
+          "meta": {
+            "source": "estimated",
+            "degraded": true
+          }
+        },
+        "route": {
+          "start": "Mumbai",
+          "end": "Kerala",
+          "distanceKm": 1357,
+          "duration": "20h 53m",
+          "apiDurationMin": 1253,
+          "modalEstimates": {
+            "flight": {
+              "distanceKm": 1357,
+              "duration": "3h 16m",
+              "speedKmh": 600
+            },
+            "train": {
+              "distanceKm": 1357,
+              "duration": "18h 6m",
+              "speedKmh": 75
+            },
+            "car": {
+              "distanceKm": 1357,
+              "duration": "20h 53m",
+              "speedKmh": 65
+            },
+            "bus": {
+              "distanceKm": 1357,
+              "duration": "30h 9m",
+              "speedKmh": 45
+            }
+          },
+          "meta": {
+            "source": "estimated",
+            "degraded": true
+          }
+        },
+        "estimatedCost": {
+          "total": 37700,
+          "transport": 9000,
+          "stay": 10000,
+          "accommodation": 2000,
+          "food": 14000,
+          "activities": 9000,
+          "buffer": 4200,
+          "misc": 4200,
+          "perPerson": 23100,
+          "breakdown": {
+            "travel": 9000,
+            "stay": 10000,
+            "food": 14000,
+            "activities": 9000,
+            "misc": 4200
+          },
+          "meta": {
+            "source": "estimated",
+            "degraded": false
+          }
+        },
+        "stay": {
+          "type": "Budget",
+          "area": "Kerala Heritage Quarter",
+          "estimatedCostPerNight": 1500,
+          "nights": 4
+        },
+        "transportOptions": [
+          {
+            "type": "flight",
+            "operator": "IndiGo",
+            "duration": "2h 15m",
+            "departure": "06:00 AM",
+            "cost": 4500
+          },
+          {
+            "type": "flight",
+            "operator": "Air India",
+            "duration": "2h 30m",
+            "departure": "10:30 AM",
+            "cost": 5200
+          },
+          {
+            "type": "flight",
+            "operator": "Vistara",
+            "duration": "2h 15m",
+            "departure": "05:00 PM",
+            "cost": 6000
+          }
+        ],
+        "rules": {
+          "weatherRules": {
+            "indoorPreference": false,
+            "packRainGear": false
+          },
+          "moodRules": {
+            "priority": [],
+            "paceOverride": null
+          },
+          "paceRules": {
+            "maxSpotsPerDay": 5
+          }
+        },
+        "places": [
+          {
+            "name": "Fort Kochi Chinese Fishing Nets",
+            "category": "Maritime Heritage",
+            "coordinates": {
+              "lat": 9.9675,
+              "lon": 76.2425
+            },
+            "isIndoor": false,
+            "weatherSensitivity": "high",
+            "rating": 8.8,
+            "cost": 0,
+            "openHours": "06:00 - 19:00",
+            "location": "Kerala, India",
+            "meta": {
+              "source": "seed",
+              "degraded": true
+            },
+            "score": 94.4,
+            "matchPercent": 86,
+            "reasons": [
+              "Renowned cultural highlight",
+              "Free public access highlight"
+            ]
+          },
+          {
+            "name": "Jew Town & Paradesi Synagogue",
+            "category": "Antiques & Heritage",
+            "coordinates": {
+              "lat": 9.957,
+              "lon": 76.26
+            },
+            "isIndoor": true,
+            "weatherSensitivity": "low",
+            "rating": 8.9,
+            "cost": 20,
+            "openHours": "10:00 - 18:00",
+            "location": "Kerala, India",
+            "meta": {
+              "source": "seed",
+              "degraded": true
+            },
+            "score": 92.5,
+            "matchPercent": 84,
+            "reasons": [
+              "Renowned cultural highlight"
+            ]
+          },
+          {
+            "name": "Munnar Kolukkumalai Sunrise Peak",
+            "category": "High Altitude Tea Peak",
+            "coordinates": {
+              "lat": 10.089,
+              "lon": 77.21
+            },
+            "isIndoor": false,
+            "weatherSensitivity": "high",
+            "rating": 9.6,
+            "cost": 600,
+            "openHours": "05:00 - 14:00",
+            "location": "Kerala, India",
+            "meta": {
+              "source": "seed",
+              "degraded": true
+            },
+            "score": 86.8,
+            "matchPercent": 79,
+            "reasons": []
+          },
+          {
+            "name": "Periyar Wildlife Sanctuary",
+            "category": "Forest Safari",
+            "coordinates": {
+              "lat": 9.466,
+              "lon": 77.144
+            },
+            "isIndoor": false,
+            "weatherSensitivity": "high",
+            "rating": 9,
+            "cost": 450,
+            "openHours": "06:00 - 17:30",
+            "location": "Kerala, India",
+            "meta": {
+              "source": "seed",
+              "degraded": true
+            },
+            "score": 86.5,
+            "matchPercent": 79,
+            "reasons": []
+          },
+          {
+            "name": "Mattancherry Dutch Palace",
+            "category": "Royal Mural Museum",
+            "coordinates": {
+              "lat": 9.958,
+              "lon": 76.259
+            },
+            "isIndoor": true,
+            "weatherSensitivity": "low",
+            "rating": 8.7,
+            "cost": 25,
+            "openHours": "09:45 - 17:00",
+            "location": "Kerala, India",
+            "meta": {
+              "source": "seed",
+              "degraded": true
+            },
+            "score": 86.4,
+            "matchPercent": 78,
+            "reasons": []
+          },
+          {
+            "name": "Alleppey Houseboat Canal Cruise",
+            "category": "Backwater Navigation",
+            "coordinates": {
+              "lat": 9.4981,
+              "lon": 76.3388
+            },
+            "isIndoor": true,
+            "weatherSensitivity": "medium",
+            "rating": 9.5,
+            "cost": 3500,
+            "openHours": "11:00 - 17:30",
+            "location": "Kerala, India",
+            "meta": {
+              "source": "seed",
+              "degraded": true
+            },
+            "score": 76.8,
+            "matchPercent": 70,
+            "reasons": []
+          }
+        ],
+        "dayPlans": [
+          {
+            "day": 1,
+            "theme": "Exploration",
+            "date": "2026-11-04",
+            "activities": [
+              {
+                "time": "Morning",
+                "title": "Fort Kochi Chinese Fishing Nets",
+                "description": "Explore Fort Kochi Chinese Fishing Nets.",
+                "duration": "2-3 hours",
+                "cost": 0,
+                "type": "Maritime Heritage"
+              },
+              {
+                "title": "Munnar Kolukkumalai Sunrise Peak",
+                "description": "Optional: Munnar Kolukkumalai Sunrise Peak",
+                "type": "High Altitude Tea Peak",
+                "isIndoor": false,
+                "weatherSensitivity": "high",
+                "time": "Afternoon"
+              },
+              {
+                "time": "Late Afternoon",
+                "title": "Jew Town & Paradesi Synagogue",
+                "description": "Visit Jew Town & Paradesi Synagogue.",
+                "duration": "1-2 hours",
+                "cost": 0,
+                "type": "Antiques & Heritage"
+              }
+            ],
+            "optionalActivities": [
+              {
+                "title": "Periyar Wildlife Sanctuary",
+                "description": "Optional: Periyar Wildlife Sanctuary",
+                "type": "Forest Safari",
+                "isIndoor": false,
+                "weatherSensitivity": "high"
+              },
+              {
+                "time": "Afternoon",
+                "title": "Mattancherry Dutch Palace",
+                "description": "Visit Mattancherry Dutch Palace.",
+                "duration": "1-2 hours",
+                "cost": 0,
+                "type": "Royal Mural Museum",
+                "idx": 1
+              }
+            ]
+          },
+          {
+            "day": 2,
+            "theme": "Exploration",
+            "date": "2026-11-05",
+            "activities": [
+              {
+                "time": "Morning",
+                "title": "Alleppey Houseboat Canal Cruise",
+                "description": "Explore Alleppey Houseboat Canal Cruise.",
+                "duration": "2-3 hours",
+                "cost": 0,
+                "type": "Backwater Navigation"
+              }
+            ],
+            "optionalActivities": []
+          }
+        ],
+        "meta": {
+          "recommenderProvider": "rule",
+          "fallbackApplied": false,
+          "degraded": true
+        },
+        "budgetAdjusted": true,
+        "adjustmentsMade": [
+          "Downgraded accommodation from Comfort to Budget to save 8000.",
+          "Replaced paid activity 'Mattancherry Dutch Palace' with 'Munnar Kolukkumalai Sunrise Peak'.",
+          "Budget still exceeded. Consider using Train or Bus instead of Flight/Car to save significantly on travel costs."
+        ]
+      },
+      "createdAt": "2026-10-28T12:22:18.916Z",
+      "updatedAt": "2026-10-28T12:22:18.917Z"
+    },
+    {
+      "_id": "trip_1793187731216",
+      "id": "trip_1793187731216",
+      "shareId": "share_17141281c546",
+      "userId": "guest",
+      "destination": "Jaipur",
+      "startLocation": "New Delhi",
+      "startDate": "2026-11-01",
+      "endDate": "2026-11-04",
+      "durationDays": 4,
+      "travelers": 2,
+      "mood": "Heritage",
+      "pace": "Medium",
+      "budget": 35000,
+      "plan": {
+        "planSummary": "A curated 4-day Comfort itinerary to Jaipur",
+        "whyThisDestination": "Perfect for your Heritage mood with Pleasant cool breeze (seasonal estimate).",
+        "budgetReasoning": "Optimized for 2 traveler(s) within a ₹35,000 budget.",
+        "stayReasoning": "Selected Comfort accommodation for optimal comfort and accessibility.",
+        "weather": {
+          "temp": 22,
+          "feelsLike": 22,
+          "humidity": 45,
+          "windKph": 12,
+          "rain": false,
+          "snow": false,
+          "description": "Pleasant cool breeze (seasonal estimate)",
+          "icon": null,
+          "city": "Jaipur",
+          "country": "IN",
+          "meta": {
+            "source": "estimated",
+            "degraded": true
+          }
+        },
+        "route": {
+          "start": "New Delhi",
+          "end": "Jaipur",
+          "distanceKm": 303,
+          "duration": "4h 40m",
+          "apiDurationMin": 280,
+          "modalEstimates": {
+            "flight": {
+              "distanceKm": 303,
+              "duration": "1h 30m",
+              "speedKmh": 600
+            },
+            "train": {
+              "distanceKm": 303,
+              "duration": "4h 2m",
+              "speedKmh": 75
+            },
+            "car": {
+              "distanceKm": 303,
+              "duration": "4h 40m",
+              "speedKmh": 65
+            },
+            "bus": {
+              "distanceKm": 303,
+              "duration": "6h 44m",
+              "speedKmh": 45
+            }
+          },
+          "meta": {
+            "source": "estimated",
+            "degraded": true
+          }
+        },
+        "estimatedCost": {
+          "total": 32390,
+          "transport": 9000,
+          "stay": 7500,
+          "accommodation": 1500,
+          "food": 11200,
+          "activities": 7200,
+          "buffer": 3490,
+          "misc": 3490,
+          "perPerson": 19195,
+          "breakdown": {
+            "travel": 9000,
+            "stay": 7500,
+            "food": 11200,
+            "activities": 7200,
+            "misc": 3490
+          },
+          "meta": {
+            "source": "estimated",
+            "degraded": false
+          }
+        },
+        "stay": {
+          "type": "Budget",
+          "area": "Jaipur Heritage Quarter",
+          "estimatedCostPerNight": 1500,
+          "nights": 3
+        },
+        "transportOptions": [
+          {
+            "type": "flight",
+            "operator": "IndiGo",
+            "duration": "2h 15m",
+            "departure": "06:00 AM",
+            "cost": 4500
+          },
+          {
+            "type": "flight",
+            "operator": "Air India",
+            "duration": "2h 30m",
+            "departure": "10:30 AM",
+            "cost": 5200
+          },
+          {
+            "type": "flight",
+            "operator": "Vistara",
+            "duration": "2h 15m",
+            "departure": "05:00 PM",
+            "cost": 6000
+          }
+        ],
+        "rules": {
+          "weatherRules": {
+            "indoorPreference": false,
+            "packRainGear": false
+          },
+          "moodRules": {
+            "priority": [],
+            "paceOverride": null
+          },
+          "paceRules": {
+            "maxSpotsPerDay": 5
+          }
+        },
+        "places": [
+          {
+            "name": "Jal Mahal (Water Palace Promenade)",
+            "category": "Scenic Lake Walk",
+            "coordinates": {
+              "lat": 26.9535,
+              "lon": 75.8462
+            },
+            "isIndoor": false,
+            "weatherSensitivity": "high",
+            "rating": 8.7,
+            "cost": 0,
+            "openHours": "06:00 - 20:00",
+            "location": "Jaipur, India",
+            "meta": {
+              "source": "seed",
+              "degraded": true
+            },
+            "score": 98.9,
+            "matchPercent": 90,
+            "reasons": [
+              "Matches your interest in palace",
+              "Free public access highlight"
+            ]
+          },
+          {
+            "name": "Amber Palace & Fort",
+            "category": "Historic Palace",
+            "coordinates": {
+              "lat": 26.9855,
+              "lon": 75.8513
+            },
+            "isIndoor": false,
+            "weatherSensitivity": "high",
+            "rating": 9.2,
+            "cost": 500,
+            "openHours": "08:00 - 18:00",
+            "location": "Jaipur, India",
+            "meta": {
+              "source": "seed",
+              "degraded": true
+            },
+            "score": 97.1,
+            "matchPercent": 88,
+            "reasons": [
+              "Matches your interest in palace"
+            ]
+          },
+          {
+            "name": "Nahargarh Fort Sunset Viewpoint",
+            "category": "Sunset & Fort",
+            "coordinates": {
+              "lat": 26.9388,
+              "lon": 75.8155
+            },
+            "isIndoor": false,
+            "weatherSensitivity": "high",
+            "rating": 9.1,
+            "cost": 100,
+            "openHours": "10:00 - 22:00",
+            "location": "Jaipur, India",
+            "meta": {
+              "source": "seed",
+              "degraded": true
+            },
+            "score": 97.1,
+            "matchPercent": 88,
+            "reasons": [
+              "Matches your interest in fort"
+            ]
+          },
+          {
+            "name": "Lassiwala Traditional Milk Bar",
+            "category": "Culinary Heritage",
+            "coordinates": {
+              "lat": 26.918,
+              "lon": 75.816
+            },
+            "isIndoor": true,
+            "weatherSensitivity": "low",
+            "rating": 9.1,
+            "cost": 120,
+            "openHours": "07:00 - 16:00",
+            "location": "Jaipur, India",
+            "meta": {
+              "source": "seed",
+              "degraded": true
+            },
+            "score": 97.1,
+            "matchPercent": 88,
+            "reasons": [
+              "Matches your interest in heritage"
+            ]
+          },
+          {
+            "name": "Hawa Mahal (Palace of Winds)",
+            "category": "Architecture",
+            "coordinates": {
+              "lat": 26.9239,
+              "lon": 75.8267
+            },
+            "isIndoor": true,
+            "weatherSensitivity": "low",
+            "rating": 9,
+            "cost": 200,
+            "openHours": "09:00 - 17:00",
+            "location": "Jaipur, India",
+            "meta": {
+              "source": "seed",
+              "degraded": true
+            },
+            "score": 97,
+            "matchPercent": 88,
+            "reasons": [
+              "Matches your interest in palace"
+            ]
+          },
+          {
+            "name": "City Palace of Jaipur",
+            "category": "Museum & Heritage",
+            "coordinates": {
+              "lat": 26.9258,
+              "lon": 75.8236
+            },
+            "isIndoor": true,
+            "weatherSensitivity": "low",
+            "rating": 8.9,
+            "cost": 700,
+            "openHours": "09:30 - 17:00",
+            "location": "Jaipur, India",
+            "meta": {
+              "source": "seed",
+              "degraded": true
+            },
+            "score": 97,
+            "matchPercent": 88,
+            "reasons": [
+              "Matches your interest in palace"
+            ]
+          },
+          {
+            "name": "Jantar Mantar Observatory",
+            "category": "Astronomy Heritage",
+            "coordinates": {
+              "lat": 26.9248,
+              "lon": 75.8246
+            },
+            "isIndoor": false,
+            "weatherSensitivity": "high",
+            "rating": 8.7,
+            "cost": 200,
+            "openHours": "09:00 - 17:00",
+            "location": "Jaipur, India",
+            "meta": {
+              "source": "seed",
+              "degraded": true
+            },
+            "score": 96.9,
+            "matchPercent": 88,
+            "reasons": [
+              "Matches your interest in heritage"
+            ]
+          },
+          {
+            "name": "Albert Hall Museum",
+            "category": "State Art Museum",
+            "coordinates": {
+              "lat": 26.9116,
+              "lon": 75.8195
+            },
+            "isIndoor": true,
+            "weatherSensitivity": "low",
+            "rating": 8.8,
+            "cost": 300,
+            "openHours": "09:00 - 20:00",
+            "location": "Jaipur, India",
+            "meta": {
+              "source": "seed",
+              "degraded": true
+            },
+            "score": 96.9,
+            "matchPercent": 88,
+            "reasons": [
+              "Matches your interest in museum"
+            ]
+          },
+          {
+            "name": "Jaigarh Fort & Cannon",
+            "category": "Historic Citadel",
+            "coordinates": {
+              "lat": 26.985,
+              "lon": 75.845
+            },
+            "isIndoor": false,
+            "weatherSensitivity": "high",
+            "rating": 8.6,
+            "cost": 250,
+            "openHours": "09:00 - 17:00",
+            "location": "Jaipur, India",
+            "meta": {
+              "source": "seed",
+              "degraded": true
+            },
+            "score": 96.8,
+            "matchPercent": 88,
+            "reasons": [
+              "Matches your interest in fort"
+            ]
+          },
+          {
+            "name": "Galta Ji (Monkey Temple)",
+            "category": "Ancient Temple Complex",
+            "coordinates": {
+              "lat": 26.9162,
+              "lon": 75.8617
+            },
+            "isIndoor": false,
+            "weatherSensitivity": "high",
+            "rating": 8.4,
+            "cost": 100,
+            "openHours": "06:00 - 19:00",
+            "location": "Jaipur, India",
+            "meta": {
+              "source": "seed",
+              "degraded": true
+            },
+            "score": 96.7,
+            "matchPercent": 88,
+            "reasons": [
+              "Matches your interest in temple"
+            ]
+          },
+          {
+            "name": "Patrika Gate & Jawahar Circle",
+            "category": "Photography & Gardens",
+            "coordinates": {
+              "lat": 26.8528,
+              "lon": 75.8052
+            },
+            "isIndoor": false,
+            "weatherSensitivity": "low",
+            "rating": 8.6,
+            "cost": 0,
+            "openHours": "06:00 - 21:00",
+            "location": "Jaipur, India",
+            "meta": {
+              "source": "seed",
+              "degraded": true
+            },
+            "score": 88.3,
+            "matchPercent": 80,
+            "reasons": [
+              "Free public access highlight"
+            ]
+          },
+          {
+            "name": "Bapu Bazaar Artisan Walk",
+            "category": "Crafts & Spices",
+            "coordinates": {
+              "lat": 26.9189,
+              "lon": 75.8225
+            },
+            "isIndoor": false,
+            "weatherSensitivity": "medium",
+            "rating": 8.5,
+            "cost": 0,
+            "openHours": "11:00 - 20:00",
+            "location": "Jaipur, India",
+            "meta": {
+              "source": "seed",
+              "degraded": true
+            },
+            "score": 88.3,
+            "matchPercent": 80,
+            "reasons": [
+              "Free public access highlight"
+            ]
+          }
+        ],
+        "dayPlans": [
+          {
+            "day": 1,
+            "theme": "Exploration",
+            "date": "2026-11-01",
+            "activities": [
+              {
+                "time": "Morning",
+                "title": "Jal Mahal (Water Palace Promenade)",
+                "description": "Explore Jal Mahal (Water Palace Promenade).",
+                "duration": "2-3 hours",
+                "cost": 0,
+                "type": "Scenic Lake Walk"
+              },
+              {
+                "time": "Afternoon",
+                "title": "City Palace of Jaipur",
+                "description": "Visit City Palace of Jaipur.",
+                "duration": "1-2 hours",
+                "cost": 0,
+                "type": "Museum & Heritage"
+              },
+              {
+                "time": "Late Afternoon",
+                "title": "Albert Hall Museum",
+                "description": "Visit Albert Hall Museum.",
+                "duration": "1-2 hours",
+                "cost": 0,
+                "type": "State Art Museum"
+              }
+            ],
+            "optionalActivities": [
+              {
+                "title": "Amber Palace & Fort",
+                "description": "Optional: Amber Palace & Fort",
+                "type": "Historic Palace",
+                "isIndoor": false,
+                "weatherSensitivity": "high"
+              },
+              {
+                "title": "Nahargarh Fort Sunset Viewpoint",
+                "description": "Optional: Nahargarh Fort Sunset Viewpoint",
+                "type": "Sunset & Fort",
+                "isIndoor": false,
+                "weatherSensitivity": "high"
+              }
+            ]
+          },
+          {
+            "day": 2,
+            "theme": "Exploration",
+            "date": "2026-11-02",
+            "activities": [
+              {
+                "time": "Morning",
+                "title": "Lassiwala Traditional Milk Bar",
+                "description": "Explore Lassiwala Traditional Milk Bar.",
+                "duration": "2-3 hours",
+                "cost": 0,
+                "type": "Culinary Heritage"
+              },
+              {
+                "time": "Afternoon",
+                "title": "Galta Ji (Monkey Temple)",
+                "description": "Visit Galta Ji (Monkey Temple).",
+                "duration": "1-2 hours",
+                "cost": 0,
+                "type": "Ancient Temple Complex"
+              },
+              {
+                "time": "Late Afternoon",
+                "title": "Bapu Bazaar Artisan Walk",
+                "description": "Visit Bapu Bazaar Artisan Walk.",
+                "duration": "1-2 hours",
+                "cost": 0,
+                "type": "Crafts & Spices"
+              }
+            ],
+            "optionalActivities": [
+              {
+                "title": "Hawa Mahal (Palace of Winds)",
+                "description": "Optional: Hawa Mahal (Palace of Winds)",
+                "type": "Architecture",
+                "isIndoor": false,
+                "weatherSensitivity": "high"
+              },
+              {
+                "title": "Jantar Mantar Observatory",
+                "description": "Optional: Jantar Mantar Observatory",
+                "type": "Astronomy Heritage",
+                "isIndoor": false,
+                "weatherSensitivity": "high"
+              }
+            ]
+          },
+          {
+            "day": 3,
+            "theme": "Exploration",
+            "date": "2026-11-03",
+            "activities": [
+              {
+                "time": "Morning",
+                "title": "Jaigarh Fort & Cannon",
+                "description": "Explore Jaigarh Fort & Cannon.",
+                "duration": "2-3 hours",
+                "cost": 0,
+                "type": "Historic Citadel"
+              },
+              {
+                "time": "Afternoon",
+                "title": "Patrika Gate & Jawahar Circle",
+                "description": "Visit Patrika Gate & Jawahar Circle.",
+                "duration": "1-2 hours",
+                "cost": 0,
+                "type": "Photography & Gardens"
+              }
+            ],
+            "optionalActivities": []
+          }
+        ],
+        "meta": {
+          "recommenderProvider": "rule",
+          "fallbackApplied": false,
+          "degraded": true
+        },
+        "budgetAdjusted": true,
+        "adjustmentsMade": [
+          "Downgraded accommodation from Comfort to Budget to save 6000."
+        ]
+      },
+      "createdAt": "2026-10-28T11:42:11.216Z",
+      "updatedAt": "2026-10-28T11:42:11.217Z"
+    },
+    {
+      "destination": "Manali",
+      "startLocation": "Chandigarh",
+      "startDate": "2026-12-01",
+      "endDate": "2026-12-05",
+      "durationDays": 5,
+      "travelers": 2,
+      "mood": "Mountains",
+      "pace": "Relaxed",
+      "budget": 40000,
+      "plan": {
+        "planSummary": "A 5-day snowline retreat in the Pir Panjal mountains",
+        "whyThisDestination": "Crisp alpine air, pine-scented log cabins, and snow trails.",
+        "estimatedCost": {
+          "total": 31000,
+          "transport": 5500,
+          "stay": 14000,
+          "food": 7500,
+          "activities": 3000,
+          "misc": 1000
+        },
+        "stay": {
+          "type": "Comfort",
+          "area": "Old Manali Apple Orchards",
+          "estimatedCostPerNight": 3500,
+          "nights": 4
+        },
+        "places": [
+          {
+            "name": "Solang Valley",
+            "category": "Valley & Snow",
+            "cost": 500
+          },
+          {
+            "name": "Hadimba Temple",
+            "category": "Cedar Sanctuary",
+            "cost": 50
+          }
+        ],
+        "dayPlans": [
+          {
+            "day": 1,
+            "theme": "Mountain Acclimatization",
+            "activities": [
+              {
+                "time": "Morning",
+                "title": "Old Manali Cafe Trail",
+                "duration": "2h"
+              }
+            ]
+          }
+        ]
+      },
+      "_id": "trip_ea01e509-723a-4a9f-940b-6dabdde15c85",
+      "id": "trip_ea01e509-723a-4a9f-940b-6dabdde15c85",
+      "shareId": "share_b2e27d219cad",
+      "createdAt": "2026-10-28T11:29:34.138Z",
+      "updatedAt": "2026-10-28T11:29:34.138Z"
+    },
+    {
+      "destination": "Jaipur",
+      "startLocation": "New Delhi",
+      "startDate": "2026-11-10",
+      "endDate": "2026-11-13",
+      "durationDays": 4,
+      "travelers": 2,
+      "mood": "Heritage",
+      "pace": "Medium",
+      "budget": 32000,
+      "plan": {
+        "planSummary": "A 4-day royal heritage expedition through Jaipur",
+        "whyThisDestination": "Cool autumn breezes and illuminated palace courtyards.",
+        "estimatedCost": {
+          "total": 24500,
+          "transport": 4200,
+          "stay": 10500,
+          "food": 6000,
+          "activities": 2800,
+          "misc": 1000
+        },
+        "stay": {
+          "type": "Comfort",
+          "area": "Civil Lines Heritage Quarter",
+          "estimatedCostPerNight": 3500,
+          "nights": 3
+        },
+        "places": [
+          {
+            "name": "Amber Palace",
+            "category": "Historic Citadel",
+            "cost": 500
+          },
+          {
+            "name": "Hawa Mahal",
+            "category": "Royal Architecture",
+            "cost": 200
+          },
+          {
+            "name": "City Palace",
+            "category": "State Museum",
+            "cost": 700
+          }
+        ],
+        "dayPlans": [
+          {
+            "day": 1,
+            "theme": "Royal Arrival & Bazaars",
+            "activities": [
+              {
+                "time": "Morning",
+                "title": "Hawa Mahal & Morning Chai",
+                "duration": "2h"
+              }
+            ]
+          },
+          {
+            "day": 2,
+            "theme": "Fortress Horizons",
+            "activities": [
+              {
+                "time": "Morning",
+                "title": "Amber Palace Elephant Path",
+                "duration": "3h"
+              }
+            ]
+          }
+        ]
+      },
+      "_id": "trip_78b4e3b0-f37b-491b-b14c-4ed62068c5b7",
+      "id": "trip_78b4e3b0-f37b-491b-b14c-4ed62068c5b7",
+      "shareId": "share_d0b8be4aaac1",
+      "createdAt": "2026-10-28T11:29:34.138Z",
+      "updatedAt": "2026-10-28T11:29:34.138Z"
+    }
+  ],
+  "reviews": [
+    {
+      "placeId": "general",
+      "destination": "Jaipur",
+      "author": "Aarav Sharma",
+      "rating": 5,
+      "worthIt": true,
+      "actualCost": 0,
+      "timeSpent": "2-3 hours",
+      "crowdLevel": "Moderate",
+      "comment": "Exceptional itinerary. Handled weather perfectly and paced out the days beautifully.",
+      "createdAt": "2026-10-28T12:29:21.639Z",
+      "_id": "rev_90b7f40f-52bb-4c80-8208-70f09e9c6c55",
+      "id": "rev_90b7f40f-52bb-4c80-8208-70f09e9c6c55"
+    },
+    {
+      "placeId": "hawa-mahal",
+      "destination": "Jaipur",
+      "author": "Tara Sen",
+      "rating": 5,
+      "worthIt": true,
+      "actualCost": 200,
+      "timeSpent": "1.5 hours",
+      "crowdLevel": "Moderate",
+      "comment": "Best viewed in early morning golden light.",
+      "createdAt": "2026-10-28T11:43:19.085Z",
+      "_id": "rev_bed87ac0-105e-4105-8348-02e49bbfe9db",
+      "id": "rev_bed87ac0-105e-4105-8348-02e49bbfe9db"
+    },
+    {
+      "placeId": "alleppey-houseboat",
+      "destination": "Kerala",
+      "author": "Rohan & Priya",
+      "rating": 5,
+      "worthIt": true,
+      "actualCost": 4500,
+      "timeSpent": "Overnight",
+      "crowdLevel": "Quiet",
+      "comment": "Unbelievably calm. The freshly cooked Karimeen fish curry while gliding through quiet palm canals was unforgettable.",
+      "_id": "rev_c4c4369b-79ba-4333-81de-51443b2c1f8b",
+      "id": "rev_c4c4369b-79ba-4333-81de-51443b2c1f8b",
+      "createdAt": "2026-10-28T11:29:34.139Z"
+    },
+    {
+      "placeId": "fontainhas",
+      "destination": "Goa",
+      "author": "Elena Rostova",
+      "rating": 5,
+      "worthIt": true,
+      "actualCost": 0,
+      "timeSpent": "2 hours",
+      "crowdLevel": "Quiet",
+      "comment": "Peaceful morning walk through the Portuguese quarter. Pick up fresh warm poee bread from the local bakeries.",
+      "_id": "rev_d3a9a70d-2fc7-4ba3-85aa-b388ef12b97d",
+      "id": "rev_d3a9a70d-2fc7-4ba3-85aa-b388ef12b97d",
+      "createdAt": "2026-10-28T11:29:34.139Z"
+    },
+    {
+      "placeId": "amber-fort",
+      "destination": "Jaipur",
+      "author": "Aarav Mehta",
+      "rating": 5,
+      "worthIt": true,
+      "actualCost": 500,
+      "timeSpent": "3.5 hours",
+      "crowdLevel": "Moderate",
+      "comment": "Arrive right at 8:00 AM before the tour buses pull in. The sun hitting the Sheesh Mahal mirror work is mesmerizing.",
+      "_id": "rev_00b55b55-e921-4759-8e61-b292d3bed27d",
+      "id": "rev_00b55b55-e921-4759-8e61-b292d3bed27d",
+      "createdAt": "2026-10-28T11:29:34.138Z"
+    }
+  ]
+}

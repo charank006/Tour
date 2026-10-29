@@ -259,6 +259,198 @@ export const destinationsData: DestinationItem[] = [
             { id: 'p12_3', name: 'Raja\'s Seat', type: 'Relaxation', popularityScore: 8.5, crowdLevel: 'High', bestSeason: 'Sunset', duration: '1h', cost: 20, bestTime: 'Sunset', weatherSensitivity: 'High', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1598000494396-857ae230b80e?w=500&auto=format&fit=crop&q=60' },
             { id: 'p12_4', name: 'Coffee Plantation Tour', type: 'Nature', popularityScore: 8.8, crowdLevel: 'Low', bestSeason: 'Year-round', duration: '2h', cost: 500, bestTime: 'Afternoon', weatherSensitivity: 'Low', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1601009187313-2d2c70032c28?w=500&auto=format&fit=crop&q=60' },
         ]
+    },
+    {
+        id: 'd13',
+        name: 'Kashmir',
+        state: 'Jammu & Kashmir',
+        category: 'Mountains',
+        famousFor: 'Pristine Dal Lake shikaras, Mughal gardens, and snow-laden peaks of Gulmarg',
+        tags: ['Snow', 'Lakes', 'Meadows', 'Himalayas'],
+        image: 'https://images.unsplash.com/photo-1595815771614-ade9d652a65d?w=800&auto=format&fit=crop&q=80',
+        averageDailyCost: 4800,
+        places: [
+            { id: 'p13_1', name: 'Gulmarg Gondola & Apharwat Peak', type: 'Adventure', popularityScore: 9.9, crowdLevel: 'High', bestSeason: 'Dec-Apr', duration: '5h', cost: 1850, bestTime: 'Morning', weatherSensitivity: 'High', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1595815771614-ade9d652a65d?w=800&auto=format&fit=crop&q=80' },
+            { id: 'p13_2', name: 'Dal Lake Morning Shikara', type: 'Relaxation', popularityScore: 9.8, crowdLevel: 'Medium', bestSeason: 'Year-round', duration: '2h', cost: 800, bestTime: 'Sunrise', weatherSensitivity: 'Medium', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1566837945700-30057527ade0?w=800&auto=format&fit=crop&q=80' },
+            { id: 'p13_3', name: 'Betaab Valley & Aru Meadows', type: 'Nature', popularityScore: 9.2, crowdLevel: 'Medium', bestSeason: 'Apr-Oct', duration: '4h', cost: 300, bestTime: 'Afternoon', weatherSensitivity: 'High', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&auto=format&fit=crop&q=80' },
+            { id: 'p13_4', name: 'Nishat Bagh Royal Garden', type: 'Heritage', popularityScore: 8.9, crowdLevel: 'Low', bestSeason: 'Apr-Nov', duration: '2h', cost: 100, bestTime: 'Sunset', weatherSensitivity: 'Low', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=800&auto=format&fit=crop&q=80' },
+        ]
+    },
+    {
+        id: 'd14',
+        name: 'Spiti Valley',
+        state: 'Himachal Pradesh',
+        category: 'Mountains',
+        famousFor: 'High-altitude Tibetan moonscape, ancient clifftop monasteries, and pristine starry skies',
+        tags: ['Monastery', 'High Altitude', 'Stargazing', 'Adventure'],
+        image: 'https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?w=800&auto=format&fit=crop&q=80',
+        averageDailyCost: 3200,
+        places: [
+            { id: 'p14_1', name: 'Key Monastery', type: 'Spiritual', popularityScore: 9.8, crowdLevel: 'Low', bestSeason: 'May-Oct', duration: '3h', cost: 50, bestTime: 'Morning', weatherSensitivity: 'Low', locationType: 'Indoor', image: 'https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?w=800&auto=format&fit=crop&q=80' },
+            { id: 'p14_2', name: 'Chandratal Lake (Moon Lake)', type: 'Nature', popularityScore: 9.7, crowdLevel: 'Medium', bestSeason: 'Jun-Sep', duration: '4h', cost: 0, bestTime: 'Sunset', weatherSensitivity: 'High', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1601009187313-2d2c70032c28?w=800&auto=format&fit=crop&q=80' },
+            { id: 'p14_3', name: 'Dhankar Clifftop Monastery', type: 'Heritage', popularityScore: 9.1, crowdLevel: 'Low', bestSeason: 'Jun-Oct', duration: '2.5h', cost: 50, bestTime: 'Morning', weatherSensitivity: 'Medium', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1598000494396-857ae230b80e?w=800&auto=format&fit=crop&q=80' },
+            { id: 'p14_4', name: 'Hikkim Highest Post Office', type: 'Urban', popularityScore: 8.8, crowdLevel: 'Medium', bestSeason: 'Jun-Oct', duration: '1.5h', cost: 100, bestTime: 'Afternoon', weatherSensitivity: 'Low', locationType: 'Indoor', image: 'https://images.unsplash.com/photo-1627052968858-54c3c3a918a3?w=800&auto=format&fit=crop&q=80' },
+        ]
+    },
+    {
+        id: 'd15',
+        name: 'Jaisalmer',
+        state: 'Rajasthan',
+        category: 'Heritage',
+        famousFor: 'Golden sandstone living fort, desert havelis, and evening camel treks on Sam dunes',
+        tags: ['Desert', 'Forts', 'Dunes', 'Royal'],
+        image: 'https://images.unsplash.com/photo-1577717903315-1691ae25ab3f?w=800&auto=format&fit=crop&q=80',
+        averageDailyCost: 3800,
+        places: [
+            { id: 'p15_1', name: 'Jaisalmer Fort (Sonar Qila)', type: 'Heritage', popularityScore: 9.8, crowdLevel: 'High', bestSeason: 'Oct-Mar', duration: '3.5h', cost: 250, bestTime: 'Morning', weatherSensitivity: 'Low', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1577717903315-1691ae25ab3f?w=800&auto=format&fit=crop&q=80' },
+            { id: 'p15_2', name: 'Patwon Ki Haveli', type: 'Heritage', popularityScore: 9.2, crowdLevel: 'Medium', bestSeason: 'Oct-Mar', duration: '2h', cost: 150, bestTime: 'Morning', weatherSensitivity: 'Low', locationType: 'Indoor', image: 'https://images.unsplash.com/photo-1599661046289-e31897846e41?w=800&auto=format&fit=crop&q=80' },
+            { id: 'p15_3', name: 'Sam Sand Dunes Camel Safari', type: 'Adventure', popularityScore: 9.5, crowdLevel: 'High', bestSeason: 'Oct-Mar', duration: '3h', cost: 800, bestTime: 'Sunset', weatherSensitivity: 'High', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=800&auto=format&fit=crop&q=80' },
+            { id: 'p15_4', name: 'Gadisar Lake at Dusk', type: 'Relaxation', popularityScore: 8.9, crowdLevel: 'Low', bestSeason: 'Oct-Mar', duration: '1.5h', cost: 100, bestTime: 'Sunset', weatherSensitivity: 'Low', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1590435974026-6b21644c1d47?w=800&auto=format&fit=crop&q=80' },
+        ]
+    },
+    {
+        id: 'd16',
+        name: 'Pondicherry',
+        state: 'Puducherry',
+        category: 'Beaches',
+        famousFor: 'Pastel French quarters, tranquil seaside promenade, artisan bakeries, and Auroville',
+        tags: ['French Quarter', 'Coast', 'Cafes', 'Boutique'],
+        image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=800&auto=format&fit=crop&q=80',
+        averageDailyCost: 3600,
+        places: [
+            { id: 'p16_1', name: 'White Town Heritage Cycle Tour', type: 'Heritage', popularityScore: 9.6, crowdLevel: 'Medium', bestSeason: 'Oct-Mar', duration: '2.5h', cost: 400, bestTime: 'Morning', weatherSensitivity: 'Low', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=800&auto=format&fit=crop&q=80' },
+            { id: 'p16_2', name: 'Promenade Seaside Walkway', type: 'Relaxation', popularityScore: 9.4, crowdLevel: 'High', bestSeason: 'Year-round', duration: '2h', cost: 0, bestTime: 'Sunset', weatherSensitivity: 'Medium', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop&q=80' },
+            { id: 'p16_3', name: 'Auroville Matrimandir & Peace Area', type: 'Spiritual', popularityScore: 9.5, crowdLevel: 'Medium', bestSeason: 'Oct-Mar', duration: '3h', cost: 0, bestTime: 'Morning', weatherSensitivity: 'Low', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=800&auto=format&fit=crop&q=80' },
+            { id: 'p16_4', name: 'Paradise Beach by Ferry', type: 'Nature', popularityScore: 9.0, crowdLevel: 'High', bestSeason: 'Nov-Feb', duration: '3h', cost: 350, bestTime: 'Afternoon', weatherSensitivity: 'High', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=800&auto=format&fit=crop&q=80' },
+        ]
+    },
+    {
+        id: 'd17',
+        name: 'Alleppey',
+        state: 'Kerala',
+        category: 'Nature',
+        famousFor: 'Emerald backwaters, silent overnight houseboats, coconut canals, and coir villages',
+        tags: ['Backwaters', 'Houseboat', 'Lush', 'Relaxation'],
+        image: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=800&auto=format&fit=crop&q=80',
+        averageDailyCost: 4200,
+        places: [
+            { id: 'p17_1', name: 'Vembanad Lake Houseboat Cruise', type: 'Nature', popularityScore: 9.9, crowdLevel: 'Medium', bestSeason: 'Sep-Mar', duration: '6h', cost: 3500, bestTime: 'Afternoon', weatherSensitivity: 'Medium', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=800&auto=format&fit=crop&q=80' },
+            { id: 'p17_2', name: 'Marari Serene White Sand Beach', type: 'Relaxation', popularityScore: 9.2, crowdLevel: 'Low', bestSeason: 'Nov-Feb', duration: '3h', cost: 0, bestTime: 'Sunset', weatherSensitivity: 'High', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop&q=80' },
+            { id: 'p17_3', name: 'Kuttanad Canal Canoe Trail', type: 'Adventure', popularityScore: 9.4, crowdLevel: 'Low', bestSeason: 'Sep-Mar', duration: '2.5h', cost: 600, bestTime: 'Sunrise', weatherSensitivity: 'Low', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1544473244-f6895e672d62?w=800&auto=format&fit=crop&q=80' },
+            { id: 'p17_4', name: 'Alappuzha Pier & Lighthouse', type: 'Heritage', popularityScore: 8.7, crowdLevel: 'Medium', bestSeason: 'Year-round', duration: '1.5h', cost: 50, bestTime: 'Sunset', weatherSensitivity: 'Medium', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1590422749842-3a5c2d3cae0a?w=800&auto=format&fit=crop&q=80' },
+        ]
+    },
+    {
+        id: 'd18',
+        name: 'Meghalaya',
+        state: 'Meghalaya',
+        category: 'Nature',
+        famousFor: 'Double decker living root bridges, crystal clear Umngot river, and misty waterfalls',
+        tags: ['Waterfalls', 'Root Bridges', 'Trekking', 'Clouds'],
+        image: 'https://images.unsplash.com/photo-1626014903708-41407985449a?w=800&auto=format&fit=crop&q=80',
+        averageDailyCost: 3500,
+        places: [
+            { id: 'p18_1', name: 'Double Decker Living Root Bridge', type: 'Adventure', popularityScore: 9.9, crowdLevel: 'Medium', bestSeason: 'Oct-Apr', duration: '6h', cost: 100, bestTime: 'Morning', weatherSensitivity: 'High', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1626014903708-41407985449a?w=800&auto=format&fit=crop&q=80' },
+            { id: 'p18_2', name: 'Dawki Umngot River Boat Ride', type: 'Nature', popularityScore: 9.6, crowdLevel: 'High', bestSeason: 'Nov-Mar', duration: '2h', cost: 600, bestTime: 'Morning', weatherSensitivity: 'High', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?w=800&auto=format&fit=crop&q=80' },
+            { id: 'p18_3', name: 'Nohkalikai Falls Overlook', type: 'Nature', popularityScore: 9.3, crowdLevel: 'Medium', bestSeason: 'Sep-Apr', duration: '1.5h', cost: 50, bestTime: 'Afternoon', weatherSensitivity: 'High', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1544473244-f6895e672d62?w=800&auto=format&fit=crop&q=80' },
+            { id: 'p18_4', name: 'Mawsmai Limestone Caves', type: 'Adventure', popularityScore: 8.8, crowdLevel: 'Medium', bestSeason: 'Year-round', duration: '2h', cost: 100, bestTime: 'Morning', weatherSensitivity: 'Low', locationType: 'Indoor', image: 'https://images.unsplash.com/photo-1627299616853-535359142ec7?w=800&auto=format&fit=crop&q=80' },
+        ]
+    },
+    {
+        id: 'd19',
+        name: 'Gokarna',
+        state: 'Karnataka',
+        category: 'Beaches',
+        famousFor: 'Scenic cliffside coastal treks, Om Beach crescent, and laidback Bohemian seaside shacks',
+        tags: ['Beach Trek', 'Quiet', 'Cliffs', 'Sunsets'],
+        image: 'https://images.unsplash.com/photo-1590523741831-ab7e8b8f9c7f?w=800&auto=format&fit=crop&q=80',
+        averageDailyCost: 2800,
+        places: [
+            { id: 'p19_1', name: 'Om Beach & Cliff Trail', type: 'Nature', popularityScore: 9.6, crowdLevel: 'Medium', bestSeason: 'Oct-Mar', duration: '3h', cost: 0, bestTime: 'Sunset', weatherSensitivity: 'High', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1590523741831-ab7e8b8f9c7f?w=800&auto=format&fit=crop&q=80' },
+            { id: 'p19_2', name: 'Half Moon to Paradise Beach Trek', type: 'Adventure', popularityScore: 9.3, crowdLevel: 'Low', bestSeason: 'Oct-Mar', duration: '3.5h', cost: 0, bestTime: 'Morning', weatherSensitivity: 'High', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop&q=80' },
+            { id: 'p19_3', name: 'Mahabaleshwar Ancient Temple', type: 'Spiritual', popularityScore: 9.0, crowdLevel: 'High', bestSeason: 'Year-round', duration: '1.5h', cost: 0, bestTime: 'Morning', weatherSensitivity: 'Low', locationType: 'Indoor', image: 'https://images.unsplash.com/photo-1623143584856-bf5db5a16c7f?w=800&auto=format&fit=crop&q=80' },
+            { id: 'p19_4', name: 'Kudle Beach Sunset Cafes', type: 'Relaxation', popularityScore: 9.1, crowdLevel: 'Medium', bestSeason: 'Nov-Feb', duration: '2.5h', cost: 400, bestTime: 'Sunset', weatherSensitivity: 'Low', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1548232979-6c557ee14752?w=800&auto=format&fit=crop&q=80' },
+        ]
+    },
+    {
+        id: 'd20',
+        name: 'Dharamshala',
+        state: 'Himachal Pradesh',
+        category: 'Mountains',
+        famousFor: 'Home of the Dalai Lama, Tibetan prayer wheels, pine-clad Triund ridge, and mountain cafes',
+        tags: ['Tibetan', 'Monasteries', 'Triund', 'Trekking'],
+        image: 'https://images.unsplash.com/photo-1597074866923-dc0589150358?w=800&auto=format&fit=crop&q=80',
+        averageDailyCost: 3100,
+        places: [
+            { id: 'p20_1', name: 'Tsuglagkhang Dalai Lama Temple Complex', type: 'Spiritual', popularityScore: 9.8, crowdLevel: 'Medium', bestSeason: 'Year-round', duration: '2.5h', cost: 0, bestTime: 'Morning', weatherSensitivity: 'Low', locationType: 'Indoor', image: 'https://images.unsplash.com/photo-1597074866923-dc0589150358?w=800&auto=format&fit=crop&q=80' },
+            { id: 'p20_2', name: 'Triund Ridge Day Hike', type: 'Adventure', popularityScore: 9.7, crowdLevel: 'High', bestSeason: 'Mar-Jun, Sep-Nov', duration: '6h', cost: 500, bestTime: 'Morning', weatherSensitivity: 'High', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&auto=format&fit=crop&q=80' },
+            { id: 'p20_3', name: 'Norbulingka Arts Institute', type: 'Heritage', popularityScore: 9.1, crowdLevel: 'Low', bestSeason: 'Year-round', duration: '2h', cost: 150, bestTime: 'Afternoon', weatherSensitivity: 'Low', locationType: 'Indoor', image: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=800&auto=format&fit=crop&q=80' },
+            { id: 'p20_4', name: 'Bhagsunag Waterfall & Shiva Cafe', type: 'Nature', popularityScore: 8.8, crowdLevel: 'High', bestSeason: 'Mar-Nov', duration: '2h', cost: 0, bestTime: 'Morning', weatherSensitivity: 'High', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?w=800&auto=format&fit=crop&q=80' },
+        ]
+    },
+    {
+        id: 'd21',
+        name: 'Amritsar',
+        state: 'Punjab',
+        category: 'Spiritual',
+        famousFor: 'Radiant Golden Temple sanctum, world-famous communal langar, and Wagah border parade',
+        tags: ['Golden Temple', 'Langar', 'Heritage', 'Food'],
+        image: 'https://images.unsplash.com/photo-1588714477688-cf28a50e94f7?w=800&auto=format&fit=crop&q=80',
+        averageDailyCost: 2600,
+        places: [
+            { id: 'p21_1', name: 'Sri Harmandir Sahib (Golden Temple)', type: 'Spiritual', popularityScore: 10, crowdLevel: 'High', bestSeason: 'Oct-Mar', duration: '4h', cost: 0, bestTime: 'Sunrise', weatherSensitivity: 'Low', locationType: 'Indoor', image: 'https://images.unsplash.com/photo-1588714477688-cf28a50e94f7?w=800&auto=format&fit=crop&q=80' },
+            { id: 'p21_2', name: 'Wagah Border Beating Retreat Ceremony', type: 'Heritage', popularityScore: 9.6, crowdLevel: 'High', bestSeason: 'Year-round', duration: '3.5h', cost: 0, bestTime: 'Sunset', weatherSensitivity: 'Medium', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1590422749842-3a5c2d3cae0a?w=800&auto=format&fit=crop&q=80' },
+            { id: 'p21_3', name: 'Jallianwala Bagh Memorial', type: 'Heritage', popularityScore: 9.3, crowdLevel: 'Medium', bestSeason: 'Year-round', duration: '1.5h', cost: 0, bestTime: 'Morning', weatherSensitivity: 'Low', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1571597438372-540dd352bf41?w=800&auto=format&fit=crop&q=80' },
+            { id: 'p21_4', name: 'Partition Museum at Town Hall', type: 'Heritage', popularityScore: 9.1, crowdLevel: 'Low', bestSeason: 'Year-round', duration: '2h', cost: 50, bestTime: 'Afternoon', weatherSensitivity: 'Low', locationType: 'Indoor', image: 'https://images.unsplash.com/photo-1596791409278-68783472506b?w=800&auto=format&fit=crop&q=80' },
+        ]
+    },
+    {
+        id: 'd22',
+        name: 'Kodaikanal',
+        state: 'Tamil Nadu',
+        category: 'Nature',
+        famousFor: 'Star-shaped mountain lake, towering Pillar Rocks, fragrant eucalyptus groves, and Coaker\'s walk',
+        tags: ['Pine Woods', 'Lakes', 'Misty Hills', 'Quiet'],
+        image: 'https://images.unsplash.com/photo-1589308078059-be1415eab4c3?w=800&auto=format&fit=crop&q=80',
+        averageDailyCost: 3400,
+        places: [
+            { id: 'p22_1', name: 'Kodaikanal Star Lake & Rowing', type: 'Relaxation', popularityScore: 9.4, crowdLevel: 'Medium', bestSeason: 'Sep-May', duration: '2.5h', cost: 250, bestTime: 'Morning', weatherSensitivity: 'Medium', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1589308078059-be1415eab4c3?w=800&auto=format&fit=crop&q=80' },
+            { id: 'p22_2', name: 'Coaker\'s Walk Valley Vista', type: 'Nature', popularityScore: 9.2, crowdLevel: 'High', bestSeason: 'Oct-May', duration: '1.5h', cost: 30, bestTime: 'Morning', weatherSensitivity: 'High', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&auto=format&fit=crop&q=80' },
+            { id: 'p22_3', name: 'Pine Forest Morning Stroll', type: 'Nature', popularityScore: 9.1, crowdLevel: 'Low', bestSeason: 'Year-round', duration: '2h', cost: 20, bestTime: 'Sunrise', weatherSensitivity: 'Low', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=800&auto=format&fit=crop&q=80' },
+            { id: 'p22_4', name: 'Pillar Rocks Mist Overlook', type: 'Nature', popularityScore: 8.9, crowdLevel: 'Medium', bestSeason: 'Sep-Apr', duration: '1.5h', cost: 20, bestTime: 'Afternoon', weatherSensitivity: 'High', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?w=800&auto=format&fit=crop&q=80' },
+        ]
+    },
+    {
+        id: 'd23',
+        name: 'Darjeeling',
+        state: 'West Bengal',
+        category: 'Mountains',
+        famousFor: 'Lush colonial tea gardens, Tiger Hill dawn over Mount Kanchenjunga, and UNESCO Toy Train',
+        tags: ['Tea Gardens', 'Toy Train', 'Kanchenjunga', 'Himalayas'],
+        image: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=800&auto=format&fit=crop&q=80',
+        averageDailyCost: 3700,
+        places: [
+            { id: 'p23_1', name: 'Tiger Hill Sunrise over Kanchenjunga', type: 'Nature', popularityScore: 9.9, crowdLevel: 'High', bestSeason: 'Oct-May', duration: '3h', cost: 100, bestTime: 'Sunrise', weatherSensitivity: 'High', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=800&auto=format&fit=crop&q=80' },
+            { id: 'p23_2', name: 'Happy Valley Tea Estate Tasting', type: 'Heritage', popularityScore: 9.4, crowdLevel: 'Medium', bestSeason: 'Mar-Nov', duration: '2.5h', cost: 250, bestTime: 'Morning', weatherSensitivity: 'Low', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1585800454359-598d9255a298?w=800&auto=format&fit=crop&q=80' },
+            { id: 'p23_3', name: 'Darjeeling Himalayan Railway (Toy Train)', type: 'Heritage', popularityScore: 9.7, crowdLevel: 'High', bestSeason: 'Year-round', duration: '2h', cost: 1200, bestTime: 'Morning', weatherSensitivity: 'Medium', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1596791409278-68783472506b?w=800&auto=format&fit=crop&q=80' },
+            { id: 'p23_4', name: 'Batasia Loop & War Memorial', type: 'Heritage', popularityScore: 8.9, crowdLevel: 'Medium', bestSeason: 'Oct-Apr', duration: '1.5h', cost: 50, bestTime: 'Afternoon', weatherSensitivity: 'Medium', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1598091383021-15ddea10925d?w=800&auto=format&fit=crop&q=80' },
+        ]
+    },
+    {
+        id: 'd24',
+        name: 'Jodhpur',
+        state: 'Rajasthan',
+        category: 'Heritage',
+        famousFor: 'The historic Blue City, colossal Mehrangarh citadel, royal stepwells, and desert spice bazaars',
+        tags: ['Blue City', 'Mehrangarh', 'Stepwells', 'Desert'],
+        image: 'https://images.unsplash.com/photo-1590422749842-3a5c2d3cae0a?w=800&auto=format&fit=crop&q=80',
+        averageDailyCost: 3400,
+        places: [
+            { id: 'p24_1', name: 'Mehrangarh Fort Clifftop Walk', type: 'Heritage', popularityScore: 9.9, crowdLevel: 'High', bestSeason: 'Oct-Mar', duration: '3.5h', cost: 600, bestTime: 'Morning', weatherSensitivity: 'Medium', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1590422749842-3a5c2d3cae0a?w=800&auto=format&fit=crop&q=80' },
+            { id: 'p24_2', name: 'Navchokiya Blue City Walking Trail', type: 'Heritage', popularityScore: 9.5, crowdLevel: 'Low', bestSeason: 'Oct-Mar', duration: '2h', cost: 0, bestTime: 'Morning', weatherSensitivity: 'Low', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1477587458883-47145ed94245?w=800&auto=format&fit=crop&q=80' },
+            { id: 'p24_3', name: 'Toorji Ka Jhalra Stepwell & Cafe', type: 'Heritage', popularityScore: 9.2, crowdLevel: 'Medium', bestSeason: 'Year-round', duration: '1.5h', cost: 0, bestTime: 'Sunset', weatherSensitivity: 'Low', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1615836245337-f5b9b2303f10?w=800&auto=format&fit=crop&q=80' },
+            { id: 'p24_4', name: 'Jaswant Thada Marble Cenotaph', type: 'Heritage', popularityScore: 8.9, crowdLevel: 'Low', bestSeason: 'Oct-Mar', duration: '1.5h', cost: 50, bestTime: 'Afternoon', weatherSensitivity: 'Low', locationType: 'Outdoor', image: 'https://images.unsplash.com/photo-1557690756-62725e24344e?w=800&auto=format&fit=crop&q=80' },
+        ]
     }
 ];
 

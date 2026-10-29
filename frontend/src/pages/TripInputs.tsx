@@ -1,72 +1,60 @@
 import { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { MapPin, Calendar, Users, Wallet, ArrowRight, Sparkles } from 'lucide-react';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
+import { MapPin, Calendar, Users, Wallet, ArrowRight, Sparkles, ArrowLeft, CheckCircle2 } from 'lucide-react';
 import { startLocations, travelTypes, budgetRanges } from '@/api/mockData';
 import { motion } from 'framer-motion';
 
-const budgetLabels: Record<string, string> = {
-  budget: 'Smart & Simple', moderate: 'Balanced', comfort: 'Relaxed', luxury: 'Indulgent',
-};
-const budgetDescriptions: Record<string, string> = {
-  budget: 'Cost-effective choices', moderate: 'Standard comfort', comfort: 'Premium experiences', luxury: 'Top-tier luxury',
-};
-const budgetColors: Record<string, string> = {
-  budget: 'from-emerald-400/20 to-emerald-600/10',
-  moderate: 'from-blue-400/20 to-blue-600/10',
-  comfort: 'from-purple-400/20 to-purple-600/10',
-  luxury: 'from-amber-400/20 to-amber-600/10',
+import { tripStore } from '@/lib/tripStore';
+import { calculateDays } from '@/lib/formatters';
+
+const budgetDetails: Record<string, { label: string; desc: string; inr: string }> = {
+  budget: { label: 'Smart Explorer', desc: 'Authentic homestays, trains & local food', inr: '₹5,000 – ₹15,000' },
+  moderate: { label: 'Balanced Traveler', desc: 'Boutique stays, cabs & top cafes', inr: '₹15,000 – ₹30,000' },
+  comfort: { label: 'Relaxed Living', desc: 'Heritage hotels, flights & private guides', inr: '₹30,000 – ₹50,000' },
+  luxury: { label: 'Royal Indulgence', desc: 'Luxury palaces, chauffeur & fine dining', inr: '₹50,000+' },
 };
 
-/** Animated section card with left accent bar and step number */
-const SectionCard = ({ step, title, description, delay = 0, children }: { step: string; title: string; description?: string; delay?: number; children: React.ReactNode }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 28 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.5, delay }}
-    className="relative bg-card border border-border/60 rounded-3xl p-8 shadow-soft hover:shadow-card transition-shadow duration-300 overflow-hidden"
-  >
-    {/* Left accent stripe */}
-    <div className="absolute left-0 top-6 bottom-6 w-1 bg-gradient-to-b from-accent via-accent/60 to-transparent rounded-r-full" />
-
-    <div className="flex items-start gap-4 mb-6">
-      <span className="text-xs font-black text-accent/40 tracking-widest mt-1 select-none">{step}</span>
-      <div>
-        <h3 className="text-xl font-bold text-foreground">{title}</h3>
-        {description && <p className="text-sm text-muted-foreground mt-1">{description}</p>}
-      </div>
-    </div>
-    {children}
-  </motion.div>
-);
-
-const TripInputs = () => {
+export const TripInputs = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const destinationData = location.state;
+  const stored = tripStore.getState().inputs;
+  const incomingData = location.state || {};
+
+  const rawDest = incomingData.destination || stored.destination || '';
+  const initialDestination = typeof rawDest === 'object' && rawDest !== null ? rawDest.name : (typeof rawDest === 'string' ? rawDest : '');
+  const [targetDestination, setTargetDestination] = useState<string>(initialDestination);
 
   const [formData, setFormData] = useState({
-    startLocation: '', startDate: '', endDate: '', travelers: 2, travelType: '', budget: 'moderate',
+    startLocation: incomingData.startLocation || stored.startLocation || 'Mumbai',
+    startDate: incomingData.startDate || stored.startDate || new Date(Date.now() + 86400000 * 7).toISOString().split('T')[0],
+    endDate: incomingData.endDate || stored.endDate || new Date(Date.now() + 86400000 * 11).toISOString().split('T')[0],
+    travelers: incomingData.travelers || stored.travelers || 2,
+    travelType: incomingData.travelType || stored.travelType || 'couple',
+    budget: incomingData.budget || stored.budget || 'moderate',
   });
+
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const handleInputChange = (field: string, value: string | number) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-    if (errors[field]) setErrors(prev => ({ ...prev, [field]: '' }));
+    setFormData((prev) => {
+      const next = { ...prev, [field]: value };
+      tripStore.saveInputs(next);
+      return next;
+    });
+    if (errors[field]) setErrors((prev) => ({ ...prev, [field]: '' }));
   };
 
-  // Progress: count filled fields out of 5 required
   const filledCount = [formData.startLocation, formData.startDate, formData.endDate, formData.travelType, formData.budget].filter(Boolean).length;
   const progress = Math.round((filledCount / 5) * 100);
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
-    if (!formData.startLocation) newErrors.startLocation = 'Select your starting city';
-    if (!formData.startDate) newErrors.startDate = 'Select start date';
-    if (!formData.endDate) newErrors.endDate = 'Select end date';
-    if (!formData.travelType) newErrors.travelType = 'Select travel type';
-    if (!formData.budget) newErrors.budget = 'Select your budget range';
-    if (formData.startDate && formData.endDate && new Date(formData.endDate) < new Date(formData.startDate))
-      newErrors.endDate = 'End date must be after start date';
+    if (!formData.startLocation) newErrors.startLocation = 'Please choose your starting city';
+    if (!formData.startDate) newErrors.startDate = 'Pick departure date';
+    if (!formData.endDate) newErrors.endDate = 'Pick return date';
+    if (formData.startDate && formData.endDate && new Date(formData.endDate) <= new Date(formData.startDate)) {
+      newErrors.endDate = 'Return date must be after departure date';
+    }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -74,197 +62,292 @@ const TripInputs = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateForm()) return;
-    const budget = budgetRanges.find(b => b.value === formData.budget);
-    if (destinationData?.destination) {
-      navigate('/trip-plan', { state: { ...formData, destination: destinationData.destination, destinationId: destinationData.destinationId, selectedPlaceIds: destinationData.selectedPlaceIds, budgetRange: budget ? { min: budget.min, max: budget.max } : null, isManualPlan: true } });
-    } else {
-      navigate('/suggestions', { state: { ...formData, budgetRange: budget ? { min: budget.min, max: budget.max } : null } });
-    }
+    const selectedBudget = budgetRanges.find((b) => b.value === formData.budget);
+    const budgetRange = selectedBudget ? { min: selectedBudget.min, max: selectedBudget.max } : { min: 15000, max: 30000 };
+
+    const payload = {
+      ...formData,
+      destination: targetDestination ? { name: targetDestination } : (incomingData.destination || stored.destination || null),
+      mood: incomingData.mood || stored.mood || 'mountains',
+      budgetRange
+    };
+
+    tripStore.saveInputs(payload);
+
+    navigate('/suggestions', {
+      state: payload
+    });
   };
 
-  const today = new Date().toISOString().split('T')[0];
-
-  const getDurationString = () => {
-    if (formData.startDate && formData.endDate) {
-      const days = Math.ceil((new Date(formData.endDate).getTime() - new Date(formData.startDate).getTime()) / (1000 * 3600 * 24)) + 1;
-      if (days > 0) return `${days}-day trip`;
-    }
-    return null;
-  };
+  const durationDays = calculateDays(formData.startDate, formData.endDate);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-secondary/10 to-background pt-28 pb-20">
-      <div className="container mx-auto px-4 max-w-3xl">
+    <div className="min-h-screen bg-background pt-28 pb-20 selection:bg-primary/20">
+      <div className="container mx-auto px-4 sm:px-6 max-w-3xl">
 
-        {/* Header */}
+        {/* Back Link */}
+        <Link
+          to="/"
+          className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-8 group"
+        >
+          <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
+          <span>Back to Home</span>
+        </Link>
+
+        {/* Editorial Stepper Header */}
         <div className="text-center mb-12">
-          <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="inline-flex items-center gap-2 mb-5">
-            <Sparkles size={18} className="text-accent" />
-            <span className="text-sm font-semibold tracking-widest text-foreground/60 uppercase">Start Planning</span>
-          </motion.div>
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold tracking-widest uppercase mb-4">
+            <Sparkles size={13} />
+            <span>Step 1 of 3 • Trip Blueprint</span>
+          </div>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-            className="text-4xl md:text-5xl font-bold text-foreground mb-4 tracking-tight"
-          >
-            {destinationData?.destination
-              ? <>Plan your trip to <span className="text-gradient-brand">{destinationData.destination.name}</span></>
-              : "Let's design your journey"}
-          </motion.h1>
+          <h1 className="font-serif-display text-fluid-h1 font-bold text-foreground tracking-tight leading-[1.12] mb-3">
+            Design your ideal itinerary
+          </h1>
 
-          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} className="text-muted-foreground text-lg">
-            A few details help us craft the perfect plan for you.
-          </motion.p>
+          <p className="text-base text-muted-foreground max-w-lg mx-auto">
+            A few thoughtful preferences help our engine eliminate tourist traps and align with your pace.
+          </p>
 
-          {/* Progress bar */}
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }} className="mt-8 max-w-xs mx-auto">
-            <div className="flex justify-between text-xs text-muted-foreground mb-2">
-              <span>Progress</span>
-              <span className="font-semibold text-accent">{progress}%</span>
+          {/* Progress Indicator with encouraging microcopy */}
+          <div className="mt-8 max-w-xs mx-auto">
+            <div className="flex justify-between text-xs text-muted-foreground mb-1.5 font-medium">
+              <span>Blueprint readiness</span>
+              <span className="font-bold text-primary">{progress}% complete</span>
             </div>
             <div className="h-1.5 bg-border rounded-full overflow-hidden">
               <motion.div
-                className="h-full rounded-full bg-gradient-to-r from-accent to-amber-400"
+                className="h-full bg-primary rounded-full"
                 animate={{ width: `${progress}%` }}
-                transition={{ duration: 0.4, ease: 'easeOut' }}
+                transition={{ duration: 0.4 }}
               />
             </div>
-          </motion.div>
+          </div>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-5">
+        {/* Form Container */}
+        <form onSubmit={handleSubmit} className="space-y-6">
 
-          {/* Section 1: Trip Basics */}
-          <SectionCard step="01" title="Trip Basics" description="We'll plan a round trip starting and ending here." delay={0.1}>
-            <div className="grid md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-foreground flex items-center gap-2">
-                  <MapPin size={15} className="text-accent" /> Starting Location
-                </label>
-                <select
-                  value={formData.startLocation}
-                  onChange={e => handleInputChange('startLocation', e.target.value)}
-                  className={`w-full p-4 rounded-xl bg-background border-2 transition-all outline-none appearance-none cursor-pointer ${errors.startLocation ? 'border-destructive/50' : 'border-border focus:border-accent/60 focus:shadow-[0_0_0_4px_hsl(38_92%_50%/0.10)]'}`}
-                >
-                  <option value="">Select your city</option>
-                  {startLocations.map(city => <option key={city} value={city}>{city}</option>)}
-                </select>
-                {errors.startLocation && <p className="text-destructive text-xs">{errors.startLocation}</p>}
-              </div>
-
-              <div className="space-y-2">
-                <div className="flex justify-between items-center">
-                  <label className="text-sm font-medium text-foreground flex items-center gap-2">
-                    <Calendar size={15} className="text-accent" /> Dates
-                  </label>
-                  {getDurationString() && (
-                    <span className="text-xs font-bold text-accent px-2.5 py-1 rounded-full bg-accent/10 animate-scale-in">
-                      {getDurationString()}
-                    </span>
-                  )}
+          {/* Locked / Preferred Destination Indicator */}
+          {targetDestination && (
+            <motion.div
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="bg-card rounded-2xl p-4 md:p-5 border border-primary/25 shadow-warm flex items-center justify-between gap-4"
+            >
+              <div className="flex items-center gap-3.5">
+                <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary shrink-0">
+                  <MapPin size={20} />
                 </div>
-                <div className="flex gap-3">
-                  <input type="date" value={formData.startDate} min={today}
-                    onChange={e => handleInputChange('startDate', e.target.value)}
-                    className={`flex-1 p-4 rounded-xl bg-background border-2 transition-all outline-none text-sm ${errors.startDate ? 'border-destructive/50' : 'border-border focus:border-accent/60'}`}
-                  />
-                  <input type="date" value={formData.endDate} min={formData.startDate || today}
-                    onChange={e => handleInputChange('endDate', e.target.value)}
-                    className={`flex-1 p-4 rounded-xl bg-background border-2 transition-all outline-none text-sm ${errors.endDate ? 'border-destructive/50' : 'border-border focus:border-accent/60'}`}
-                  />
-                </div>
-                {(errors.startDate || errors.endDate) && <p className="text-destructive text-xs">{errors.startDate || errors.endDate}</p>}
-              </div>
-            </div>
-          </SectionCard>
-
-          {/* Section 2: Who's Traveling */}
-          <SectionCard step="02" title="Who's Traveling" description="This helps us match the right pace and experiences." delay={0.2}>
-            <div className="space-y-7">
-              {/* Traveler count */}
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <label className="text-sm font-medium text-foreground flex items-center gap-2">
-                    <Users size={15} className="text-accent" /> Number of Travelers
-                  </label>
-                  <span className="text-sm font-semibold text-accent">{formData.travelers === 1 ? 'Just me' : `${formData.travelers} people`}</span>
-                </div>
-                <div className="flex items-center gap-5 bg-secondary/20 p-2 pl-6 rounded-2xl border border-border/40 w-max">
-                  <span className="w-8 text-center font-black text-2xl tabular-nums text-foreground">{formData.travelers}</span>
-                  <div className="flex gap-1.5">
-                    <button type="button" onClick={() => handleInputChange('travelers', Math.max(1, formData.travelers - 1))}
-                      className="w-11 h-11 rounded-xl bg-background hover:bg-white text-foreground shadow-soft flex items-center justify-center transition-all hover:scale-110 active:scale-95 border border-border text-xl font-medium">−</button>
-                    <button type="button" onClick={() => handleInputChange('travelers', Math.min(10, formData.travelers + 1))}
-                      className="w-11 h-11 rounded-xl bg-primary text-primary-foreground shadow-orange flex items-center justify-center transition-all hover:scale-110 active:scale-95 text-xl font-medium">+</button>
+                <div>
+                  <div className="text-[10px] font-bold uppercase tracking-wider text-primary">Destination Focus</div>
+                  <div className="text-base sm:text-lg font-serif-display font-bold text-foreground">
+                    {targetDestination}
                   </div>
                 </div>
               </div>
+              <button
+                type="button"
+                onClick={() => setTargetDestination('')}
+                className="text-xs text-muted-foreground hover:text-foreground font-semibold px-3 py-1.5 rounded-lg bg-muted/60 hover:bg-muted border border-border/60 transition-all shrink-0"
+              >
+                Clear / Suggest All
+              </button>
+            </motion.div>
+          )}
 
-              {/* Travel style */}
+          {/* Section 1: Departure & Dates */}
+          <div className="bg-card rounded-3xl p-6 md:p-8 border border-border/80 shadow-warm">
+            <div className="flex items-center gap-2.5 mb-6">
+              <span className="font-serif-display text-2xl font-bold text-muted-foreground/40">01</span>
               <div>
-                <label className="text-sm font-medium text-foreground block mb-3">Travel Style</label>
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-                  {travelTypes.map(type => (
-                    <button key={type.value} type="button" onClick={() => handleInputChange('travelType', type.value)}
-                      className={`group relative p-4 rounded-2xl border-2 transition-all duration-300 text-left ${formData.travelType === type.value ? 'border-accent bg-accent/[0.08] shadow-[0_0_0_4px_rgba(245,158,11,0.12)]' : 'border-border hover:border-accent/30 bg-background'}`}
-                    >
-                      {formData.travelType === type.value && (
-                        <motion.div layoutId="travel-type-bg" className="absolute inset-0 rounded-2xl bg-accent/5" transition={{ type: 'spring', stiffness: 300, damping: 28 }} />
-                      )}
-                      <div className={`text-2xl mb-2 transition-transform duration-300 ${formData.travelType === type.value ? 'scale-125' : 'group-hover:scale-110'}`}>{type.icon}</div>
-                      <div className="font-semibold text-foreground text-sm relative z-10">{type.label}</div>
-                    </button>
-                  ))}
-                </div>
-                {errors.travelType && <p className="text-destructive text-xs mt-2">{errors.travelType}</p>}
+                <h3 className="font-serif-display text-xl font-bold text-foreground">Starting Point & Dates</h3>
+                <p className="text-xs text-muted-foreground">We calibrate transport timings from your home city.</p>
               </div>
             </div>
-          </SectionCard>
 
-          {/* Section 3: Budget */}
-          <SectionCard step="03" title="Comfort & Budget" description="Choose your preferred comfort level." delay={0.3}>
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-              {budgetRanges.map(range => {
-                const isActive = formData.budget === range.value;
-                return (
-                  <button key={range.value} type="button" onClick={() => handleInputChange('budget', range.value)}
-                    className={`relative p-5 rounded-2xl border-2 transition-all duration-300 text-left group overflow-hidden ${isActive ? 'border-accent shadow-[0_0_0_4px_rgba(245,158,11,0.15)]' : 'border-border hover:border-accent/30 bg-background'}`}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              {/* Origin City */}
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-muted-foreground mb-2 flex items-center gap-1.5">
+                  <MapPin size={14} className="text-primary" />
+                  Origin City
+                </label>
+                <select
+                  value={formData.startLocation}
+                  onChange={(e) => handleInputChange('startLocation', e.target.value)}
+                  className="w-full h-12 px-4 rounded-xl border border-border/80 bg-background text-foreground text-sm font-semibold focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+                >
+                  {startLocations.map((city) => (
+                    <option key={city} value={city}>{city}</option>
+                  ))}
+                </select>
+                {errors.startLocation && (
+                  <p className="text-xs text-destructive mt-1.5">{errors.startLocation}</p>
+                )}
+              </div>
+
+              {/* Date Selection */}
+              <div>
+                <div className="flex justify-between items-center mb-2">
+                  <label className="text-xs font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
+                    <Calendar size={14} className="text-primary" />
+                    Trip Dates
+                  </label>
+                  <span className="text-xs font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-full">
+                    {durationDays} Days
+                  </span>
+                </div>
+                <div className="flex gap-2.5">
+                  <input
+                    type="date"
+                    value={formData.startDate}
+                    onChange={(e) => handleInputChange('startDate', e.target.value)}
+                    className="flex-1 h-12 px-3.5 rounded-xl border border-border/80 bg-background text-foreground text-xs md:text-sm font-medium focus:outline-none focus:border-primary"
+                  />
+                  <input
+                    type="date"
+                    value={formData.endDate}
+                    onChange={(e) => handleInputChange('endDate', e.target.value)}
+                    className="flex-1 h-12 px-3.5 rounded-xl border border-border/80 bg-background text-foreground text-xs md:text-sm font-medium focus:outline-none focus:border-primary"
+                  />
+                </div>
+                {errors.endDate && (
+                  <p className="text-xs text-destructive mt-1.5">{errors.endDate}</p>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Section 2: Travel Party & Style */}
+          <div className="bg-card rounded-3xl p-6 md:p-8 border border-border/80 shadow-warm">
+            <div className="flex items-center gap-2.5 mb-6">
+              <span className="font-serif-display text-2xl font-bold text-muted-foreground/40">02</span>
+              <div>
+                <h3 className="font-serif-display text-xl font-bold text-foreground">Who is Traveling</h3>
+                <p className="text-xs text-muted-foreground">Adjusts walking pace, kid-friendly spots, and room configurations.</p>
+              </div>
+            </div>
+
+            <div className="space-y-6">
+              {/* Traveler Counter */}
+              <div>
+                <div className="flex justify-between items-center mb-3">
+                  <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
+                    <Users size={14} className="text-primary" />
+                    Group Size
+                  </span>
+                  <span className="text-xs font-semibold text-primary">
+                    {formData.travelers === 1 ? 'Solo explorer' : `${formData.travelers} companions`}
+                  </span>
+                </div>
+
+                <div className="flex items-center gap-3 bg-muted/50 p-1.5 rounded-2xl w-fit border border-border/60">
+                  <button
+                    type="button"
+                    onClick={() => handleInputChange('travelers', Math.max(1, formData.travelers - 1))}
+                    className="w-10 h-10 rounded-xl bg-card hover:bg-background text-foreground border border-border font-bold text-lg flex items-center justify-center active:scale-95 transition-all"
                   >
-                    {isActive && (
-                      <motion.div
-                        layoutId="budget-bg"
-                        className={`absolute inset-0 bg-gradient-to-br ${budgetColors[range.value]} opacity-80`}
-                        transition={{ type: 'spring', stiffness: 300, damping: 28 }}
-                      />
-                    )}
-                    <div className="relative z-10">
-                      <div className="flex justify-between items-start mb-3">
-                        <Wallet size={18} className={isActive ? 'text-accent' : 'text-muted-foreground'} />
-                        {isActive && <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="w-2 h-2 rounded-full bg-accent" />}
-                      </div>
-                      <div className="font-bold text-foreground text-sm mb-1">{budgetLabels[range.value] || range.label}</div>
-                      <div className="text-xs text-muted-foreground mb-2">{range.range}</div>
-                      <p className="text-[10px] text-muted-foreground/60 leading-tight">{budgetDescriptions[range.value]}</p>
+                    -
+                  </button>
+                  <span className="w-10 text-center font-bold text-xl tabular-nums text-foreground">
+                    {formData.travelers}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => handleInputChange('travelers', Math.min(8, formData.travelers + 1))}
+                    className="w-10 h-10 rounded-xl bg-primary text-primary-foreground font-bold text-lg flex items-center justify-center shadow-warm-sm active:scale-95 transition-all"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+
+              {/* Group Type Chips */}
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3">
+                  Travel Companion Style
+                </label>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                  {travelTypes.map((type) => {
+                    const active = formData.travelType === type.value;
+                    return (
+                      <button
+                        key={type.value}
+                        type="button"
+                        onClick={() => handleInputChange('travelType', type.value)}
+                        className={`p-3.5 rounded-2xl border text-left transition-all duration-200 flex flex-col justify-between ${
+                          active
+                            ? 'border-primary bg-primary/10 shadow-warm-sm'
+                            : 'border-border/80 bg-background hover:bg-muted/50'
+                        }`}
+                      >
+                        <span className="text-2xl mb-1.5">{type.icon}</span>
+                        <span className={`text-sm font-bold ${active ? 'text-primary' : 'text-foreground'}`}>
+                          {type.label}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Section 3: Comfort & Budget Tier */}
+          <div className="bg-card rounded-3xl p-6 md:p-8 border border-border/80 shadow-warm">
+            <div className="flex items-center gap-2.5 mb-6">
+              <span className="font-serif-display text-2xl font-bold text-muted-foreground/40">03</span>
+              <div>
+                <h3 className="font-serif-display text-xl font-bold text-foreground">Comfort & Budget Tier</h3>
+                <p className="text-xs text-muted-foreground">Real total per person, including stays, transit, meals and admissions.</p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              {budgetRanges.map((range) => {
+                const active = formData.budget === range.value;
+                const info = budgetDetails[range.value];
+                return (
+                  <button
+                    key={range.value}
+                    type="button"
+                    onClick={() => handleInputChange('budget', range.value)}
+                    className={`p-4 rounded-2xl border text-left transition-all duration-200 relative ${
+                      active
+                        ? 'border-primary bg-primary/10 shadow-warm-sm ring-1 ring-primary'
+                        : 'border-border/80 bg-background hover:bg-muted/50'
+                    }`}
+                  >
+                    <div className="flex justify-between items-baseline mb-1">
+                      <span className={`font-serif-display font-bold text-base ${active ? 'text-primary' : 'text-foreground'}`}>
+                        {info.label}
+                      </span>
+                      <span className="text-xs font-bold text-foreground/80">{info.inr}</span>
                     </div>
+                    <p className="text-xs text-muted-foreground leading-relaxed">{info.desc}</p>
                   </button>
                 );
               })}
             </div>
-            {errors.budget && <p className="text-destructive text-xs mt-2">{errors.budget}</p>}
-          </SectionCard>
+          </div>
 
-          {/* Submit */}
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="pt-6 text-center space-y-4">
-            <button type="submit"
-              className="btn-primary w-full md:w-auto md:min-w-[320px] text-lg px-10 py-4 rounded-full group inline-flex items-center justify-center gap-2"
+          {/* Form Action Submit */}
+          <div className="pt-4 text-center space-y-3">
+            <button
+              type="submit"
+              className="w-full sm:w-auto min-w-[280px] bg-primary text-primary-foreground font-semibold px-8 py-4 rounded-full shadow-warm hover:brightness-105 active:scale-[0.98] transition-all text-base inline-flex items-center justify-center gap-2"
             >
-              Design My Trip
-              <ArrowRight size={20} className="group-hover:translate-x-1.5 transition-transform duration-300" />
+              <span>Curate Destinations</span>
+              <ArrowRight size={18} />
             </button>
-            <p className="text-xs text-muted-foreground">Takes less than 10 seconds &nbsp;·&nbsp; No sign-up needed</p>
-          </motion.div>
+            <p className="text-xs text-muted-foreground">
+              Step 2 will show destination matches tailored to this budget
+            </p>
+          </div>
 
         </form>
+
       </div>
     </div>
   );

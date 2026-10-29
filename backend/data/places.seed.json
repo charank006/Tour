@@ -1,0 +1,60 @@
+{
+  "jaipur": [
+    { "name": "Amber Palace & Fort", "category": "Historic Palace", "coordinates": { "lat": 26.9855, "lon": 75.8513 }, "isIndoor": false, "weatherSensitivity": "high", "rating": 9.2, "cost": 500, "openHours": "08:00 - 18:00" },
+    { "name": "Hawa Mahal (Palace of Winds)", "category": "Architecture", "coordinates": { "lat": 26.9239, "lon": 75.8267 }, "isIndoor": true, "weatherSensitivity": "low", "rating": 9.0, "cost": 200, "openHours": "09:00 - 17:00" },
+    { "name": "City Palace of Jaipur", "category": "Museum & Heritage", "coordinates": { "lat": 26.9258, "lon": 75.8236 }, "isIndoor": true, "weatherSensitivity": "low", "rating": 8.9, "cost": 700, "openHours": "09:30 - 17:00" },
+    { "name": "Jantar Mantar Observatory", "category": "Astronomy Heritage", "coordinates": { "lat": 26.9248, "lon": 75.8246 }, "isIndoor": false, "weatherSensitivity": "high", "rating": 8.7, "cost": 200, "openHours": "09:00 - 17:00" },
+    { "name": "Nahargarh Fort Sunset Viewpoint", "category": "Sunset & Fort", "coordinates": { "lat": 26.9388, "lon": 75.8155 }, "isIndoor": false, "weatherSensitivity": "high", "rating": 9.1, "cost": 100, "openHours": "10:00 - 22:00" },
+    { "name": "Albert Hall Museum", "category": "State Art Museum", "coordinates": { "lat": 26.9116, "lon": 75.8195 }, "isIndoor": true, "weatherSensitivity": "low", "rating": 8.8, "cost": 300, "openHours": "09:00 - 20:00" },
+    { "name": "Patrika Gate & Jawahar Circle", "category": "Photography & Gardens", "coordinates": { "lat": 26.8528, "lon": 75.8052 }, "isIndoor": false, "weatherSensitivity": "low", "rating": 8.6, "cost": 0, "openHours": "06:00 - 21:00" },
+    { "name": "Bapu Bazaar Artisan Walk", "category": "Crafts & Spices", "coordinates": { "lat": 26.9189, "lon": 75.8225 }, "isIndoor": false, "weatherSensitivity": "medium", "rating": 8.5, "cost": 0, "openHours": "11:00 - 20:00" },
+    { "name": "Jal Mahal (Water Palace Promenade)", "category": "Scenic Lake Walk", "coordinates": { "lat": 26.9535, "lon": 75.8462 }, "isIndoor": false, "weatherSensitivity": "high", "rating": 8.7, "cost": 0, "openHours": "06:00 - 20:00" },
+    { "name": "Galta Ji (Monkey Temple)", "category": "Ancient Temple Complex", "coordinates": { "lat": 26.9162, "lon": 75.8617 }, "isIndoor": false, "weatherSensitivity": "high", "rating": 8.4, "cost": 100, "openHours": "06:00 - 19:00" },
+    { "name": "Jaigarh Fort & Cannon", "category": "Historic Citadel", "coordinates": { "lat": 26.9850, "lon": 75.8450 }, "isIndoor": false, "weatherSensitivity": "high", "rating": 8.6, "cost": 250, "openHours": "09:00 - 17:00" },
+    { "name": "Lassiwala Traditional Milk Bar", "category": "Culinary Heritage", "coordinates": { "lat": 26.9180, "lon": 75.8160 }, "isIndoor": true, "weatherSensitivity": "low", "rating": 9.1, "cost": 120, "openHours": "07:00 - 16:00" }
+  ],
+  "manali": [
+    { "name": "Solang Valley Alpine Meadow", "category": "Valley & Adventure", "coordinates": { "lat": 32.3160, "lon": 77.1575 }, "isIndoor": false, "weatherSensitivity": "high", "rating": 9.3, "cost": 500, "openHours": "09:00 - 18:00" },
+    { "name": "Hadimba Cedar Forest Temple", "category": "Historic Shrine", "coordinates": { "lat": 32.2483, "lon": 77.1804 }, "isIndoor": false, "weatherSensitivity": "medium", "rating": 9.0, "cost": 50, "openHours": "08:00 - 18:00" },
+    { "name": "Old Manali Apple Orchards & Cafes", "category": "Culture & Cafe", "coordinates": { "lat": 32.2530, "lon": 77.1750 }, "isIndoor": true, "weatherSensitivity": "low", "rating": 8.9, "cost": 300, "openHours": "09:00 - 22:00" },
+    { "name": "Jogini Waterfalls Trail", "category": "Waterfall Hike", "coordinates": { "lat": 32.2680, "lon": 77.1950 }, "isIndoor": false, "weatherSensitivity": "high", "rating": 9.2, "cost": 0, "openHours": "06:00 - 17:00" },
+    { "name": "Vashisht Natural Hot Springs", "category": "Wellness & Baths", "coordinates": { "lat": 32.2612, "lon": 77.1895 }, "isIndoor": true, "weatherSensitivity": "low", "rating": 8.6, "cost": 0, "openHours": "07:00 - 20:00" },
+    { "name": "Atal Tunnel & Sissu Viewpoint", "category": "Mountain Pass", "coordinates": { "lat": 32.4400, "lon": 77.1600 }, "isIndoor": false, "weatherSensitivity": "high", "rating": 9.5, "cost": 0, "openHours": "07:00 - 18:00" },
+    { "name": "Manu Temple Pilgrimage", "category": "Ancient Temple", "coordinates": { "lat": 32.2560, "lon": 77.1720 }, "isIndoor": true, "weatherSensitivity": "low", "rating": 8.5, "cost": 0, "openHours": "06:00 - 19:00" },
+    { "name": "Van Vihar Pine Sanctuary", "category": "Forest Walk", "coordinates": { "lat": 32.2410, "lon": 77.1870 }, "isIndoor": false, "weatherSensitivity": "medium", "rating": 8.4, "cost": 30, "openHours": "08:00 - 19:00" }
+  ],
+  "goa": [
+    { "name": "Basilica of Bom Jesus", "category": "UNESCO Heritage", "coordinates": { "lat": 15.5009, "lon": 73.9116 }, "isIndoor": true, "weatherSensitivity": "low", "rating": 9.2, "cost": 0, "openHours": "09:00 - 18:30" },
+    { "name": "Fontainhas Latin Quarter", "category": "Colonial Heritage Walk", "coordinates": { "lat": 15.4989, "lon": 73.8315 }, "isIndoor": false, "weatherSensitivity": "medium", "rating": 9.0, "cost": 0, "openHours": "07:00 - 20:00" },
+    { "name": "Aguada Fort & Sea Lighthouse", "category": "Historic Citadel", "coordinates": { "lat": 15.4925, "lon": 73.7735 }, "isIndoor": false, "weatherSensitivity": "high", "rating": 8.8, "cost": 100, "openHours": "09:30 - 17:30" },
+    { "name": "Dudhsagar Cascading Falls", "category": "Nature & Waterfall", "coordinates": { "lat": 15.3144, "lon": 74.3144 }, "isIndoor": false, "weatherSensitivity": "high", "rating": 9.4, "cost": 400, "openHours": "07:00 - 16:30" },
+    { "name": "Anjuna Coastal Cliff & Flea Market", "category": "Beach & Market", "coordinates": { "lat": 15.5800, "lon": 73.7400 }, "isIndoor": false, "weatherSensitivity": "high", "rating": 8.7, "cost": 0, "openHours": "09:00 - 22:00" },
+    { "name": "Palolem Crescent Beach", "category": "Peaceful Lagoon", "coordinates": { "lat": 15.0100, "lon": 74.0230 }, "isIndoor": false, "weatherSensitivity": "high", "rating": 9.1, "cost": 0, "openHours": "06:00 - 21:00" },
+    { "name": "Reis Magos Coastal Fort", "category": "Restored Fortress", "coordinates": { "lat": 15.4965, "lon": 73.8090 }, "isIndoor": true, "weatherSensitivity": "low", "rating": 8.6, "cost": 50, "openHours": "09:30 - 17:00" },
+    { "name": "Spice Plantation & Farm Lunch", "category": "Agri-Tourism & Food", "coordinates": { "lat": 15.4200, "lon": 74.0100 }, "isIndoor": false, "weatherSensitivity": "medium", "rating": 8.8, "cost": 500, "openHours": "09:00 - 16:00" }
+  ],
+  "kerala": [
+    { "name": "Alleppey Houseboat Canal Cruise", "category": "Backwater Navigation", "coordinates": { "lat": 9.4981, "lon": 76.3388 }, "isIndoor": true, "weatherSensitivity": "medium", "rating": 9.5, "cost": 3500, "openHours": "11:00 - 17:30" },
+    { "name": "Fort Kochi Chinese Fishing Nets", "category": "Maritime Heritage", "coordinates": { "lat": 9.9675, "lon": 76.2425 }, "isIndoor": false, "weatherSensitivity": "high", "rating": 8.8, "cost": 0, "openHours": "06:00 - 19:00" },
+    { "name": "Mattancherry Dutch Palace", "category": "Royal Mural Museum", "coordinates": { "lat": 9.9580, "lon": 76.2590 }, "isIndoor": true, "weatherSensitivity": "low", "rating": 8.7, "cost": 25, "openHours": "09:45 - 17:00" },
+    { "name": "Munnar Kolukkumalai Sunrise Peak", "category": "High Altitude Tea Peak", "coordinates": { "lat": 10.0890, "lon": 77.2100 }, "isIndoor": false, "weatherSensitivity": "high", "rating": 9.6, "cost": 600, "openHours": "05:00 - 14:00" },
+    { "name": "Periyar Wildlife Sanctuary", "category": "Forest Safari", "coordinates": { "lat": 9.4660, "lon": 77.1440 }, "isIndoor": false, "weatherSensitivity": "high", "rating": 9.0, "cost": 450, "openHours": "06:00 - 17:30" },
+    { "name": "Jew Town & Paradesi Synagogue", "category": "Antiques & Heritage", "coordinates": { "lat": 9.9570, "lon": 76.2600 }, "isIndoor": true, "weatherSensitivity": "low", "rating": 8.9, "cost": 20, "openHours": "10:00 - 18:00" }
+  ],
+  "delhi": [
+    { "name": "Humayun's Tomb Garden", "category": "Mughal Architecture", "coordinates": { "lat": 28.5933, "lon": 77.2507 }, "isIndoor": false, "weatherSensitivity": "high", "rating": 9.3, "cost": 250, "openHours": "06:00 - 18:00" },
+    { "name": "Qutub Minar Victory Complex", "category": "UNESCO Monument", "coordinates": { "lat": 28.5244, "lon": 77.1855 }, "isIndoor": false, "weatherSensitivity": "high", "rating": 9.1, "cost": 250, "openHours": "07:00 - 18:30" },
+    { "name": "National Museum of India", "category": "Art & History", "coordinates": { "lat": 28.6118, "lon": 77.2193 }, "isIndoor": true, "weatherSensitivity": "low", "rating": 9.0, "cost": 150, "openHours": "10:00 - 18:00" },
+    { "name": "Sunder Nursery Heritage Park", "category": "Botanical Gardens", "coordinates": { "lat": 28.5950, "lon": 77.2450 }, "isIndoor": false, "weatherSensitivity": "medium", "rating": 9.4, "cost": 50, "openHours": "07:00 - 20:00" },
+    { "name": "Chandni Chowk Old City Bazaar", "category": "Culinary Heritage Walk", "coordinates": { "lat": 28.6506, "lon": 77.2303 }, "isIndoor": false, "weatherSensitivity": "high", "rating": 8.9, "cost": 0, "openHours": "10:00 - 20:00" },
+    { "name": "Lotus Temple Bahá'í Sanctuary", "category": "Architecture & Meditation", "coordinates": { "lat": 28.5535, "lon": 77.2588 }, "isIndoor": true, "weatherSensitivity": "low", "rating": 8.8, "cost": 0, "openHours": "09:00 - 17:30" }
+  ],
+  "default": [
+    { "name": "Historic Old Town Promenade", "category": "Heritage Walk", "coordinates": { "lat": 0, "lon": 0 }, "isIndoor": false, "weatherSensitivity": "medium", "rating": 8.8, "cost": 0, "openHours": "08:00 - 20:00" },
+    { "name": "Central Art & Heritage Gallery", "category": "Museum", "coordinates": { "lat": 0, "lon": 0 }, "isIndoor": true, "weatherSensitivity": "low", "rating": 8.7, "cost": 150, "openHours": "10:00 - 17:00" },
+    { "name": "Botanical Riverfront Gardens", "category": "Nature & Park", "coordinates": { "lat": 0, "lon": 0 }, "isIndoor": false, "weatherSensitivity": "high", "rating": 8.9, "cost": 50, "openHours": "06:30 - 19:00" },
+    { "name": "Traditional Crafts Bazaar", "category": "Artisan Market", "coordinates": { "lat": 0, "lon": 0 }, "isIndoor": false, "weatherSensitivity": "medium", "rating": 8.6, "cost": 0, "openHours": "11:00 - 21:00" },
+    { "name": "Sunset Panorama Point", "category": "Scenic Viewpoint", "coordinates": { "lat": 0, "lon": 0 }, "isIndoor": false, "weatherSensitivity": "high", "rating": 9.1, "cost": 0, "openHours": "17:00 - 19:30" },
+    { "name": "Heritage Tea House & Kitchen", "category": "Local Dining", "coordinates": { "lat": 0, "lon": 0 }, "isIndoor": true, "weatherSensitivity": "low", "rating": 9.0, "cost": 300, "openHours": "08:00 - 22:00" }
+  ]
+}

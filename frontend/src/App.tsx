@@ -9,15 +9,21 @@ import TripInputs from "./pages/TripInputs";
 import Suggestions from "./pages/Suggestions";
 import TripPlan from "./pages/TripPlan";
 import NotFound from "./pages/NotFound";
-
 import Destinations from "./pages/Destinations";
 import Activities from "./pages/Activities";
 import Reviews from "./pages/Reviews";
-
 import MyTrips from "./pages/MyTrips";
-import TestPage from "./pages/TestLogic";
+import ErrorBoundary from "./components/ErrorBoundary";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 2,
+      staleTime: 5 * 60 * 1000,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -26,19 +32,22 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Navbar />
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/plan" element={<TripInputs />} />
-          <Route path="/suggestions" element={<Suggestions />} />
-          <Route path="/trip-plan" element={<TripPlan />} />
-          <Route path="/destinations" element={<Destinations />} />
-          <Route path="/activities" element={<Activities />} />
-          <Route path="/reviews" element={<Reviews />} />
-          <Route path="/my-trips" element={<MyTrips />} />
-          <Route path="/test-logic" element={<TestPage />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <ErrorBoundary>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/plan" element={<TripInputs />} />
+            <Route path="/suggestions" element={<Suggestions />} />
+            <Route path="/trip-plan" element={<TripPlan />} />
+            <Route path="/trip/:id" element={<TripPlan />} />
+            <Route path="/trip/share/:shareId" element={<TripPlan />} />
+            <Route path="/destinations" element={<Destinations />} />
+            <Route path="/activities" element={<Activities />} />
+            <Route path="/reviews" element={<Reviews />} />
+            <Route path="/my-trips" element={<MyTrips />} />
+            {/* Catch-all route */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </ErrorBoundary>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

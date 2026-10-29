@@ -251,3 +251,8 @@ exports.generateItinerary = (placesRaw, days, pace, weather) => {
     // --- 2. Post-Processing Optimization ---
     return optimizeForWeather(dayPlans, weather);
 };
+
+exports.categorizePlace = categorizePlace;
+exports.enrichPlace = enrichPlace;
+exports.optimizeForWeather = optimizeForWeather;
+

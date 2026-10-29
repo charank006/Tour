@@ -10,7 +10,9 @@ const TripSchema = new mongoose.Schema({
     mood: String,
     pace: String,
     budget: Number,
-    plan: Object
+    plan: Object,
+    shareId: { type: String, unique: true, sparse: true },
+    createdAt: { type: Date, default: Date.now }
 });
 
 module.exports = mongoose.model('Trip', TripSchema);

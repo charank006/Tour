@@ -1,75 +1,64 @@
-import { Skeleton } from "@/components/ui/Skeleton";
+import { Skeleton } from "@/components/ui/skeleton";
+import PlanningAnimation from "@/components/PlanningAnimation";
 
-const TripPlanSkeleton = () => {
-    return (
-        <div className="min-h-screen bg-background pt-24 pb-12">
-            <div className="container mx-auto px-4">
-                <div className="max-w-4xl mx-auto space-y-8">
+export const TripPlanSkeleton = () => {
+  return (
+    <div className="min-h-screen bg-background pt-28 pb-16 selection:bg-primary/20">
+      <div className="container mx-auto px-4 sm:px-6 max-w-4xl">
 
-                    {/* Header Skeleton */}
-                    <div className="space-y-4">
-                        <Skeleton className="h-6 w-32" /> {/* Back link */}
-                        <div className="grid md:grid-cols-2 gap-6 items-start">
-                            <div>
-                                <Skeleton className="h-12 w-3/4 mb-2" /> {/* Title */}
-                                <Skeleton className="h-4 w-1/2" /> {/* Subtitle */}
-                            </div>
-                            <div className="bg-card border rounded-2xl p-4 flex justify-between items-center">
-                                <Skeleton className="h-10 w-24" /> {/* Stat 1 */}
-                                <div className="h-8 w-[1px] bg-border mx-4" />
-                                <Skeleton className="h-10 w-24" /> {/* Stat 2 */}
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Timeline Skeleton */}
-                    <div className="space-y-8 pl-4 md:pl-8 ml-4 md:ml-6 border-l-[2px] border-dashed border-border/30">
-                        {[1, 2, 3].map((day) => (
-                            <div key={day} className="relative space-y-6">
-                                {/* Day Header */}
-                                <div className="flex items-center gap-4 mb-6">
-                                    <Skeleton className="h-12 w-12 rounded-lg" />
-                                    <div className="space-y-2">
-                                        <Skeleton className="h-6 w-48" />
-                                        <Skeleton className="h-4 w-32" />
-                                    </div>
-                                </div>
-
-                                {/* Activity Cards */}
-                                {[1, 2].map((act) => (
-                                    <div key={act} className="relative pl-8">
-                                        <div className="absolute -left-[23px] md:-left-[39px] top-6 w-4 h-4 rounded-full border-[3px] border-background bg-muted z-10" />
-                                        <div className="bg-card rounded-xl border p-4 flex gap-4 h-40">
-                                            <Skeleton className="w-24 h-24 rounded-lg shrink-0" />
-                                            <div className="flex-grow space-y-3">
-                                                <div className="flex justify-between">
-                                                    <Skeleton className="h-6 w-1/3" />
-                                                    <Skeleton className="h-6 w-16" />
-                                                </div>
-                                                <Skeleton className="h-4 w-full" />
-                                                <Skeleton className="h-4 w-2/3" />
-                                                <div className="flex gap-2 mt-auto pt-2">
-                                                    <Skeleton className="h-5 w-16 rounded-full" />
-                                                    <Skeleton className="h-5 w-16 rounded-full" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        ))}
-                    </div>
-
-                    {/* Options Skeleton */}
-                    <div className="grid md:grid-cols-3 gap-4">
-                        {[1, 2, 3].map((i) => (
-                            <Skeleton key={i} className="h-32 rounded-xl" />
-                        ))}
-                    </div>
-                </div>
-            </div>
+        {/* Hero Planning Animation with Real Steps */}
+        <div className="mb-12 bg-card border border-border/80 rounded-3xl p-6 sm:p-8 shadow-warm">
+          <PlanningAnimation />
         </div>
-    );
+
+        {/* Header Skeleton */}
+        <div className="space-y-4 mb-10">
+          <Skeleton className="h-5 w-32 rounded-full" />
+          <div className="grid md:grid-cols-2 gap-6 items-start">
+            <div className="space-y-2">
+              <Skeleton className="h-10 w-3/4 rounded-xl" />
+              <Skeleton className="h-4 w-1/2 rounded-md" />
+            </div>
+            <div className="bg-card border border-border/70 rounded-2xl p-5 flex justify-between items-center shadow-xs">
+              <Skeleton className="h-10 w-24 rounded-lg" />
+              <div className="h-8 w-[1px] bg-border mx-4" />
+              <Skeleton className="h-10 w-24 rounded-lg" />
+            </div>
+          </div>
+        </div>
+
+        {/* Timeline Itinerary Skeletons matching exact layout */}
+        <div className="space-y-8 pl-4 md:pl-8 ml-4 md:ml-6 border-l-2 border-dashed border-border/60">
+          {[1, 2].map((day) => (
+            <div key={day} className="relative space-y-6">
+              <div className="flex items-center gap-4 mb-4">
+                <Skeleton className="h-10 w-28 rounded-full" />
+                <Skeleton className="h-5 w-40 rounded-md" />
+              </div>
+
+              {[1, 2].map((act) => (
+                <div key={act} className="relative pl-6">
+                  <div className="absolute -left-[31px] md:-left-[47px] top-6 w-4 h-4 rounded-full border-2 border-background bg-primary/40" />
+                  <div className="bg-card rounded-2xl border border-border/70 p-5 flex gap-4 h-36 shadow-xs">
+                    <Skeleton className="w-24 h-24 rounded-xl shrink-0" />
+                    <div className="flex-grow space-y-3">
+                      <div className="flex justify-between items-center">
+                        <Skeleton className="h-5 w-1/3 rounded-md" />
+                        <Skeleton className="h-5 w-16 rounded-md" />
+                      </div>
+                      <Skeleton className="h-3.5 w-full rounded-md" />
+                      <Skeleton className="h-3.5 w-2/3 rounded-md" />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+
+      </div>
+    </div>
+  );
 };
 
 export default TripPlanSkeleton;

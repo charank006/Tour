@@ -1,83 +1,103 @@
 const travelService = require('./travel.service');
 const hotelsService = require('./hotels.service');
 
-// Service: Cost Engine
-// Estimates costs based on real-time data from other services where possible
-
 /**
- * Calculates a detailed budget breakdown for a trip.
- * 
- * @param {string} fromCity - Origin city
- * @param {string} toCity - Destination city
- * @param {string} date - Travel start date (YYYY-MM-DD)
- * @param {number} durationDays - Number of days
- * @param {number} travelers - Number of travelers
- * @param {string} budgetLevel - 'low', 'medium', 'high'
+ * Calculates a guaranteed, NaN-proof budget breakdown for a trip.
  */
-exports.estimateTripCost = async (fromCity, toCity, date, durationDays, travelers, budgetLevel = 'medium') => {
-    // 1. Travel Cost (Get Cheapest Valid Option)
-    // We fetch top options and pick the cheapest one for the budget estimate
-    let travelCostPerPerson = 2000; // Default fallback if API fails
+exports.estimateTripCost = async (fromCity, toCity, date, durationDays = 3, travelers = 2, budgetLevel = 'medium') => {
+  // Support flexible arguments if called with numbers directly
+  let from = fromCity;
+  let to = toCity;
+  let dDays = Number(durationDays) || 3;
+  let pax = Number(travelers) || 2;
+  let level = budgetLevel;
 
-    try {
-        const travelOptions = await travelService.getTravelOptions(fromCity, toCity, date);
-        if (travelOptions && travelOptions.length > 0) {
-            // Find option with lowest price
-            // Ensure price is a number
-            const validOptions = travelOptions.filter(o => (o.priceEstimate || o.price) > 0);
-            if (validOptions.length > 0) {
-                const cheapest = validOptions.reduce((min, o) => (o.priceEstimate || o.price) < (min.priceEstimate || min.price) ? o : min);
-                travelCostPerPerson = cheapest.priceEstimate || cheapest.price;
-            }
+  // If first param was a distance number (e.g. legacy signature `estimateTripCost(distanceKm, durationDays, travelers)`)
+  if (typeof fromCity === 'number' || (!isNaN(Number(fromCity)) && typeof toCity === 'number')) {
+    dDays = Math.max(1, Number(toCity) || 3);
+    pax = Math.max(1, Number(date) || 2);
+    from = 'Origin';
+    to = 'Destination';
+    level = 'medium';
+  }
+
+  dDays = Math.max(1, Math.round(dDays));
+  pax = Math.max(1, Math.round(pax));
+
+  // 1. Travel Cost
+  let travelCostPerPerson = 2000;
+  if (level === 'high' || level === 'luxury') travelCostPerPerson = 6000;
+  if (level === 'low' || level === 'budget') travelCostPerPerson = 1200;
+
+  try {
+    if (from && to && typeof from === 'string' && typeof to === 'string') {
+      const travelOptions = await travelService.getTravelOptions(from, to, date || new Date().toISOString());
+      if (travelOptions && Array.isArray(travelOptions) && travelOptions.length > 0) {
+        const validOptions = travelOptions.filter(o => Number(o.priceEstimate || o.price) > 0);
+        if (validOptions.length > 0) {
+          const cheapest = validOptions.reduce((min, o) =>
+            (Number(o.priceEstimate || o.price) < Number(min.priceEstimate || min.price)) ? o : min
+          );
+          travelCostPerPerson = Number(cheapest.priceEstimate || cheapest.price) || travelCostPerPerson;
         }
-    } catch (err) {
-        console.warn("Cost Service: Failed to fetch dynamic travel cost, using default.", err.message);
+      }
     }
+  } catch (err) {
+    console.warn('[CostService] Dynamic travel cost fallback used:', err.message);
+  }
 
-    const totalTravel = travelCostPerPerson * travelers;
+  const totalTravel = Math.round(travelCostPerPerson * pax);
 
-    // 2. Stay Cost (Fetch Hotel for Budget Level)
-    let hotelCostPerNight = 3000; // Default Medium
-    if (budgetLevel === 'low') hotelCostPerNight = 1200;
-    if (budgetLevel === 'high') hotelCostPerNight = 8000;
+  // 2. Stay Cost
+  let hotelCostPerNight = 3200; // Medium / Comfort
+  if (level === 'low' || level === 'budget') hotelCostPerNight = 1400;
+  if (level === 'high' || level === 'luxury') hotelCostPerNight = 8500;
 
-    try {
-        const hotels = await hotelsService.getHotels(toCity, budgetLevel);
-        if (hotels && hotels.length > 0) {
-            // Take average of top 3 findings to be safe? Or just the cheapest/best fit?
-            // Let's take the first one (top rated in price tier)
-            hotelCostPerNight = hotels[0].priceEstimate || hotelCostPerNight;
-        }
-    } catch (err) {
-        console.warn("Cost Service: Failed to fetch dynamic hotel cost, using default.", err.message);
+  try {
+    if (to && typeof to === 'string') {
+      const hotels = await hotelsService.getHotels(to, level);
+      if (hotels && Array.isArray(hotels) && hotels.length > 0) {
+        hotelCostPerNight = Number(hotels[0].priceEstimate) || hotelCostPerNight;
+      }
     }
+  } catch (err) {
+    console.warn('[CostService] Dynamic hotel cost fallback used:', err.message);
+  }
 
-    // Cost is per room per night. Assume 2 people share a room.
-    const rooms = Math.ceil(travelers / 2);
-    const totalStay = hotelCostPerNight * durationDays * rooms;
+  const rooms = Math.max(1, Math.ceil(pax / 2));
+  const nights = Math.max(1, dDays - 1);
+  const totalStay = Math.round(hotelCostPerNight * nights * rooms);
 
-    // 3. Food & Activities (Static Heuristics based on Budget Level)
-    const dailyFood = budgetLevel === 'high' ? 3000 : (budgetLevel === 'low' ? 800 : 1500);
-    const dailyActivity = budgetLevel === 'high' ? 2000 : (budgetLevel === 'low' ? 500 : 1000);
+  // 3. Food & Activities
+  const dailyFoodPerPax = level === 'high' || level === 'luxury' ? 2500 : (level === 'low' || level === 'budget' ? 700 : 1400);
+  const dailyActivityPerPax = level === 'high' || level === 'luxury' ? 2000 : (level === 'low' || level === 'budget' ? 400 : 900);
 
-    const totalFood = dailyFood * durationDays * travelers;
-    const totalActivities = dailyActivity * durationDays * travelers;
+  const totalFood = Math.round(dailyFoodPerPax * dDays * pax);
+  const totalActivities = Math.round(dailyActivityPerPax * dDays * pax);
 
-    // 4. Misc Buffer (10%)
-    const subtotal = totalTravel + totalStay + totalFood + totalActivities;
-    const misc = Math.round(subtotal * 0.10);
+  // 4. Buffer
+  const subtotal = totalTravel + totalStay + totalFood + totalActivities;
+  const misc = Math.round(subtotal * 0.10);
+  const total = subtotal + misc;
+  const perPerson = Math.max(1, Math.round(total / pax));
 
-    const total = subtotal + misc;
-
-    return {
-        total,
-        breakdown: {
-            travel: totalTravel,
-            stay: totalStay,
-            food: totalFood,
-            activities: totalActivities,
-            misc: misc
-        },
-        perPerson: Math.round(total / travelers)
-    };
+  return {
+    total,
+    transport: totalTravel,
+    stay: totalStay,
+    accommodation: totalStay, // For backward compatibility with budgetLogic
+    food: totalFood,
+    activities: totalActivities,
+    buffer: misc,
+    misc,
+    perPerson,
+    breakdown: {
+      travel: totalTravel,
+      stay: totalStay,
+      food: totalFood,
+      activities: totalActivities,
+      misc
+    },
+    meta: { source: 'estimated', degraded: false }
+  };
 };

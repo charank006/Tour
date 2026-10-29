@@ -169,7 +169,7 @@ export const planningLogic = {
         });
 
         for (let i = 1; i <= days; i++) {
-            const dayActs: any[] = [];
+            const dayActs: Record<string, unknown>[] = [];
             let dailyCost = 0;
             const usedIdsInDay: string[] = [];
 
