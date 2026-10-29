@@ -14,6 +14,7 @@ import Activities from "./pages/Activities";
 import Reviews from "./pages/Reviews";
 import MyTrips from "./pages/MyTrips";
 import ErrorBoundary from "./components/ErrorBoundary";
+import AiConciergeDrawer from "./components/agent/AiConciergeDrawer";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -48,6 +49,8 @@ const App = () => (
             <Route path="*" element={<NotFound />} />
           </Routes>
         </ErrorBoundary>
+        {/* Global 24/7 AI Concierge Drawer available on all pages */}
+        <AiConciergeDrawer />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

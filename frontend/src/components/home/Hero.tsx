@@ -245,7 +245,14 @@ export const Hero = () => {
         >
           <span>• No cookie-cutter tours</span>
           <span>• Real road and crowd times</span>
-          <span>• Free to plan and customize</span>
+          <button
+            type="button"
+            onClick={() => window.dispatchEvent(new CustomEvent('open-ai-concierge'))}
+            className="hover:text-accent text-stone-200 underline decoration-accent/60 underline-offset-4 inline-flex items-center gap-1.5 transition-colors cursor-pointer"
+          >
+            <Sparkles size={13} className="text-accent" />
+            <span>24/7 AI Concierge</span>
+          </button>
         </motion.p>
       </motion.div>
 

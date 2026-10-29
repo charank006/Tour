@@ -33,7 +33,6 @@ import { generateOfflineTripPlan } from '@/lib/offlinePlanner';
 import { formatINR, calculateDays, formatDateDisplay } from '@/lib/formatters';
 import ImageWithFallback from '@/components/ui/ImageWithFallback';
 import confetti from 'canvas-confetti';
-import AiConciergeDrawer from '@/components/agent/AiConciergeDrawer';
 
 interface BudgetBreakdown {
   total: number;
@@ -181,6 +180,26 @@ export const TripPlanPage = () => {
 
     loadTripPlan();
   }, [params.id, params.shareId, tripData?.destination?.name, navigate]);
+
+  // Sync trip context with global AI Concierge whenever tripPlan updates
+  useEffect(() => {
+    if (tripPlan?.destination?.name) {
+      window.dispatchEvent(
+        new CustomEvent('update-ai-concierge-context', {
+          detail: {
+            destination: tripPlan.destination.name,
+            tripContext: {
+              destination: tripPlan.destination.name,
+              startLocation: tripData?.startLocation || 'Origin City',
+              totalDays: tripPlan.totalDays,
+              travelers: tripPlan.travelers,
+              budget: tripPlan.budgetBreakdown?.total,
+            },
+          },
+        })
+      );
+    }
+  }, [tripPlan, tripData]);
 
   function adaptServerPlan(serverTrip: ServerTripResponse, isOffline = false) {
     const p = serverTrip.plan;
@@ -560,18 +579,6 @@ export const TripPlanPage = () => {
           </SectionErrorBoundary>
 
         </div>
-
-        {/* Floating AI Concierge Agent Drawer */}
-        <AiConciergeDrawer
-          currentDestination={destName}
-          tripContext={{
-            destination: destName,
-            startLocation: startLoc,
-            totalDays: tripPlan.totalDays,
-            travelers: tripPlan.travelers,
-            budget: tripPlan.budgetBreakdown?.total,
-          }}
-        />
       </div>
     </PageTransition>
   );

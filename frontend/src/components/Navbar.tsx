@@ -89,10 +89,25 @@ const Navbar = () => {
               );
             })}
 
+            {/* AI Concierge Trigger */}
+            <button
+              type="button"
+              onClick={() => window.dispatchEvent(new CustomEvent('open-ai-concierge'))}
+              className={`ml-1 inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold border transition-all duration-200 cursor-pointer ${
+                isTransparent
+                  ? 'bg-white/10 hover:bg-white/20 text-white border-white/20 shadow-sm'
+                  : 'bg-primary/10 hover:bg-primary/15 text-primary border-primary/20 shadow-sm'
+              }`}
+              title="Open 24/7 AI Travel Concierge"
+            >
+              <Sparkles size={13} className="text-accent animate-pulse" />
+              <span>AI Concierge</span>
+            </button>
+
             {/* Primary Action Button */}
             <Link
               to="/plan"
-              className="ml-3 inline-flex items-center gap-2 bg-primary text-primary-foreground text-sm font-semibold px-5 py-2.5 rounded-full shadow-warm hover:brightness-105 active:scale-[0.98] transition-all duration-200"
+              className="ml-2 inline-flex items-center gap-2 bg-primary text-primary-foreground text-sm font-semibold px-5 py-2.5 rounded-full shadow-warm hover:brightness-105 active:scale-[0.98] transition-all duration-200"
             >
               <Sparkles size={15} />
               <span>Plan a Trip</span>
@@ -138,6 +153,24 @@ const Navbar = () => {
                     {item.label}
                   </Link>
                 ))}
+
+                {/* AI Concierge Mobile Item */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsOpen(false);
+                    window.dispatchEvent(new CustomEvent('open-ai-concierge'));
+                  }}
+                  className="w-full flex items-center justify-between px-4 py-3 rounded-xl text-base font-medium text-foreground/90 hover:bg-muted text-left transition-colors cursor-pointer"
+                >
+                  <span className="flex items-center gap-2.5">
+                    <Sparkles size={18} className="text-accent" />
+                    <span>AI Travel Concierge</span>
+                  </span>
+                  <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-950/40 px-2 py-0.5 rounded-full">
+                    Online
+                  </span>
+                </button>
 
                 <div className="pt-3 mt-2 border-t border-border/60">
                   <Link

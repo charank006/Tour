@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { MapPin, Search, Sparkles, ArrowRight, Compass, SlidersHorizontal, Sun, Calendar, Wallet } from 'lucide-react';
 import { destinationsData, DestinationItem } from '@/data/staticDiscoveryData';
 import DestinationModal from '@/components/trip/DestinationModal';
-import AiConciergeDrawer from '@/components/agent/AiConciergeDrawer';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { planningLogic } from '@/lib/planningLogic';
 
@@ -16,7 +15,6 @@ export const Destinations = () => {
   const [search, setSearch] = useState<string>('');
   const [sortBy, setSortBy] = useState<'featured' | 'cost-asc' | 'cost-desc' | 'name'>('featured');
   const [selectedDestination, setSelectedDestination] = useState<DestinationItem | null>(null);
-  const [drawerOpen, setDrawerOpen] = useState(false);
 
   useEffect(() => {
     if (highlightActivityIds && highlightActivityIds.length > 0) {
@@ -110,7 +108,7 @@ export const Destinations = () => {
           <div className="relative z-10 max-w-xl">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-xs text-white/90 font-medium mb-3">
               <Sparkles size={12} className="text-accent" />
-              <span>Artisanal Travel Concierge • Powered by Gemini</span>
+              <span>Artisanal Travel Concierge • 24/7 Live Assistant</span>
             </div>
             <h3 className="font-serif-display text-2xl font-bold tracking-tight mb-2">
               Unsure which corner of India fits your tempo?
@@ -122,8 +120,8 @@ export const Destinations = () => {
 
           <button
             type="button"
-            onClick={() => setDrawerOpen(true)}
-            className="relative z-10 bg-primary hover:brightness-105 active:scale-95 text-primary-foreground font-semibold px-6 py-3.5 rounded-2xl shadow-warm flex items-center gap-2.5 transition-all shrink-0 text-sm"
+            onClick={() => window.dispatchEvent(new CustomEvent('open-ai-concierge', { detail: { destination: selectedDestination?.name } }))}
+            className="relative z-10 bg-primary hover:brightness-105 active:scale-95 text-primary-foreground font-semibold px-6 py-3.5 rounded-2xl shadow-warm flex items-center gap-2.5 transition-all shrink-0 text-sm cursor-pointer"
           >
             <Sparkles size={16} />
             <span>Ask AI Concierge</span>
@@ -313,12 +311,6 @@ export const Destinations = () => {
       <DestinationModal
         destination={selectedDestination}
         onClose={() => setSelectedDestination(null)}
-      />
-
-      {/* Floating AI Concierge Drawer */}
-      <AiConciergeDrawer
-        isOpen={drawerOpen}
-        onClose={() => setDrawerOpen(false)}
       />
     </div>
   );
